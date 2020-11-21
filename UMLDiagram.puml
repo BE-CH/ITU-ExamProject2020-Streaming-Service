@@ -1,0 +1,87 @@
+@startuml
+
+enum Genre {
+  DRAMA
+  CRIMI
+  ...
+}
+
+class Episode {
+
+# String name;
+# int releaseDate;
+# ArrayList<Genre> genres;
+
++ Video (String name, int releaseDate, ArrayList<Genre> genres);
+
++ void watch()
+__ Getters __
++ String getName();
++ int getReleaseDate();
++ ArrayList<Genre> getGenres();
+
+__ Setters __
+
++ void addGenre(Genre genre);
+
+}
+
+class Movie() extends Episode{
+- double score;
+
++ Movie(String name, int releaseDate, ArrayList<Genre> genres, double score);
+
+__ Setters __
++ void setScore(double newScore);
+
+__ Getters __
++ double getScore();
+}
+
+class Season(){
+- ArrayList<Video> episodes;
+
+__ Setters __
++ void addEpisode(Episode episode);
+
+__ Getter __
++ ArrayList<Video> getEpisodes();
++ Video getEpisode(int episodeNumber);
+
+}
+
+class Series(){
+- String name;
+- int endDate;
+- ArrayList<Season> seasons;
+- double score;
+
++ Series()
+
+__ Setters __
+
++ void addSeason(Season season);
++ void setEndDate(int endDate);
++ void setSore(int score);
+
+__ Getters __
++ String getName();
++ void getSeasons();
++ Season getSeason(int seasonNumber);
++ double getScore();
+
+}
+
+class Controller(){
+
+
+
+
++ void loadData();
++ void saveData();
+
+}
+
+
+
+@enduml
