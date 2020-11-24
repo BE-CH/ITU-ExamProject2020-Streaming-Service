@@ -1,9 +1,40 @@
 @startuml
 
 enum Genre {
-  DRAMA
-  CRIMI
-  ...
+  Biography
+  Musical
+  Film-Noir
+  Animation
+  Horror
+  Comedy
+  Film-Noir
+  Fantasy
+  Biography
+  Drama
+  Family
+  Romance
+  Adventure
+  Comedy
+  Documentary
+  Western
+  Mystery
+  Crime
+  Family
+  Horror
+  Drama
+  Talk-show
+  Fantasy
+  Sci-fi
+  Music
+  Mystery
+  War
+  Sport
+  Crime
+  Thriller
+  Adventure
+  Western
+  Action
+  History
 }
 
 class Episode {
@@ -26,7 +57,7 @@ __ Setters __
 
 }
 
-class Movie() extends Episode{
+class Movie() extends Episode implements Presentable{
 - double score;
 
 + Movie(String name, int releaseDate, ArrayList<Genre> genres, double score);
@@ -50,7 +81,7 @@ __ Getter __
 
 }
 
-class Series(){
+class Series() implements Presentable{
 - String name;
 - int endDate;
 - ArrayList<Season> seasons;
@@ -75,10 +106,21 @@ __ Getters __
 class Controller(){
 
 
+}
 
+interface Presentable{
++ String getName();
++ Object getImage();
++ in getReleaseDate();
+}
 
-+ void loadData();
-+ void saveData();
+class FileController(){
++ void readFile();
++ void writeFile();
+}
+
+class GUIController(){
+
 
 }
 
