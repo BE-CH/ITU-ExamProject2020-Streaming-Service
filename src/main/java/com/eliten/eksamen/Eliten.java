@@ -14,6 +14,7 @@ public class Eliten {
         logger.info("Programmerings Projekt 2020 - Eliten");
 
         fileManager = new FileManager();
+        
     }
 
     public static FileManager fileManager() {
