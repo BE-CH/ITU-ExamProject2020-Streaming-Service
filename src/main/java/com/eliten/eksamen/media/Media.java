@@ -1,5 +1,6 @@
 package com.eliten.eksamen.media;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Media {
@@ -11,7 +12,7 @@ public class Media {
     private int releaseYear;
     private double score;
 
-    private Object image;
+    private JLabel image;
 
     public Media(String name, MediaType type, int releaseYear, double score) {
 
@@ -47,7 +48,7 @@ public class Media {
         return genres;
     }
 
-    public Object getImage() {
+    public JLabel getImage() {
         return image;
     }
 
@@ -55,7 +56,7 @@ public class Media {
         genres.add(genre);
     }
 
-    public void setImage(Object image) {
+    public void setImage(JLabel image) {
         this.image = image;
     }
 }

@@ -5,6 +5,10 @@ import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Year;
 import java.util.Scanner;
 
@@ -25,13 +29,14 @@ public class FileManager {
 
         while(movies.hasNext()) {
 
-            String name = movies.next();
+            String name = movies.next().trim();
             int year = movies.nextInt();
             String genres = movies.next();
             double score = movies.nextDouble();
 
             Media media = new Media(name, MediaType.MOVIE, year, score);
             addGenres(media, genres);
+            addImage(media, "movie_images");
         }
 
         Eliten.getLogger().info("Loading movies - complete");
@@ -41,7 +46,7 @@ public class FileManager {
 
         while (seriesScanner.hasNext()) {
 
-            String name = seriesScanner.next();
+            String name = seriesScanner.next().trim();
 
             String release = seriesScanner.next();
             String[] releaseYears = release.split("-");
@@ -56,6 +61,7 @@ public class FileManager {
 
             Series series = new Series(name, MediaType.SERIES, releaseYear, endYear, score);
             addGenres(series, genres);
+            addImage(series, "series_images");
 
             for (String seasonAndEpisodes : seasons) {
                 String[] parts = seasonAndEpisodes.split("-");
@@ -75,6 +81,18 @@ public class FileManager {
             for (String genre : genres.split(", ")) {
                 media.addGenre(Genre.fromString(genre));
             }
+        }
+    }
+
+    private void addImage(Media media, String folder) {
+
+        try {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(folder + "/" + media.getName() + ".jpg");
+            media.setImage(new JLabel(new ImageIcon(ImageIO.read(inputStream))));
+        } catch (NullPointerException e) {
+            Eliten.getLogger().warning(media.getName() + " image could not be found - please make sure it's spelled correctly.");
+        } catch(IOException e) {
+            Eliten.getLogger().warning(media.getName() + " image could not be read.");
         }
     }
 }
