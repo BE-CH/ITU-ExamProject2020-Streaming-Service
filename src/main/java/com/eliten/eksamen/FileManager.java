@@ -8,7 +8,6 @@ import com.eliten.eksamen.media.Series;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.Year;
 import java.util.Scanner;
 
@@ -17,7 +16,7 @@ public class FileManager {
     public FileManager() {
 
         Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
-        readFiles();
+        //readFiles();
         Eliten.getLogger().info("FileManager: All data has been loaded");
     }
 
@@ -86,13 +85,19 @@ public class FileManager {
 
     private void addImage(Media media, String folder) {
 
+        media.setImage(new JLabel(getImage(folder + "/" + media.getName() + ".jpg")));
+    }
+
+    public ImageIcon getImage(String path) {
+
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(folder + "/" + media.getName() + ".jpg");
-            media.setImage(new JLabel(new ImageIcon(ImageIO.read(inputStream))));
-        } catch (NullPointerException e) {
-            Eliten.getLogger().warning(media.getName() + " image could not be found - please make sure it's spelled correctly.");
+            return new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream(path)));
         } catch(IOException e) {
-            Eliten.getLogger().warning(media.getName() + " image could not be read.");
+            e.printStackTrace();
+            Eliten.getLogger().warning("Failed to load image from path: " + path);
         }
+
+        Eliten.getLogger().warning("Image path is returning null " + path);
+        return null;
     }
 }

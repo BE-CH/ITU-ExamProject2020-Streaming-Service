@@ -1,5 +1,7 @@
 package com.eliten.eksamen;
 
+import com.eliten.eksamen.gui.MasterFrame;
+
 import java.util.logging.Logger;
 
 public class Eliten {
@@ -7,6 +9,7 @@ public class Eliten {
     private static final Logger logger = Logger.getLogger("Test");
 
     private static FileManager fileManager;
+    private static MasterFrame masterFrame;
 
     public static void main(String[] args) {
         System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT %4$s %2$s %5$s%6$s%n");
@@ -14,6 +17,8 @@ public class Eliten {
         logger.info("Programmerings Projekt 2020 - Eliten");
 
         fileManager = new FileManager();
+        masterFrame = new MasterFrame();
+
     }
 
     public static FileManager fileManager() {
@@ -22,5 +27,9 @@ public class Eliten {
 
     public static Logger getLogger() {
         return logger;
+    }
+
+    public static MasterFrame getMasterFrame() {
+        return masterFrame;
     }
 }
