@@ -1,5 +1,6 @@
-package com.eliten.eksamen;
+package com.eliten.eksamen.managers;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
