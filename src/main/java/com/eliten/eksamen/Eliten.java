@@ -1,6 +1,7 @@
 package com.eliten.eksamen;
 
 import com.eliten.eksamen.gui.MasterFrame;
+import com.eliten.eksamen.managers.FileManager;
 
 import java.util.logging.Logger;
 
