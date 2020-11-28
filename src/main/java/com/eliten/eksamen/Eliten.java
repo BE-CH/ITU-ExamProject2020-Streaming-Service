@@ -2,6 +2,7 @@ package com.eliten.eksamen;
 
 import com.eliten.eksamen.gui.MasterFrame;
 import com.eliten.eksamen.managers.FileManager;
+import com.eliten.eksamen.managers.MediaManager;
 
 import java.util.logging.Logger;
 
@@ -9,7 +10,7 @@ public class Eliten {
 
     private static final Logger logger = Logger.getLogger("Test");
 
-    private static MediaController mediaController;
+    private static MediaManager mediaManager;
     private static FileManager fileManager;
     private static MasterFrame masterFrame;
 
@@ -19,14 +20,14 @@ public class Eliten {
 
         logger.info("Programmerings Projekt 2020 - Eliten");
 
-        mediaController = new MediaController();
+        mediaManager = new MediaManager();
         fileManager = new FileManager();
         masterFrame = new MasterFrame();
 
     }
 
-    public static MediaController mediaController() {
-        return mediaController;
+    public static MediaManager mediaManager() {
+        return mediaManager;
     }
 
     public static FileManager fileManager() {

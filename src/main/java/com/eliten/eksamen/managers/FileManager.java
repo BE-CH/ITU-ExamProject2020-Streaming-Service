@@ -38,7 +38,7 @@ public class FileManager {
             addGenres(media, genres);
             addImage(media, "movie_images");
 
-            Eliten.mediaController().addMedia(media);
+            Eliten.mediaManager().addMedia(media);
         }
 
         Eliten.getLogger().info("Loading movies - complete");
@@ -70,7 +70,7 @@ public class FileManager {
                 series.addSeason(Integer.parseInt(parts[1].trim()));
             }
 
-            Eliten.mediaController().addMedia(series);
+            Eliten.mediaManager().addMedia(series);
         }
 
         Eliten.getLogger().info("Loading series - complete");

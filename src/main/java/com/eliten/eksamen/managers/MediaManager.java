@@ -1,4 +1,4 @@
-package com.eliten.eksamen;
+package com.eliten.eksamen.managers;
 
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
@@ -6,11 +6,11 @@ import com.eliten.eksamen.media.Series;
 
 import java.util.ArrayList;
 
-public class MediaController {
+public class MediaManager {
 
     private ArrayList<Media> medias;
 
-    public MediaController() {
+    public MediaManager() {
         medias = new ArrayList<>();
     }
 
