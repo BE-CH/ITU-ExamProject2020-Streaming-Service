@@ -16,7 +16,7 @@ public class FileManager {
     public FileManager() {
 
         Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
-        //readFiles();
+        readFiles();
         Eliten.getLogger().info("FileManager: All data has been loaded");
     }
 
@@ -36,6 +36,8 @@ public class FileManager {
             Media media = new Media(name, MediaType.MOVIE, year, score);
             addGenres(media, genres);
             addImage(media, "movie_images");
+
+            Eliten.mediaController().addMedia(media);
         }
 
         Eliten.getLogger().info("Loading movies - complete");
@@ -66,6 +68,8 @@ public class FileManager {
                 String[] parts = seasonAndEpisodes.split("-");
                 series.addSeason(Integer.parseInt(parts[1].trim()));
             }
+
+            Eliten.mediaController().addMedia(series);
         }
 
         Eliten.getLogger().info("Loading series - complete");

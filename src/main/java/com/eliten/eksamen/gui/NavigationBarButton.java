@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class NavigationBarButton extends JButton {
-    
+
     // private static final ImageIcon icon = new ImageIcon(Eliten.fileManager().getImage("logos/media_logo.png").getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
 
     public NavigationBarButton(String text) {
