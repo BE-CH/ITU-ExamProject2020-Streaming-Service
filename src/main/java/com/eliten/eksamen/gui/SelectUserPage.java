@@ -1,16 +1,15 @@
-package com.eliten.eksamen;
+package com.eliten.eksamen.gui;
 
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Main {
+public class SelectUserPage extends JPanel {
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Eliten");
-        frame.setPreferredSize(new Dimension(800,800));
-        frame.setLayout(new GridLayout(3,1));
+    public SelectUserPage()  {
+        JPanel container = new JPanel();
+        container.setLayout(new GridLayout(3,1));
 
         //Users.. Has to be user objects
         ArrayList<String> users = new ArrayList<String>();
@@ -40,18 +39,16 @@ public class Main {
         }
 
         //adding the containers to the contentpane
-        frame.getContentPane().add(headerCon);
-        frame.getContentPane().add(userCon);
+        container.add(headerCon);
+        container.add(userCon);
 
         //Creating logoutbutton and setting the size
         JButton logOutButton = new JButton("Log ud");
         logOutButton.setPreferredSize(new Dimension(30, 10));
+        logOutButton.setMaximumSize(new Dimension(30, 10));
 
         //adding logoutbutton
-        frame.getContentPane().add(logOutButton, BorderLayout.CENTER);
+        container.add(logOutButton);
 
-
-        frame.pack();
-        frame.setVisible(true);
     }
 }
