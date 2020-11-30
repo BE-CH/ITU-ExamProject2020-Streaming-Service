@@ -1,5 +1,6 @@
 package com.eliten.eksamen.managers;
 
+import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
@@ -26,7 +27,7 @@ public class MediaManager {
         ArrayList<Media> movies = new ArrayList<>();
 
         for (Media media : getMedias()) {
-            if (media.getType() == MediaType.MOVIE) {
+            if (media.isMovie()) {
                 movies.add(media);
             }
         }
@@ -38,11 +39,23 @@ public class MediaManager {
         ArrayList<Series> series = new ArrayList<>();
 
         for (Media media : getMedias()) {
-            if (media.getType() == MediaType.SERIES) {
+            if (!media.isMovie()) {
                 series.add((Series) media);
             }
         }
 
         return series;
+    }
+
+    public ArrayList<Media> getMediaByGenre(Genre genre) {
+        ArrayList<Media> medias = new ArrayList<>();
+
+        for (Media media : getMedias()) {
+            if (media.getGenres().contains(genre)) {
+                medias.add(media);
+            }
+        }
+
+        return medias;
     }
 }
