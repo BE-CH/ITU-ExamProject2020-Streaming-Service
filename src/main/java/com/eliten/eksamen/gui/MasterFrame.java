@@ -6,7 +6,7 @@ import java.awt.*;
 public class MasterFrame extends JFrame {
 
     public MasterFrame() {
-        super("Eliten");
+        super("Eliten Swag");
 
         JPanel panel = new JPanel(new GridLayout(1, 2));
         panel.add(new NavigationBar());
