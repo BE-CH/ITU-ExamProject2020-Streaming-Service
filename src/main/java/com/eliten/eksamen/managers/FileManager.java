@@ -100,9 +100,10 @@ public class FileManager {
         } catch(IOException e) {
             e.printStackTrace();
             Eliten.getLogger().warning("Failed to load image from path: " + path);
+        } catch (IllegalArgumentException e) {
+            Eliten.getLogger().warning("Image path is returning null " + path);
         }
-
-        Eliten.getLogger().warning("Image path is returning null " + path);
+        
         return null;
     }
 }
