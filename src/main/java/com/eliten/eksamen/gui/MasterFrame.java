@@ -2,20 +2,29 @@ package com.eliten.eksamen.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 
 public class MasterFrame extends JFrame {
 
+    JPanel MainPanel;
+    HashMap<Integer, JPanel> panels;
+
     public MasterFrame() {
-        super("Eliten Swag");
+        super("Eliten");
 
-        JPanel MainPanel = new JPanel(new GridLayout(1, 2));
-        JPanel navigationBar = new NavigationBar();
-        MainPanel.add(navigationBar);
+        MainPanel = new JPanel(new GridLayout(1,1));
 
-        MainPanel.add(new JPanel());
+        JPanel selectUserPage = new SelectUserPage();
+
+        showView(MainPanel, selectUserPage);
+
+
+        //JPanel navigationBar = new NavigationBar();
+        //MainPanel.add(navigationBar);
+
+        //MainPanel.add(new JPanel());
 
         add(MainPanel);
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(1600, 800);
         setResizable(false);
@@ -36,16 +45,14 @@ public class MasterFrame extends JFrame {
         mainPanel.repaint();
     }
 
-    public void removeAndShow(JPanel mainPanel, JPanel[] panelToRemove, JPanel[] panelToShow){
-        for (JPanel panel :
-                panelToRemove) {
-            mainPanel.remove(panel);
-        }
-        for (JPanel panel :
-                panelToShow) {
-            mainPanel.add(panel);
-        }
+    public void removeAndShow(JPanel mainPanel, JPanel panelToRemove, JPanel panelToShow){
+        mainPanel.remove(panelToRemove);
+        mainPanel.add(panelToShow);
         mainPanel.revalidate();
         mainPanel.repaint();
+    }
+
+    public JPanel getMainFrame(){
+        return MainPanel;
     }
 }
