@@ -22,6 +22,7 @@ public class SelectUserPage extends JPanel{
 
         //For the header with the text
         JPanel headerCon = new JPanel(new GridLayout(2,1));
+        headerCon.setBackground(new Color(128, 128, 128));
 
         //Creating the labels with the center placement
         JLabel header = new JLabel("ELITEN", JLabel.CENTER);
@@ -35,6 +36,7 @@ public class SelectUserPage extends JPanel{
         //Creating the userbuttons container
         JPanel userCon = new JPanel(new GridLayout(1, users.size(), 25, 0));
         userCon.setBorder(new EmptyBorder(0,15,0,15));
+        userCon.setBackground(new Color(128, 128, 128));
 
         //Creating the buttons --- has to be updated to user objects
         for(String u : users){
@@ -50,6 +52,7 @@ public class SelectUserPage extends JPanel{
         //Creating logoutbutton and setting the size
         JPanel logoutCon = new JPanel(new BorderLayout());
         logoutCon.setBorder(new EmptyBorder(0,600,0,600));
+        logoutCon.setBackground(new Color(128, 128, 128));
         JButton logOutButton = new JButton("Log ud");
         logOutButton.setPreferredSize(new Dimension(150, 50));
 
