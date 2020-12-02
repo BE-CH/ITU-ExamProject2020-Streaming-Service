@@ -90,7 +90,7 @@ public class FileManager {
 
     private void addImage(Media media, String folder) {
 
-        media.setImage(new JLabel(getImage(folder + "/" + media.getName() + ".jpg")));
+        media.setImage(getImage(folder + "/" + media.getName() + ".jpg"));
     }
 
     public ImageIcon getImage(String path) {

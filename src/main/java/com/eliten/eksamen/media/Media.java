@@ -12,7 +12,7 @@ public class Media {
     private int releaseYear;
     private double score;
 
-    private JLabel image;
+    private ImageIcon image;
 
     public Media(String name, MediaType type, int releaseYear, double score) {
 
@@ -48,7 +48,7 @@ public class Media {
         return genres;
     }
 
-    public JLabel getImage() {
+    public ImageIcon getImage() {
         return image;
     }
 
@@ -56,7 +56,7 @@ public class Media {
         genres.add(genre);
     }
 
-    public void setImage(JLabel image) {
+    public void setImage(ImageIcon image) {
         this.image = image;
     }
 }

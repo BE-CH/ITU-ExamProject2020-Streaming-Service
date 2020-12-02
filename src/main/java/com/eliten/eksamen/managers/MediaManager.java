@@ -2,7 +2,6 @@ package com.eliten.eksamen.managers;
 
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
-import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
 
 import java.util.ArrayList;
