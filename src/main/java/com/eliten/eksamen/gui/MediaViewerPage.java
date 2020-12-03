@@ -1,6 +1,6 @@
 package com.eliten.eksamen.gui;
 
-import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -32,12 +32,6 @@ public class MediaViewerPage extends JPanel {
     private JPanel seasonsBigContainer;
     private JLabel seasonsTitle;
     private JPanel seasonsButtonsContainer;
-    private JButton seasonButton;
-    private JButton seasonButton2;
-    private JButton seasonButton3;
-    private JButton seasonButton4;
-    private JButton seasonButton5;
-    private JButton seasonButton6;
     private JPanel episodesBigContainer;
     private JPanel episodesContainer;
     private JLabel episodesTitle;
@@ -53,7 +47,7 @@ public class MediaViewerPage extends JPanel {
     private JButton singleEpisodeWatch3;
     private JLabel movieImage;
 
-    public MediaViewerPage(String _mediaTitle, String _mediaReleaseDate, String _mediaRating, Boolean _forKids, String _mediaGenres, String _mediaImage){
+    public MediaViewerPage(Media media) {
         topPanels = new JPanel();
         imageContainer = new JPanel();
         textContainer = new JPanel();
@@ -76,12 +70,6 @@ public class MediaViewerPage extends JPanel {
         seasonsBigContainer = new JPanel();
         seasonsTitle = new JLabel();
         seasonsButtonsContainer = new JPanel();
-        seasonButton = new JButton();
-        seasonButton2 = new JButton();
-        seasonButton3 = new JButton();
-        seasonButton4 = new JButton();
-        seasonButton5 = new JButton();
-        seasonButton6 = new JButton();
         episodesBigContainer = new JPanel();
         episodesContainer = new JPanel();
         episodesTitle = new JLabel();
@@ -104,9 +92,7 @@ public class MediaViewerPage extends JPanel {
         {
             topPanels.setAlignmentY(0.0F);
             topPanels.setAlignmentX(0.0F);
-            topPanels.setBorder(new CompoundBorder(
-                    new EmptyBorder(5, 5, 5, 5),
-                    LineBorder.createBlackLineBorder()));
+            topPanels.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), LineBorder.createBlackLineBorder()));
             topPanels.setLayout(new GridLayout(1, 2, 10, 10));
 
             //======== imageContainer ========
@@ -115,7 +101,7 @@ public class MediaViewerPage extends JPanel {
 
                 // ====== Movie Image =========
 
-                movieImage.setIcon(new ImageIcon(Eliten.fileManager().getImage(_mediaImage).getImage().getScaledInstance(600,300, Image.SCALE_DEFAULT)));
+                movieImage.setIcon(new ImageIcon(media.getImage().getImage().getScaledInstance(600,300, Image.SCALE_DEFAULT)));
                 imageContainer.add(movieImage);
             }
             topPanels.add(imageContainer);
@@ -125,7 +111,7 @@ public class MediaViewerPage extends JPanel {
                 textContainer.setLayout(new BoxLayout(textContainer, BoxLayout.Y_AXIS));
 
                 //---- movieTitle ----
-                movieTitle.setText(_mediaTitle);
+                movieTitle.setText(media.getName());
                 movieTitle.setFont(new Font("Tahoma", Font.BOLD, 26));
                 movieTitle.setAlignmentY(0.0F);
                 movieTitle.setHorizontalAlignment(SwingConstants.LEFT);
@@ -144,7 +130,7 @@ public class MediaViewerPage extends JPanel {
                     releaseDateContainer.add(releaseDateTitle);
 
                     //---- releaseDateValue ----
-                    releaseDateValue.setText(_mediaReleaseDate);
+                    releaseDateValue.setText("" + media.getReleaseYear());
                     releaseDateValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     releaseDateValue.setAlignmentY(0.0F);
                     releaseDateValue.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -165,7 +151,7 @@ public class MediaViewerPage extends JPanel {
                     ratingContainer.add(ratingTitle);
 
                     //---- ratingValue ----
-                    ratingValue.setText(_mediaRating);
+                    ratingValue.setText("" + media.getScore());
                     ratingValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     ratingValue.setAlignmentY(0.0F);
                     ratingValue.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -186,12 +172,7 @@ public class MediaViewerPage extends JPanel {
                     forKidsContainer.add(forKidsTitle);
 
                     //---- forKidsValue ----
-                    String _isForKidsValue = "Nej";
-                    if(_forKids){
-                        _isForKidsValue = "Ja";
-                    }
-
-                    forKidsValue.setText(_isForKidsValue);
+                    forKidsValue.setText("UNKNOWN");
                     forKidsValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     forKidsValue.setAlignmentY(0.0F);
                     forKidsValue.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -206,13 +187,13 @@ public class MediaViewerPage extends JPanel {
                     genresContainer.setLayout(new BoxLayout(genresContainer, BoxLayout.X_AXIS));
 
                     //---- genresTitle ----
-                    genresTitle.setText("Genre(r):");
+                    genresTitle.setText("Genre" + (media.getGenres().size() > 1 ? "r" : "") + ":");
                     genresTitle.setAlignmentY(0.0F);
                     genresTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
                     genresContainer.add(genresTitle);
 
                     //---- genresValue ----
-                    genresValue.setText(_mediaGenres);
+                    genresValue.setText(media.getGenresString());
                     genresValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     genresValue.setAlignmentY(0.0F);
                     genresValue.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -262,35 +243,12 @@ public class MediaViewerPage extends JPanel {
                 seasonsButtonsContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
                 seasonsButtonsContainer.setLayout(new GridLayout(1, 7, 5, 0));
 
-                //---- seasonButton ----
-                seasonButton.setText("Sæson 1");
-                seasonButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                seasonsButtonsContainer.add(seasonButton);
-
-                //---- seasonButton2 ----
-                seasonButton2.setText("Sæson 2");
-                seasonButton2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                seasonsButtonsContainer.add(seasonButton2);
-
-                //---- seasonButton3 ----
-                seasonButton3.setText("Sæson 3");
-                seasonButton3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                seasonsButtonsContainer.add(seasonButton3);
-
-                //---- seasonButton4 ----
-                seasonButton4.setText("Sæson 4");
-                seasonButton4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                seasonsButtonsContainer.add(seasonButton4);
-
-                //---- seasonButton5 ----
-                seasonButton5.setText("Sæson 5");
-                seasonButton5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                seasonsButtonsContainer.add(seasonButton5);
-
-                //---- seasonButton6 ----
-                seasonButton6.setText("Sæson 6");
-                seasonButton6.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                seasonsButtonsContainer.add(seasonButton6);
+                //---- seasonButtons ----
+                for (int i = 1; i < 7; i++) {
+                    JButton seasonButton = new JButton("Sæson " + i);
+                    seasonButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                    seasonsButtonsContainer.add(seasonButton);
+                }
             }
             seasonsBigContainer.add(seasonsButtonsContainer);
         }
@@ -299,9 +257,7 @@ public class MediaViewerPage extends JPanel {
         //======== episodesBigContainer ========
         {
             episodesBigContainer.setAlignmentX(0.0F);
-            episodesBigContainer.setBorder(new CompoundBorder(
-                    new EmptyBorder(5, 5, 5, 5),
-                    LineBorder.createBlackLineBorder()));
+            episodesBigContainer.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), LineBorder.createBlackLineBorder()));
             episodesBigContainer.setLayout(new BoxLayout(episodesBigContainer, BoxLayout.Y_AXIS));
 
             //======== episodesContainer ========

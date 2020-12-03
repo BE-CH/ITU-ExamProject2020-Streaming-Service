@@ -5,6 +5,7 @@ import com.eliten.eksamen.media.Genre;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Arrays;
 
 public class NavigationBar extends JPanel {
 
@@ -19,15 +20,17 @@ public class NavigationBar extends JPanel {
         subtitle.setBorder(new EmptyBorder(0, 10, 0, 10));
         add(subtitle);
 
+        JPanel panel = new JPanel(new GridLayout(2, 1));
+
         Genre[] allGenres = Genre.values();
+        Arrays.sort(allGenres);
+
         String[] genres = new String[allGenres.length + 1];
         genres[0] = "Kategori...";
 
         for (int i = 0; i < allGenres.length; i++) {
             genres[i + 1] = allGenres[i].getName();
         }
-
-        JPanel panel = new JPanel(new GridLayout(2, 1));
 
         JComboBox categories = new JComboBox(genres);
         categories.setPreferredSize(new Dimension(50, 50));

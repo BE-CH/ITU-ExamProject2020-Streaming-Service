@@ -2,73 +2,53 @@ package com.eliten.eksamen.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.InputStream;
-import java.util.HashMap;
 
 public class MasterFrame extends JFrame {
 
-    private JPanel MainPanel;
-    private HashMap<Integer, JPanel> panels;
-    private Font mainFont;
+    private NavigationBar navigationBar;
 
     public MasterFrame() {
         super("Eliten");
 
-        try {
-            InputStream mainFontLocation = getClass().getResourceAsStream("/Fonts/Roboto-Regular.ttf");
-            mainFont = Font.createFont(Font.TRUETYPE_FONT, mainFontLocation);
-            MainPanel = new JPanel(new GridLayout(1,1));
+        setLayout(new GridBagLayout());
 
-            JPanel selectUserPage = new SelectUserPage();
-            JPanel loginPage = new LoginPage();
-            JPanel mediaViewerPage = new MediaViewerPage("Dunkirk", "2018", "9.5", false, "Krimi, action & ballade", "movie_images/12 Angry Men.jpg");
+        navigationBar = new NavigationBar();
 
-            showView(MainPanel, mediaViewerPage);
+        MediaByGenrePage defaultPage = new MediaByGenrePage();
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.LINE_START;
 
-            //JPanel navigationBar = new NavigationBar();
-            //MainPanel.add(navigationBar);
+        getContentPane().add(navigationBar, gbc);
 
-            //MainPanel.add(new JPanel());
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        getContentPane().add(defaultPage, gbc);
 
-            add(MainPanel);
-            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            setSize(1600, 800);
-            setResizable(false);
-            setVisible(true);
-
-        }catch (Exception e){
-            System.out.println("Error creating mainFrame: " + e.getMessage());
-        }
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(1600, 800);
+        setResizable(false);
+        setVisible(true);
     }
 
-    public void removeView(JPanel mainPanel, JPanel panelToRemove){
+    public void changeView(JPanel newPanel) {
+        System.out.println("hit");
 
-        mainPanel.remove(panelToRemove);
-        mainPanel.revalidate();
-        mainPanel.repaint();
+        getContentPane().removeAll();
 
-    }
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.LINE_START;
 
-    public void showView(JPanel mainPanel, JPanel panelToShow){
-        mainPanel.add(panelToShow);
-        mainPanel.revalidate();
-        mainPanel.repaint();
-    }
+        getContentPane().add(navigationBar, gbc);
 
-    public void removeAndShow(JPanel mainPanel, JPanel panelToRemove, JPanel panelToShow){
-        mainPanel.remove(panelToRemove);
-        mainPanel.add(panelToShow);
-        mainPanel.revalidate();
-        mainPanel.repaint();
-    }
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        getContentPane().add(newPanel, gbc);
 
-    public JPanel getMainFrame(){
-        return MainPanel;
-    }
-
-    public Font getMainFont(int style, float size) {
-        return mainFont.deriveFont(style, size);
-
+        revalidate();
     }
 }

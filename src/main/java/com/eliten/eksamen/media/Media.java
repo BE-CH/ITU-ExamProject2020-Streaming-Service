@@ -1,5 +1,7 @@
 package com.eliten.eksamen.media;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -46,6 +48,18 @@ public class Media {
 
     public ArrayList<Genre> getGenres() {
         return genres;
+    }
+
+    // TODO: Rename
+    public String getGenresString() {
+
+        String genres = "";
+
+        for(Genre genre : getGenres()) {
+            genres += genre.getName() + ", ";
+        }
+
+        return StringUtils.strip(genres, ", ");
     }
 
     public ImageIcon getImage() {

@@ -22,6 +22,16 @@ public class MediaManager {
         return medias;
     }
 
+    public Media getMediaByName(String name) {
+        for (Media media : medias) {
+            if (media.getName().equalsIgnoreCase(name)) {
+                return media;
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<Media> getMovies() {
         ArrayList<Media> movies = new ArrayList<>();
 
