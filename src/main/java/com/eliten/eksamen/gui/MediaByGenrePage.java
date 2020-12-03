@@ -79,7 +79,7 @@ public class MediaByGenrePage extends JPanel {
                 int col = table.columnAtPoint(e.getPoint());
 
                 JLabel label = (JLabel) table.getModel().getValueAt(row, col);
-                Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())));
+                Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())), true);
             }
         });
 
