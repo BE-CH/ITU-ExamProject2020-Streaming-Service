@@ -6,4 +6,5 @@
 - [ ] Add scrollPane to MediaViwerPage
 - [ ] Make MediaViewerPage loop through series and episodes
 - [ ] Add navigationBar to MediaViewerPage
+- [ ] Check if isMovie() on MediaViewerPage når den loades.
 - [ ] Create AllGenres page
