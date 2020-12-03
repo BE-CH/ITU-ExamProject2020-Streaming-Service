@@ -6,3 +6,4 @@
 - [ ] Add scrollPane to MediaViwerPage
 - [ ] Make MediaViewerPage loop through series and episodes
 - [ ] Add navigationBar to MediaViewerPage
+- [ ] Create AllGenres page
