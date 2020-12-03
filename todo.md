@@ -9,3 +9,4 @@
 - [ ] Check if isMovie() on MediaViewerPage når den loades.
 - [ ] Make image on MEdiaViewerPage correct aspect video
 - [ ] Create AllGenres page
+- [ ] Fuzzy search
