@@ -2,7 +2,7 @@ package com.eliten.eksamen.managers;
 
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
-import com.eliten.eksamen.media.Series;
+import com.eliten.eksamen.media.MediaType;
 
 import java.util.ArrayList;
 
@@ -32,11 +32,11 @@ public class MediaManager {
         return null;
     }
 
-    public ArrayList<Media> getMovies() {
+    public ArrayList<Media> getMediasByType(MediaType type) {
         ArrayList<Media> movies = new ArrayList<>();
 
         for (Media media : getMedias()) {
-            if (media.isMovie()) {
+            if (media.getType() == type) {
                 movies.add(media);
             }
         }
@@ -44,23 +44,23 @@ public class MediaManager {
         return movies;
     }
 
-    public ArrayList<Series> getSeries() {
-        ArrayList<Series> series = new ArrayList<>();
-
-        for (Media media : getMedias()) {
-            if (!media.isMovie()) {
-                series.add((Series) media);
-            }
-        }
-
-        return series;
-    }
-
-    public ArrayList<Media> getMediaByGenre(Genre genre) {
+    public ArrayList<Media> getMediasByGenre(Genre genre) {
         ArrayList<Media> medias = new ArrayList<>();
 
         for (Media media : getMedias()) {
             if (media.getGenres().contains(genre)) {
+                medias.add(media);
+            }
+        }
+
+        return medias;
+    }
+
+    public ArrayList<Media> getMediasFuzzy(String search) {
+        ArrayList<Media> medias = new ArrayList<>();
+
+        for (Media media : getMedias()) {
+            if (media.getName().toLowerCase().contains(search.toLowerCase())) {
                 medias.add(media);
             }
         }

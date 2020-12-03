@@ -1,11 +1,14 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MasterFrame extends JFrame {
 
     private NavigationBar navigationBar;
+    private JPanel currentPage;
 
     public MasterFrame() {
         super("Eliten");
@@ -14,7 +17,8 @@ public class MasterFrame extends JFrame {
 
         navigationBar = new NavigationBar();
 
-        MediaByGenrePage defaultPage = new MediaByGenrePage();
+        MediaListPage defaultPage = new MediaListPage();
+        defaultPage.update(Eliten.mediaManager().getMedias());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.LINE_START;
@@ -27,6 +31,8 @@ public class MasterFrame extends JFrame {
         gbc.anchor = GridBagConstraints.NORTHWEST;
         getContentPane().add(defaultPage, gbc);
 
+        currentPage = defaultPage;
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(1600, 800);
         setResizable(false);
@@ -34,8 +40,6 @@ public class MasterFrame extends JFrame {
     }
 
     public void changeView(JPanel newPanel) {
-        System.out.println("hit");
-
         getContentPane().removeAll();
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -49,6 +53,16 @@ public class MasterFrame extends JFrame {
         gbc.anchor = GridBagConstraints.NORTHWEST;
         getContentPane().add(newPanel, gbc);
 
+        currentPage = newPanel;
+
         revalidate();
+    }
+
+    public boolean isListPage() {
+        return currentPage instanceof MediaListPage;
+    }
+
+    public JPanel getCurrentPage() {
+        return currentPage;
     }
 }

@@ -12,25 +12,80 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class MediaByGenrePage extends JPanel {
+public class MediaListPage extends JPanel {
 
-    public MediaByGenrePage() {
+    private DefaultTableModel model;
+    private JTable table;
+
+    private final int columns = 8;
+
+    public static void changeList(ArrayList<Media> medias) {
+
+        MediaListPage page;
+
+        if (!Eliten.getMasterFrame().isListPage()) {
+
+            page = new MediaListPage();
+            Eliten.getMasterFrame().changeView(page);
+        } else {
+            page = (MediaListPage) Eliten.getMasterFrame().getCurrentPage();
+        }
+
+        page.update(medias);
+    }
+
+    public void update(ArrayList<Media> medias) {
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+
+        JLabel[] labels = new JLabel[columns];
+
+        int count = 0;
+
+        for (int i = 0; i < medias.size(); i++) {
+            Media media = medias.get(i);
+
+            JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
+            label.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+            label.setText(media.getName());
+            label.setHorizontalTextPosition(JLabel.CENTER);
+            label.setVerticalTextPosition(JLabel.BOTTOM);
+
+            labels[count] = label;
+            count++;
+
+            if (i % columns == 0) {
+
+                model.addRow(labels);
+                labels = new JLabel[columns];
+                count = 0;
+            }
+        }
+
+        for(JLabel label : labels) {
+            if (label != null) {
+                model.addRow(labels);
+                return;
+            }
+        }
+    }
+
+    public MediaListPage() {
         setLayout(new BorderLayout());
 
-        ArrayList<Media> medias = Eliten.mediaManager().getMedias();
-
-        DefaultTableModel model = new DefaultTableModel() {
+        model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setDefaultRenderer(JLabel.class, new CustomRenderer());
 
-        int columns = 8;
-
+        // Add columns
         for (int i = 0; i < columns; i++) {
             model.addColumn(i);
         }
@@ -45,32 +100,6 @@ public class MediaByGenrePage extends JPanel {
         table.setTableHeader(null);
 
         JScrollPane scrollPane = new JScrollPane(table);
-
-        JLabel[] labels = new JLabel[columns];
-        int count = 0;
-
-        for (int y = 0; y < 3; y++) {
-            for (int i = 0; i < medias.size(); i++) {
-                Media media = medias.get(i);
-
-                JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
-                label.setBorder(new EmptyBorder(0, 0, 0, 0));
-
-                label.setText(media.getName());
-                label.setHorizontalTextPosition(JLabel.CENTER);
-                label.setVerticalTextPosition(JLabel.BOTTOM);
-
-                labels[count] = label;
-                count++;
-
-                if (i % columns == 0) {
-
-                    model.addRow(labels);
-                    labels = new JLabel[columns];
-                    count = 0;
-                }
-            }
-        }
 
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -87,10 +116,7 @@ public class MediaByGenrePage extends JPanel {
     }
 }
 
-
-
 class CustomRenderer extends DefaultTableCellRenderer {
-
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if (value instanceof JLabel) {
