@@ -2,33 +2,44 @@ package com.eliten.eksamen.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 import java.util.HashMap;
 
 public class MasterFrame extends JFrame {
 
-    JPanel MainPanel;
-    HashMap<Integer, JPanel> panels;
+    private JPanel MainPanel;
+    private HashMap<Integer, JPanel> panels;
+    private Font mainFont;
 
     public MasterFrame() {
         super("Eliten");
 
-        MainPanel = new JPanel(new GridLayout(1,1));
+        try {
+            InputStream mainFontLocation = getClass().getResourceAsStream("/Fonts/Roboto-Regular.ttf");
+            mainFont = Font.createFont(Font.TRUETYPE_FONT, mainFontLocation);
+            MainPanel = new JPanel(new GridLayout(1,1));
 
-        JPanel selectUserPage = new SelectUserPage();
+            JPanel selectUserPage = new SelectUserPage();
+            JPanel loginPage = new LoginPage();
+            JPanel mediaViewerPage = new MediaViewerPage("Dunkirk", "2018", "9.5", false, "Krimi, action & ballade", "movie_images/12 Angry Men.jpg");
 
-        showView(MainPanel, selectUserPage);
+            showView(MainPanel, mediaViewerPage);
 
 
-        //JPanel navigationBar = new NavigationBar();
-        //MainPanel.add(navigationBar);
+            //JPanel navigationBar = new NavigationBar();
+            //MainPanel.add(navigationBar);
 
-        //MainPanel.add(new JPanel());
+            //MainPanel.add(new JPanel());
 
-        add(MainPanel);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(1600, 800);
-        setResizable(false);
-        setVisible(true);
+            add(MainPanel);
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            setSize(1600, 800);
+            setResizable(false);
+            setVisible(true);
+
+        }catch (Exception e){
+            System.out.println("Error creating mainFrame: " + e.getMessage());
+        }
     }
 
     public void removeView(JPanel mainPanel, JPanel panelToRemove){
@@ -54,5 +65,10 @@ public class MasterFrame extends JFrame {
 
     public JPanel getMainFrame(){
         return MainPanel;
+    }
+
+    public Font getMainFont(int style, float size) {
+        return mainFont.deriveFont(style, size);
+
     }
 }
