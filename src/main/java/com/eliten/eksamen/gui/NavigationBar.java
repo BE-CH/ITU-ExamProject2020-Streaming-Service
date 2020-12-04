@@ -14,8 +14,14 @@ public class NavigationBar extends JPanel {
 
     public static final Color BACKGROUND_COLOR = new Color(128, 128, 128);
 
+    private JComboBox genreSelector;
+    private JTextField searchField;
+    private MediaType mediaType;
+
     public NavigationBar() {
         super(new GridLayout(15, 1));
+
+        mediaType = null;
 
         add(getLabel("ELITEN", 50, SwingConstants.CENTER));
 
@@ -35,29 +41,18 @@ public class NavigationBar extends JPanel {
             genres[i + 1] = allGenres[i].getName();
         }
 
-        JComboBox categories = new JComboBox(genres);
-        categories.setPreferredSize(new Dimension(50, 50));
-        categories.setBackground(Color.WHITE);
-        categories.setFocusable(false);
-        categories.addActionListener(e -> {
+        genreSelector = new JComboBox(genres);
+        genreSelector.setPreferredSize(new Dimension(50, 50));
+        genreSelector.setBackground(Color.WHITE);
+        genreSelector.setFocusable(false);
+        genreSelector.addActionListener(e -> MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType())));
 
-            String selected = (String) categories.getSelectedItem();
+        searchField = new JTextField();
+        searchField.setToolTipText("Search...");
+        searchField.getDocument().addDocumentListener(new SearchFieldListener(searchField));
 
-            if (selected.equalsIgnoreCase("Kategori...")) {
-                MediaListPage.changeList(Eliten.mediaManager().getMedias());
-            }
-            else {
-                MediaListPage.changeList(Eliten.mediaManager().getMediasByGenre(Genre.fromString(selected)));
-            }
-
-        });
-
-        JTextField search = new JTextField();
-        search.setToolTipText("Search...");
-        search.getDocument().addDocumentListener(new SearchFieldListener(search));
-
-        panel.add(categories);
-        panel.add(search);
+        panel.add(genreSelector);
+        panel.add(searchField);
         add(panel);
 
         JLabel navigation = getLabel("Navigation", 25, SwingConstants.LEFT);
@@ -65,15 +60,24 @@ public class NavigationBar extends JPanel {
         add(navigation);
 
         NavigationBarButton medias = new NavigationBarButton("Alle medier");
-        medias.addActionListener(e -> MediaListPage.changeList(Eliten.mediaManager().getMedias()));
+        medias.addActionListener(e -> {
+            mediaType = null;
+            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType()));
+        });
         add(medias);
 
         NavigationBarButton movie = new NavigationBarButton("Film");
-        movie.addActionListener(e -> MediaListPage.changeList(Eliten.mediaManager().getMediasByType(MediaType.MOVIE)));
+        movie.addActionListener(e -> {
+            mediaType = MediaType.MOVIE;
+            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType()));
+        });
         add(movie);
 
         NavigationBarButton series = new NavigationBarButton("Serier");
-        series.addActionListener(e -> MediaListPage.changeList(Eliten.mediaManager().getMediasByType(MediaType.SERIES)));
+        series.addActionListener(e -> {
+            mediaType = MediaType.SERIES;
+            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType()));
+        });
         add(series);
 
         NavigationBarButton genre = new NavigationBarButton("Genre");
@@ -89,6 +93,14 @@ public class NavigationBar extends JPanel {
         }
 
         setBackground(BACKGROUND_COLOR);
+    }
+
+    public Genre getGenreFromCategory() {
+        return Genre.fromString((String) genreSelector.getSelectedItem());
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
     }
 
     private JLabel getLabel(String text, int size, int position) {

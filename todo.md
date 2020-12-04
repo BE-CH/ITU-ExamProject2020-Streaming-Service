@@ -5,7 +5,7 @@
   - [ ] Update Update SelectUser and MyProfile page to take user objects.
 - [ ] Add scrollPane to MediaViwerPage
 - [ ] Make MediaViewerPage loop through series and episodes
-- [ ] Add navigationBar to MediaViewerPage
+- [x] Add navigationBar to MediaViewerPage
 - [ ] Check if isMovie() on MediaViewerPage når den loades.
 - [ ] Make image on MEdiaViewerPage correct aspect video
 - [ ] Create AllGenres page

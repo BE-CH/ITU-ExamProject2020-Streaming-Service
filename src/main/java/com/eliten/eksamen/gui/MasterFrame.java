@@ -13,6 +13,7 @@ public class MasterFrame extends JFrame {
     public MasterFrame() {
         super("Eliten");
 
+        setIconImage(Eliten.fileManager().getImage("logos/media_logo.png").getImage());
         setLayout(new GridBagLayout());
 
         navigationBar = new NavigationBar();
@@ -64,5 +65,9 @@ public class MasterFrame extends JFrame {
 
     public JPanel getCurrentPage() {
         return currentPage;
+    }
+
+    public NavigationBar getNavigationBar() {
+        return navigationBar;
     }
 }

@@ -43,10 +43,8 @@ public class MediaListPage extends JPanel {
 
         int count = 0;
 
-        for (int i = 0; i < medias.size(); i++) {
-            Media media = medias.get(i);
-
-            JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
+        for (Media media : medias) {
+            JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
             label.setBorder(new EmptyBorder(0, 0, 0, 0));
 
             label.setText(media.getName());
@@ -56,19 +54,16 @@ public class MediaListPage extends JPanel {
             labels[count] = label;
             count++;
 
-            if (i % columns == 0) {
-
+            if (count == columns) {
                 model.addRow(labels);
                 labels = new JLabel[columns];
                 count = 0;
             }
         }
 
-        for(JLabel label : labels) {
-            if (label != null) {
-                model.addRow(labels);
-                return;
-            }
+        // Add rest
+        if (count != 0) {
+            model.addRow(labels);
         }
     }
 
@@ -95,7 +90,7 @@ public class MediaListPage extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 
-        table.setRowHeight(150);
+        table.setRowHeight(175);
         table.setShowGrid(false);
         table.setTableHeader(null);
 
@@ -108,7 +103,10 @@ public class MediaListPage extends JPanel {
                 int col = table.columnAtPoint(e.getPoint());
 
                 JLabel label = (JLabel) table.getModel().getValueAt(row, col);
-                Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())));
+
+                if (label != null) {
+                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())));
+                }
             }
         });
 

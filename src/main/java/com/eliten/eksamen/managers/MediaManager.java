@@ -44,23 +44,11 @@ public class MediaManager {
         return movies;
     }
 
-    public ArrayList<Media> getMediasByGenre(Genre genre) {
+    public ArrayList<Media> getMediasBySearch(String search, Genre genre, MediaType type) {
         ArrayList<Media> medias = new ArrayList<>();
 
         for (Media media : getMedias()) {
-            if (media.getGenres().contains(genre)) {
-                medias.add(media);
-            }
-        }
-
-        return medias;
-    }
-
-    public ArrayList<Media> getMediasFuzzy(String search) {
-        ArrayList<Media> medias = new ArrayList<>();
-
-        for (Media media : getMedias()) {
-            if (media.getName().toLowerCase().contains(search.toLowerCase())) {
+            if (media.getName().toLowerCase().contains(search.toLowerCase()) && (genre == null || media.getGenres().contains(genre)) && (type == null || media.getType() == type)) {
                 medias.add(media);
             }
         }
