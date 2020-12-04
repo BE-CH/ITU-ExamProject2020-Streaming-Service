@@ -4,7 +4,6 @@ import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -40,13 +39,10 @@ public class MediaListPage extends JPanel {
         }
 
         JLabel[] labels = new JLabel[columns];
-
         int count = 0;
 
         for (Media media : medias) {
             JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
-            label.setBorder(new EmptyBorder(0, 0, 0, 0));
-
             label.setText(media.getName());
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setVerticalTextPosition(JLabel.BOTTOM);
@@ -95,6 +91,7 @@ public class MediaListPage extends JPanel {
         table.setTableHeader(null);
 
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 
         table.addMouseListener(new MouseAdapter() {
             @Override

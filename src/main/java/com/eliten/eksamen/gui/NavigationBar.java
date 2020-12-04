@@ -3,12 +3,33 @@ package com.eliten.eksamen.gui;
 import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.gui.actionlisteners.SearchFieldListener;
 import com.eliten.eksamen.media.Genre;
+import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
+import com.eliten.eksamen.utils.SortingUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+
+enum SortingStyle {
+    ALPHABETICALLY("Alfabetisk"),
+    NEWEST("Nyest"),
+    RATING("Score"),
+    DEFAULT("Default");
+
+    private String name;
+
+    SortingStyle(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
 
 public class NavigationBar extends JPanel {
 
@@ -18,10 +39,15 @@ public class NavigationBar extends JPanel {
     private JTextField searchField;
     private MediaType mediaType;
 
+    private SortingStyle currentSortingStyle;
+    private SortingStyle nextSortingStyle;
+
     public NavigationBar() {
         super(new GridLayout(15, 1));
 
         mediaType = null;
+        currentSortingStyle = SortingStyle.DEFAULT;
+        nextSortingStyle = SortingStyle.ALPHABETICALLY;
 
         add(getLabel("ELITEN", 50, SwingConstants.CENTER));
 
@@ -80,6 +106,37 @@ public class NavigationBar extends JPanel {
         });
         add(series);
 
+        NavigationBarButton sort = new NavigationBarButton("Sorter \uD83E\uDC46 Alfabetisk");
+        sort.addActionListener(e -> {
+
+            ArrayList<Media> list = Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType());
+
+            if (nextSortingStyle == SortingStyle.DEFAULT) {
+                currentSortingStyle = nextSortingStyle;
+                nextSortingStyle = SortingStyle.ALPHABETICALLY;
+                Collections.shuffle(list);
+            }
+            else if (nextSortingStyle == SortingStyle.ALPHABETICALLY) {
+                currentSortingStyle = nextSortingStyle;
+                nextSortingStyle = SortingStyle.NEWEST;
+                SortingUtils.alphabetically(list);
+            }
+            else if (nextSortingStyle == SortingStyle.NEWEST) {
+                currentSortingStyle = nextSortingStyle;
+                nextSortingStyle = SortingStyle.RATING;
+                SortingUtils.newest(list);
+            }
+            else if (nextSortingStyle == SortingStyle.RATING) {
+                currentSortingStyle = nextSortingStyle;
+                nextSortingStyle = SortingStyle.DEFAULT;
+                SortingUtils.rating(list);
+            }
+
+            sort.setText("Sorter \uD83E\uDC46 " + nextSortingStyle.getName());
+            MediaListPage.changeList(list);
+        });
+        add(sort);
+
         NavigationBarButton genre = new NavigationBarButton("Genre");
         genre.addActionListener(e -> System.out.println("missing!!"));
         add(genre);
@@ -93,6 +150,21 @@ public class NavigationBar extends JPanel {
         }
 
         setBackground(BACKGROUND_COLOR);
+    }
+
+    public ArrayList<Media> sort(ArrayList<Media> list) {
+
+        if (currentSortingStyle == SortingStyle.ALPHABETICALLY) {
+            SortingUtils.alphabetically(list);
+        }
+        else if (currentSortingStyle == SortingStyle.NEWEST) {
+            SortingUtils.newest(list);
+        }
+        else if (currentSortingStyle == SortingStyle.RATING) {
+            SortingUtils.rating(list);
+        }
+
+        return list;
     }
 
     public Genre getGenreFromCategory() {

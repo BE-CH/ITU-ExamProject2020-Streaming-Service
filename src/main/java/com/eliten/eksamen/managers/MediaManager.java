@@ -1,5 +1,6 @@
 package com.eliten.eksamen.managers;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
@@ -48,11 +49,11 @@ public class MediaManager {
         ArrayList<Media> medias = new ArrayList<>();
 
         for (Media media : getMedias()) {
-            if (media.getName().toLowerCase().contains(search.toLowerCase()) && (genre == null || media.getGenres().contains(genre)) && (type == null || media.getType() == type)) {
+            if ((media.getName().toLowerCase().contains(search.toLowerCase()) || search.contains("" + media.getReleaseYear())) && (genre == null || media.getGenres().contains(genre)) && (type == null || media.getType() == type)) {
                 medias.add(media);
             }
         }
 
-        return medias;
+        return Eliten.getMasterFrame().getNavigationBar().sort(medias);
     }
 }
