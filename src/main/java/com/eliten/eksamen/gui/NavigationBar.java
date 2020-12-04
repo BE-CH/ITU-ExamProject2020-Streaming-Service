@@ -33,7 +33,7 @@ enum SortingStyle {
 
 public class NavigationBar extends JPanel {
 
-    public static final Color BACKGROUND_COLOR = new Color(128, 128, 128);
+    public static final Color BACKGROUND_COLOR = new Color(80, 77, 77);
 
     private JComboBox genreSelector;
     private JTextField searchField;

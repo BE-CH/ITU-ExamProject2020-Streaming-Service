@@ -213,6 +213,16 @@ public class MediaViewerPage extends JPanel {
                     playMovieButton.setBackground(new Color(16, 170, 22));
                     playMovieButton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
                     playMovieButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                    playMovieButton.addActionListener(e -> {
+                        if (playMovieButton.getText().contains("Afspiller...")) {
+                            return;
+                        }
+                        playMovieButton.setText("Afspiller... Vent venligst");
+                        media.watch();
+                        Timer timer = new Timer(2000, e1 -> playMovieButton.setText("Afspil film"));
+                        timer.setRepeats(false);
+                        timer.start();
+                    });
                     playMovieContainer.add(playMovieButton);
                 }
                 textContainer.add(playMovieContainer);

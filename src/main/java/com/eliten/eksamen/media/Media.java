@@ -1,8 +1,12 @@
 package com.eliten.eksamen.media;
 
+import com.eliten.eksamen.Eliten;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class Media {
@@ -72,5 +76,15 @@ public class Media {
 
     public void setImage(ImageIcon image) {
         this.image = image;
+    }
+
+    public void watch() {
+        try {
+            Desktop.getDesktop().open(Eliten.fileManager().getFile("video.mp4"));
+        } catch (URISyntaxException e) {
+            Eliten.getLogger().warning("File not found!");
+        } catch (IOException e) {
+            Eliten.getLogger().warning("Cannot open media file for media: " + getName());
+        }
     }
 }
