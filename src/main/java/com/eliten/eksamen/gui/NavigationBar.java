@@ -14,26 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-enum SortingStyle {
-    ALPHABETICALLY("Alfabetisk"),
-    NEWEST("Nyest"),
-    RATING("Score"),
-    DEFAULT("Default");
-
-    private String name;
-
-    SortingStyle(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-}
-
 public class NavigationBar extends JPanel {
 
     public static final Color BACKGROUND_COLOR = new Color(80, 77, 77);
+    public static final Color BUTTON_HOVER_COLOR = Color.decode("#3d3d3d");
 
     private JComboBox genreSelector;
     private JTextField searchField;

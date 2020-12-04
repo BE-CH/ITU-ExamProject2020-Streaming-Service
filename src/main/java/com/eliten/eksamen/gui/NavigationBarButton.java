@@ -5,6 +5,8 @@ import com.eliten.eksamen.Eliten;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class NavigationBarButton extends JButton {
 
@@ -20,6 +22,19 @@ public class NavigationBarButton extends JButton {
         setForeground(Color.WHITE);
         setBackground(NavigationBar.BACKGROUND_COLOR);
 
-        setContentAreaFilled(false);
+        setUI(new NavigationBarButtonUI());
+
+        addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setBackground(NavigationBar.BUTTON_HOVER_COLOR);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBackground(NavigationBar.BACKGROUND_COLOR);
+            }
+        });
     }
 }
