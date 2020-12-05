@@ -4,6 +4,7 @@ import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class MediaListPage extends JPanel {
         if (!Eliten.getMasterFrame().isListPage()) {
 
             page = new MediaListPage();
-            Eliten.getMasterFrame().changeView(page);
+            Eliten.getMasterFrame().changeView(page, true);
         } else {
             page = (MediaListPage) Eliten.getMasterFrame().getCurrentPage();
         }
@@ -39,10 +40,15 @@ public class MediaListPage extends JPanel {
         }
 
         JLabel[] labels = new JLabel[columns];
+
         int count = 0;
 
-        for (Media media : medias) {
-            JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
+        for (int i = 0; i < medias.size(); i++) {
+            Media media = medias.get(i);
+
+            JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
+            label.setBorder(new EmptyBorder(0, 0, 0, 0));
+
             label.setText(media.getName());
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setVerticalTextPosition(JLabel.BOTTOM);
@@ -50,16 +56,19 @@ public class MediaListPage extends JPanel {
             labels[count] = label;
             count++;
 
-            if (count == columns) {
+            if (i % columns == 0) {
+
                 model.addRow(labels);
                 labels = new JLabel[columns];
                 count = 0;
             }
         }
 
-        // Add rest
-        if (count != 0) {
-            model.addRow(labels);
+        for(JLabel label : labels) {
+            if (label != null) {
+                model.addRow(labels);
+                return;
+            }
         }
     }
 
@@ -86,12 +95,11 @@ public class MediaListPage extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 
-        table.setRowHeight(175);
+        table.setRowHeight(150);
         table.setShowGrid(false);
         table.setTableHeader(null);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -102,7 +110,7 @@ public class MediaListPage extends JPanel {
                 JLabel label = (JLabel) table.getModel().getValueAt(row, col);
 
                 if (label != null) {
-                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())));
+                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())), true);
                 }
             }
         });

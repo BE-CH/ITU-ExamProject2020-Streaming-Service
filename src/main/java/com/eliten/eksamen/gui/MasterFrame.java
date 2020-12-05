@@ -1,5 +1,7 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
+
 import javax.swing.*;
 import java.awt.*;
 
