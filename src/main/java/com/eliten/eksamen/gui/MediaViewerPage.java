@@ -172,7 +172,12 @@ public class MediaViewerPage extends JPanel {
                     forKidsContainer.add(forKidsTitle);
 
                     //---- forKidsValue ----
-                    forKidsValue.setText("UNKNOWN");
+
+                    if(media.getIsForKids()){
+                        forKidsValue.setText("Ja");
+                    }else{
+                        forKidsValue.setText("Nej");
+                    }
                     forKidsValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     forKidsValue.setAlignmentY(0.0F);
                     forKidsValue.setBorder(new EmptyBorder(0, 5, 0, 0));

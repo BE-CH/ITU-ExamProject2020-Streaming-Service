@@ -14,6 +14,7 @@ public class Media {
     private String name;
     private MediaType type;
     private ArrayList<Genre> genres;
+    private boolean isForKids;
 
     private int releaseYear;
     private double score;
@@ -26,9 +27,12 @@ public class Media {
         this.type = type;
         this.releaseYear = releaseYear;
         this.score = score;
+        this.isForKids = false;
 
         genres = new ArrayList<>();
     }
+
+    public boolean getIsForKids(){ return isForKids; };
 
     public String getName() {
         return name;
@@ -87,4 +91,6 @@ public class Media {
             Eliten.getLogger().warning("Cannot open media file for media: " + getName());
         }
     }
+
+    public void setIsForKids(boolean kidsFriendly) { isForKids = kidsFriendly; };
 }
