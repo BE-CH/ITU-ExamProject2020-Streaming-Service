@@ -1,6 +1,7 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.gui.actionlisteners.NavigationButtonListener;
 import com.eliten.eksamen.gui.actionlisteners.SearchFieldListener;
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
@@ -129,8 +130,20 @@ public class NavigationBar extends JPanel {
         user.setBorder(new EmptyBorder(0, 5, 0, 0));
         add(user);
 
-        for (String navButton : new String[] {"Min Liste", "Min Profil", "Admin panel", "Log Ud"}) {
-            add(new NavigationBarButton(navButton));
+        String[] stringToLoop;
+
+        if(Eliten.getLoggedInAccount().isAdmin()){
+            stringToLoop = new String[] {"Min Liste", "Min Profil", "Admin panel", "Log Ud"};
+        }else{
+            stringToLoop = new String[] {"Min Liste", "Min Profil", "Log Ud"};
+        }
+
+        for (String navButton : stringToLoop) {
+            NavigationBarButton button = new NavigationBarButton(navButton);
+
+            button.addActionListener(new NavigationButtonListener());
+
+            add(button);
         }
 
         setBackground(BACKGROUND_COLOR);

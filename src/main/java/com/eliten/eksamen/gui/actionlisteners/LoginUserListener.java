@@ -53,8 +53,14 @@ public class LoginUserListener implements ActionListener {
                         int age = user.getJSONArray("users").getJSONObject(i).getInt("age");
                         usersToAdd.add(new User(username, age));
                     }
+                    boolean isAdmin = false;
 
-                    Account loggedInAccount = new Account(user.getString("email"), user.getString("password"), usersToAdd);
+                    if(user.getBoolean("admin") == true){
+                        isAdmin = true;
+                    }
+
+
+                    Account loggedInAccount = new Account(user.getString("email"), user.getString("password"), usersToAdd, isAdmin);
                     Eliten.setLoggedInAccount(loggedInAccount);
 
                     // user is now logged in

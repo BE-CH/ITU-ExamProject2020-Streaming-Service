@@ -17,7 +17,6 @@ public class MasterFrame extends JFrame {
         setLayout(new GridBagLayout());
 
         // create Navigationbar for later use.
-        navigationBar = new NavigationBar();
 
         LoginPage defaultPage = new LoginPage();
 
@@ -45,6 +44,11 @@ public class MasterFrame extends JFrame {
         gbc.fill = GridBagConstraints.LINE_START;
 
         if(navBar){
+
+            if(navigationBar == null){
+                navigationBar = new NavigationBar();
+            }
+
             getContentPane().add(navigationBar, gbc);
         }
 

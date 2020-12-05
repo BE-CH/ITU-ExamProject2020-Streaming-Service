@@ -7,12 +7,14 @@ public class Account {
     private String email;
     private String password;
     private ArrayList<User> users;
+    private boolean isAdmin;
 
 
-    public Account(String email, String password, ArrayList<User> users){
+    public Account(String email, String password, ArrayList<User> users, boolean isAdmin){
         this.email = email;
         this.password = password;
         this.users = users;
+        this.isAdmin = isAdmin;
 
     }
 
@@ -36,4 +38,6 @@ public class Account {
     public ArrayList<User> getUsers(){
         return users;
     }
+
+    public boolean isAdmin() { return isAdmin; };
 }
