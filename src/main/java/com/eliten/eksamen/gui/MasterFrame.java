@@ -1,7 +1,5 @@
 package com.eliten.eksamen.gui;
 
-import com.eliten.eksamen.Eliten;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,15 +13,13 @@ public class MasterFrame extends JFrame {
 
         setLayout(new GridBagLayout());
 
+        // create Navigationbar for later use.
         navigationBar = new NavigationBar();
 
-        MediaListPage defaultPage = new MediaListPage();
-        defaultPage.update(Eliten.mediaManager().getMedias());
+        LoginPage defaultPage = new LoginPage();
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.LINE_START;
-
-        getContentPane().add(navigationBar, gbc);
 
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -39,13 +35,16 @@ public class MasterFrame extends JFrame {
         setVisible(true);
     }
 
-    public void changeView(JPanel newPanel) {
+    public void changeView(JPanel newPanel, boolean navBar) {
         getContentPane().removeAll();
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.LINE_START;
 
-        getContentPane().add(navigationBar, gbc);
+        if(navBar){
+            getContentPane().add(navigationBar, gbc);
+        }
+
 
         gbc.weightx = 1;
         gbc.weighty = 1;

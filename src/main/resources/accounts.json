@@ -1,0 +1,27 @@
+[
+  {
+    "email": "milb@itu.dk",
+    "password": "S3pyJIY6f7ikZI7z4BzUNxEYmVo5pubnnw0x6oLYGH4Pz9zmSq6bCFcSJrl4ziVx",
+    "users": [{
+      "username": "Mor",
+      "age": 45,
+    }, {
+      "username": "Eddy",
+      "age": 13,
+    }, {
+      "username": "Dad",
+      "age": 57
+    }],
+    "admin": false
+  },
+  {
+    "email": "lauritsbonde@itu.dk",
+    "password": "awdadinziiaiwdnaidw",
+    "users": [
+      "Mor",
+      "Far",
+      "Eddy"
+    ],
+    "admin": false
+  }
+]

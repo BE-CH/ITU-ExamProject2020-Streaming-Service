@@ -1,5 +1,7 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.gui.actionlisteners.LoginUserListener;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -83,7 +85,7 @@ public class LoginPage extends JPanel {
             passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
 
             //---- passwordField ----
-            passwordField.setBorder(new TitledBorder(null, "Din email", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
+            passwordField.setBorder(new TitledBorder(null, "Din adgangskode", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
                     new Font("Tahoma", Font.BOLD, 14)));
             passwordContainer.add(passwordField);
         }
@@ -100,9 +102,18 @@ public class LoginPage extends JPanel {
             loginButton.setAlignmentY(0.0F);
             loginButton.setAlignmentX(0.5F);
             loginButton.setBorder(new EmptyBorder(5, 30, 5, 30));
+            loginButton.addActionListener(new LoginUserListener());
             loginContainer.add(loginButton);
         }
         add(loginContainer);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    public String getEmailInput(){
+        return emailField.getText();
+    }
+
+    public String getPasswordInput(){
+        return passwordField.getText();
     }
 }

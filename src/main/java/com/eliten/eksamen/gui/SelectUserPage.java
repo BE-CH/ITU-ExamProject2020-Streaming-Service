@@ -1,5 +1,6 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.User;
 import com.eliten.eksamen.gui.actionlisteners.UserListener;
 
 import javax.swing.*;
@@ -8,17 +9,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SelectUserPage extends JPanel{
-    public SelectUserPage()  {
+    public SelectUserPage(ArrayList<User> users)  {
         super(new GridLayout(1,1));
         JPanel container = new JPanel();
         container.setLayout(new GridLayout(3,1));
-
-        //Users.. Has to be user objects
-        ArrayList<String> users = new ArrayList<String>();
-        users.add("Mor");
-        users.add("Eddy");
-        users.add("Far");
-        users.add("Barn");
 
         //For the header with the text
         JPanel headerCon = new JPanel(new GridLayout(2,1));
@@ -39,8 +33,8 @@ public class SelectUserPage extends JPanel{
         userCon.setBackground(new Color(128, 128, 128));
 
         //Creating the buttons --- has to be updated to user objects
-        for(String u : users){
-            JButton userButton = new JButton(u);
+        for(User u : users){
+            JButton userButton = new JButton(u.getName());
             userButton.addActionListener(new UserListener());
             userCon.add(userButton);
         }
