@@ -8,7 +8,9 @@ import com.eliten.eksamen.media.Series;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.Year;
 import java.util.Scanner;
 
@@ -91,6 +93,11 @@ public class FileManager {
     private void addImage(Media media, String folder) {
 
         media.setImage(getImage(folder + "/" + media.getName() + ".jpg"));
+    }
+
+    public File getFile(String path) throws URISyntaxException {
+
+        return new File(getClass().getClassLoader().getResource(path).toURI());
     }
 
     public ImageIcon getImage(String path) {

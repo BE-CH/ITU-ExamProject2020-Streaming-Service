@@ -32,7 +32,7 @@ public class SearchFieldListener implements DocumentListener {
 
     private void handle() {
         if (Eliten.getMasterFrame().isListPage()) {
-            MediaListPage.changeList(Eliten.mediaManager().getMediasFuzzy(field.getText()));
+            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(field.getText(), Eliten.getMasterFrame().getNavigationBar().getGenreFromCategory(), Eliten.getMasterFrame().getNavigationBar().getMediaType()));
         }
     }
 }
