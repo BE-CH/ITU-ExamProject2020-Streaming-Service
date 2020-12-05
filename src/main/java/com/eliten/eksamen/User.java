@@ -9,10 +9,10 @@ public class User {
     private int age;
     private ArrayList<Media> myList;
 
-    public User(String name, int age){
+    public User(String name, int age, ArrayList<Media> listOfMedia){
         this.name = name;
         this.age = age;
-        myList = new ArrayList<Media>();
+        myList = listOfMedia;
     }
 
     //Getters

@@ -5,6 +5,7 @@ import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.User;
 import com.eliten.eksamen.gui.LoginPage;
 import com.eliten.eksamen.gui.SelectUserPage;
+import com.eliten.eksamen.media.Media;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,11 +48,23 @@ public class LoginUserListener implements ActionListener {
                     // password is correct
 
                     ArrayList<User> usersToAdd = new ArrayList<>();
+                    ArrayList<Media> mediasToAdd = new ArrayList<>();
 
                     for (int i = 0; i < user.getJSONArray("users").length(); i++) {
+                        mediasToAdd.clear();
+                        JSONObject actualUser = user.getJSONArray("users").getJSONObject(i);
                         String username = user.getJSONArray("users").getJSONObject(i).getString("username");
                         int age = user.getJSONArray("users").getJSONObject(i).getInt("age");
-                        usersToAdd.add(new User(username, age));
+
+                        for (int j = 0; j < actualUser.getJSONArray("myList").length(); j++) {
+                            // Loops through all myList objects
+
+                            JSONObject mediaLopped = actualUser.getJSONArray("myList").getJSONObject(j);
+                            String mediaTitle = mediaLopped.getString("title");
+                            mediasToAdd.add(Eliten.mediaManager().getMediaByName(mediaTitle));
+                        }
+
+                        usersToAdd.add(new User(username, age, mediasToAdd));
                     }
                     boolean isAdmin = false;
 

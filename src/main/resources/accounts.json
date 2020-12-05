@@ -4,13 +4,22 @@
     "password": "S3pyJIY6f7ikZI7z4BzUNxEYmVo5pubnnw0x6oLYGH4Pz9zmSq6bCFcSJrl4ziVx",
     "users": [{
       "username": "Mor",
-      "age": 45
+      "age": 45,
+      "myList": [{
+        "title": "The Godfather"
+      }]
     }, {
       "username": "Eddy",
-      "age": 13
+      "age": 13,
+      "myList": [{
+        "title": "The Godfather"
+      }]
     }, {
       "username": "Far",
-      "age": 57
+      "age": 57,
+      "myList": [{
+        "title": "The Godfather"
+      }]
     }],
     "admin": true
   },
