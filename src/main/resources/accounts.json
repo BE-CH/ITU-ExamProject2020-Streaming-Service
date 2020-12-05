@@ -12,7 +12,7 @@
       "username": "Dad",
       "age": 57
     }],
-    "admin": true
+    "admin": false
   },
   {
     "email": "lauritsbonde@itu.dk",

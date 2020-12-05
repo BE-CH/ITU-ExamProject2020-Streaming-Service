@@ -1,13 +1,15 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.User;
+import com.eliten.eksamen.media.Media;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MyProfile extends JPanel {
 
-    public MyProfile(String user) {
+    public MyProfile(User user) {
         super(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -39,8 +41,8 @@ public class MyProfile extends JPanel {
         //Creating the standard info
         JPanel infoCon = new JPanel(new GridLayout(2,1));
         //has to be changed to use userobjects.
-        JLabel name = new JLabel("Navn: " + user);
-        JLabel age = new JLabel("Alder: " + user);
+        JLabel name = new JLabel("Navn: " + user.getName());
+        JLabel age = new JLabel("Alder: " + user.getAge());
         infoCon.add(name);
         infoCon.add(age);
         c.gridy = 1;
@@ -53,20 +55,15 @@ public class MyProfile extends JPanel {
         JLabel movieHeader = new JLabel("Film på min liste: ");
         movieCon.add(movieHeader);
 
-        ArrayList<String> movies= new ArrayList<String>();
-        for(int i = 1; i <=15; i++){
-            movies.add("movie"+i);
-        }
-
         int moviesPerRow = 3;
-        double rows = movies.size()/moviesPerRow;
+        double rows = user.getMyList().size()/moviesPerRow;
         if(rows % moviesPerRow != 0){
             rows++;
         }
 
         JPanel movieList = new JPanel(new GridLayout((int) rows, moviesPerRow));
-        for(String m : movies){
-            JButton but = new JButton(m);
+        for(Media m : user.getMyList()){
+            JButton but = new JButton(m.getName());
             movieList.add(but);
         }
         movieCon.add(movieList);
