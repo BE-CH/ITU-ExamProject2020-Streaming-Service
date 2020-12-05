@@ -4,7 +4,6 @@ import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -43,12 +42,8 @@ public class MediaListPage extends JPanel {
 
         int count = 0;
 
-        for (int i = 0; i < medias.size(); i++) {
-            Media media = medias.get(i);
-
+        for (Media media : medias) {
             JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
-            label.setBorder(new EmptyBorder(0, 0, 0, 0));
-
             label.setText(media.getName());
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setVerticalTextPosition(JLabel.BOTTOM);
@@ -56,7 +51,7 @@ public class MediaListPage extends JPanel {
             labels[count] = label;
             count++;
 
-            if (i % columns == 0) {
+            if (count == columns) {
 
                 model.addRow(labels);
                 labels = new JLabel[columns];
@@ -64,11 +59,8 @@ public class MediaListPage extends JPanel {
             }
         }
 
-        for(JLabel label : labels) {
-            if (label != null) {
-                model.addRow(labels);
-                return;
-            }
+        if (count != 0) {
+            model.addRow(labels);
         }
     }
 
@@ -95,7 +87,7 @@ public class MediaListPage extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 
-        table.setRowHeight(150);
+        table.setRowHeight(175);
         table.setShowGrid(false);
         table.setTableHeader(null);
 
