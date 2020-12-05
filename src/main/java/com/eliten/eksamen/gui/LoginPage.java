@@ -71,9 +71,9 @@ public class LoginPage extends JPanel {
             emailContainer.setLayout(new BoxLayout(emailContainer, BoxLayout.Y_AXIS));
 
             //---- emailField ----
-            emailField.setBorder(new TitledBorder(null, "Din email", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
-                    new Font("Tahoma", Font.BOLD, 14)));
+            emailField.setBorder(new TitledBorder(null, "Din email", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, new Font("Tahoma", Font.BOLD, 14)));
             emailField.setSize(new Dimension(200,20));
+            emailField.addActionListener(e -> loginButton.doClick());
             emailContainer.add(emailField);
         }
         add(emailContainer);
@@ -85,8 +85,8 @@ public class LoginPage extends JPanel {
             passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
 
             //---- passwordField ----
-            passwordField.setBorder(new TitledBorder(null, "Din adgangskode", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
-                    new Font("Tahoma", Font.BOLD, 14)));
+            passwordField.setBorder(new TitledBorder(null, "Din adgangskode", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, new Font("Tahoma", Font.BOLD, 14)));
+            passwordField.addActionListener(e -> loginButton.doClick());
             passwordContainer.add(passwordField);
         }
         add(passwordContainer);

@@ -92,6 +92,7 @@ public class MediaListPage extends JPanel {
         table.setTableHeader(null);
 
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
 
         table.addMouseListener(new MouseAdapter() {
             @Override

@@ -123,7 +123,7 @@ public class NavigationBar extends JPanel {
         add(sort);
 
         NavigationBarButton genre = new NavigationBarButton("Genre");
-        genre.addActionListener(e -> System.out.println("missing!!"));
+        genre.addActionListener(e -> Eliten.getMasterFrame().changeView(new GenrePage(), true));
         add(genre);
 
         JLabel user = getLabel("Min bruger", 25, SwingConstants.LEFT);
