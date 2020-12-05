@@ -18,9 +18,6 @@ public class MyProfile extends JPanel {
         c.gridy = 0;
         c.anchor = GridBagConstraints.PAGE_START;
 
-        //Adding the navigation bar to the page
-        add(new NavigationBar(), c);
-
         //Creating the container for the information
         JPanel container = new JPanel(new GridBagLayout());
         container.setBorder(new EmptyBorder(10,15,0,15));

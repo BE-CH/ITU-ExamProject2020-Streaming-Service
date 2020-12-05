@@ -16,8 +16,6 @@ public class MasterFrame extends JFrame {
         setIconImage(Eliten.fileManager().getImage("logos/media_logo.png").getImage());
         setLayout(new GridBagLayout());
 
-        // create Navigationbar for later use.
-
         LoginPage defaultPage = new LoginPage();
 
         GridBagConstraints gbc = new GridBagConstraints();

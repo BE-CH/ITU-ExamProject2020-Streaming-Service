@@ -1,5 +1,6 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.User;
 import com.eliten.eksamen.gui.actionlisteners.UserListener;
 
@@ -49,6 +50,10 @@ public class SelectUserPage extends JPanel{
         logoutCon.setBackground(new Color(128, 128, 128));
         JButton logOutButton = new JButton("Log ud");
         logOutButton.setPreferredSize(new Dimension(150, 50));
+
+        logOutButton.addActionListener(e -> {
+            Eliten.logOutUser();
+        });
 
         //adding logoutbutton
         logoutCon.add(logOutButton, BorderLayout.SOUTH);

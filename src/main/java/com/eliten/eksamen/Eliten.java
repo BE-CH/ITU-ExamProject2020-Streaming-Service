@@ -1,5 +1,6 @@
 package com.eliten.eksamen;
 
+import com.eliten.eksamen.gui.LoginPage;
 import com.eliten.eksamen.gui.MasterFrame;
 import com.eliten.eksamen.managers.FileManager;
 import com.eliten.eksamen.managers.MediaManager;
@@ -78,4 +79,10 @@ public class Eliten {
     public static void setSelectedUser(User usr) { selectedUser = usr;};
 
     public static User getSelectedUser() { return selectedUser; };
+
+    public static void logOutUser() {
+        setSelectedUser(null);
+        setLoggedInAccount(null);
+        getMasterFrame().changeView(new LoginPage(), false);
+    }
 }

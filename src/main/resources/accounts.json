@@ -9,10 +9,10 @@
       "username": "Eddy",
       "age": 13
     }, {
-      "username": "Dad",
+      "username": "Far",
       "age": 57
     }],
-    "admin": false
+    "admin": true
   },
   {
     "email": "lauritsbonde@itu.dk",

@@ -20,7 +20,7 @@ public class NavigationButtonListener implements ActionListener {
         }else if(selectedPage.equalsIgnoreCase("Admin panel")){
             JOptionPane.showMessageDialog(null, "Skift til Admin Panel");
         }else if(selectedPage.equalsIgnoreCase("Log Ud")){
-            JOptionPane.showMessageDialog(null, "Skift til log ud");
+            Eliten.logOutUser();
         }else{
             JOptionPane.showMessageDialog(null, "Vi kender ikke denne side!");
         }
