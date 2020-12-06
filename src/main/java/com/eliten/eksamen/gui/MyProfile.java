@@ -55,7 +55,7 @@ public class MyProfile extends JPanel {
         JLabel movieHeader = new JLabel("Film på min liste: ");
         movieCon.add(movieHeader);
 
-        int moviesPerRow = 3;
+        int moviesPerRow = 5;
         double rows = user.getMyList().size()/moviesPerRow;
         if(rows % moviesPerRow != 0){
             rows++;

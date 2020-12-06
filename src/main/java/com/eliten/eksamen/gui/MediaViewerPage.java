@@ -1,5 +1,6 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
@@ -8,6 +9,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MediaViewerPage extends JPanel {
 
@@ -47,6 +50,8 @@ public class MediaViewerPage extends JPanel {
     private JButton singleEpisodeWatch3;
     private JLabel movieImage;
 
+    private JButton addToList;
+
     public MediaViewerPage(Media media) {
         topPanels = new JPanel();
         imageContainer = new JPanel();
@@ -83,6 +88,7 @@ public class MediaViewerPage extends JPanel {
         singleEpisodeContainer3 = new JPanel();
         singleEpisodeTitle3 = new JLabel();
         singleEpisodeWatch3 = new JButton();
+        addToList = new JButton();
 
         //======== JPanel ========
         setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -230,6 +236,31 @@ public class MediaViewerPage extends JPanel {
                     });
                     playMovieContainer.add(playMovieButton);
                 }
+
+                if(Eliten.getSelectedUser().getMyList().indexOf(media) == -1){
+                    addToList.setText("Tilføj til min liste");
+                    addToList.addMouseListener(new MouseAdapter() {
+                        public void mouseClicked(MouseEvent e) {
+                            Eliten.getSelectedUser().addToList(media);
+                            //dont know if this is the best way to do it
+                            Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                        }
+                    });
+                } else {
+                    addToList.setText("Fjern fra min liste");
+                    addToList.addMouseListener(new MouseAdapter() {
+                        public void mouseClicked(MouseEvent e) {
+                            Eliten.getSelectedUser().removeFromList(media);
+                            //dont know if this is the best way to do it
+                            Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                        }
+                    });
+                }
+                addToList.setAlignmentY(0.0F);
+                addToList.setBackground(new Color(16, 170, 22));
+                addToList.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
+                addToList.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                playMovieContainer.add(addToList);
                 textContainer.add(playMovieContainer);
             }
             topPanels.add(textContainer);

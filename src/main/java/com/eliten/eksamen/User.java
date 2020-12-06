@@ -2,6 +2,7 @@ package com.eliten.eksamen;
 
 import com.eliten.eksamen.media.Media;
 
+
 import java.util.ArrayList;
 
 public class User {
@@ -42,11 +43,13 @@ public class User {
 
     public void addToList(Media m){
         myList.add(m);
+        Eliten.fileManager().overWriteMylist(myList);
     }
 
     public void removeFromList(Media m){
         int index = myList.indexOf(m);
         myList.remove(index);
+        Eliten.fileManager().overWriteMylist(myList);
     }
 
 }
