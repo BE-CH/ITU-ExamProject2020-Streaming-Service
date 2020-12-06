@@ -1,11 +1,14 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.User;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MyProfile extends JPanel {
 
@@ -64,8 +67,14 @@ public class MyProfile extends JPanel {
             label.setText(media.getName());
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setVerticalTextPosition(JLabel.BOTTOM);
+            label.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                }
+            });
             movieList.add(label);
         }
+
         movieCon.add(movieList);
         c.gridy = 2;
         c.weighty = 0.7;
