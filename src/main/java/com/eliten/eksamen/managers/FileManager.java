@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Year;
 import java.util.Scanner;
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 public class FileManager {
 
@@ -112,5 +116,31 @@ public class FileManager {
         }
         
         return null;
+    }
+
+    public void overWriteMylist(ArrayList<Media> myList){
+        Media list[] = new Media[myList.size()];
+        for(int i = 0; i < myList.size(); i++){
+            list[i] = myList.get(i);
+        }
+        JSONArray database = Eliten.getDatabase();
+        JSONObject user = new JSONObject();
+        for(int i = 0; i < database.length(); i++){
+            if(database.getJSONObject(i).get("email") == Eliten.getLoggedInAccount().getEmail()){
+                for(int j = 0; j < database.getJSONObject(i).getJSONArray("users").getJSONObject(i).length(); j++) {
+                    String username = database.getJSONObject(i).getJSONArray("users").getJSONObject(j).getString("username");
+                    if(username == Eliten.getSelectedUser().getName()){
+                        database.getJSONObject(i).getJSONArray("users").getJSONObject(j).remove("myList");
+                        database.getJSONObject(i).getJSONArray("users").getJSONObject(j).put("myList", new JSONArray());
+                        for(int k = 0; k < myList.size(); k++){
+                            System.out.println(myList.get(k).getName());
+                            database.getJSONObject(i).getJSONArray("users").getJSONObject(j).getJSONArray("myList").put(k, "title: " + myList.get(k).getName()});
+                        }
+                        System.out.println(database.getJSONObject(i).getJSONArray("users").getJSONObject(j));
+                    }
+                }
+            }
+        }
+        //System.out.println(database.getJSONObject(0).getJSONArray("users").getJSONObject(0));
     }
 }
