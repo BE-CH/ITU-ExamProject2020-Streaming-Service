@@ -59,9 +59,12 @@ public class MyProfile extends JPanel {
         }
 
         JPanel movieList = new JPanel(new GridLayout((int) rows, moviesPerRow));
-        for(Media m : user.getMyList()){
-            JButton but = new JButton(m.getName());
-            movieList.add(but);
+        for (Media media : user.getMyList()) {
+            JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
+            label.setText(media.getName());
+            label.setHorizontalTextPosition(JLabel.CENTER);
+            label.setVerticalTextPosition(JLabel.BOTTOM);
+            movieList.add(label);
         }
         movieCon.add(movieList);
         c.gridy = 2;
