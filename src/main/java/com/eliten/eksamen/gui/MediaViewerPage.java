@@ -1,6 +1,7 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.User;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
@@ -194,11 +195,13 @@ public class MediaViewerPage extends JPanel {
 
         textContainer.add(playMovieContainer);
 
-        if(!Eliten.getSelectedUser().getMyList().contains(media)){
+        User user = Eliten.accountManager().getLoggedInAccount().getSelectedUser();
+
+        if(!user.getMyList().contains(media)){
             addToList.setText("Tilføj til min liste");
             addToList.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    Eliten.getSelectedUser().addToList(media);
+                    user.addToList(media);
                     //dont know if this is the best way to do it
                     Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
                 }
@@ -207,7 +210,7 @@ public class MediaViewerPage extends JPanel {
             addToList.setText("Fjern fra min liste");
             addToList.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    Eliten.getSelectedUser().removeFromList(media);
+                    user.removeFromList(media);
                     //dont know if this is the best way to do it
                     Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
                 }

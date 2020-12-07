@@ -1,5 +1,6 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.User;
 import com.eliten.eksamen.media.Media;
 
@@ -28,10 +29,9 @@ public class MyProfile extends JPanel {
         JLabel underHeader = new JLabel("Se de informationer vi har på dig");
         headerCon.add(header);
         headerCon.add(underHeader);
-        c.gridy = 0;
+
         c.gridx = 1;
         c.weighty = 0.25;
-        c.weightx = 0.3;
         c.gridheight = 1;
         container.add(headerCon, c);
 
@@ -59,10 +59,12 @@ public class MyProfile extends JPanel {
         }
 
         JPanel movieList = new JPanel(new GridLayout((int) rows, moviesPerRow));
-        for(Media m : user.getMyList()){
-            JButton but = new JButton(m.getName());
-            movieList.add(but);
+        for(Media media : user.getMyList()){
+            JButton button = new JButton(media.getName());
+            button.addActionListener(e -> Eliten.getMasterFrame().changeView(new MediaViewerPage(media), true));
+            movieList.add(button);
         }
+
         movieCon.add(movieList);
         c.gridy = 2;
         c.weighty = 0.7;

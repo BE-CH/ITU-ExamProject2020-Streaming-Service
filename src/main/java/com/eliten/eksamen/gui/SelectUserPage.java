@@ -34,8 +34,8 @@ public class SelectUserPage extends JPanel{
         userCon.setBackground(new Color(128, 128, 128));
 
         //Creating the buttons --- has to be updated to user objects
-        for(User u : users){
-            JButton userButton = new JButton(u.getName());
+        for(User user : users){
+            JButton userButton = new JButton(user.getName());
             userButton.addActionListener(new UserListener());
             userCon.add(userButton);
         }
@@ -48,12 +48,10 @@ public class SelectUserPage extends JPanel{
         JPanel logoutCon = new JPanel(new BorderLayout());
         logoutCon.setBorder(new EmptyBorder(0,600,0,600));
         logoutCon.setBackground(new Color(128, 128, 128));
+
         JButton logOutButton = new JButton("Log ud");
         logOutButton.setPreferredSize(new Dimension(150, 50));
-
-        logOutButton.addActionListener(e -> {
-            Eliten.logOutUser();
-        });
+        logOutButton.addActionListener(e -> Eliten.accountManager().logout());
 
         //adding logoutbutton
         logoutCon.add(logOutButton, BorderLayout.SOUTH);

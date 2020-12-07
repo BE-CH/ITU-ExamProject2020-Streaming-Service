@@ -5,14 +5,15 @@ import com.eliten.eksamen.media.Media;
 import java.util.ArrayList;
 
 public class User {
+
     private String name;
     private int age;
     private ArrayList<Media> myList;
 
-    public User(String name, int age, ArrayList<Media> listOfMedia){
+    public User(String name, int age, ArrayList<Media> myList){
         this.name = name;
         this.age = age;
-        myList = listOfMedia;
+        this.myList = myList;
     }
 
     //Getters
@@ -47,4 +48,6 @@ public class User {
     public void removeFromList(Media m){
         myList.remove(m);
     }
+
+
 }

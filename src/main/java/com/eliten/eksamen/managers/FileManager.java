@@ -5,6 +5,7 @@ import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
+import org.apache.commons.io.FileUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -98,6 +99,17 @@ public class FileManager {
     public File getFile(String path) throws URISyntaxException {
 
         return new File(getClass().getClassLoader().getResource(path).toURI());
+    }
+
+    public byte[] getFileByteArray(String path) {
+
+        try {
+            return FileUtils.readFileToByteArray(getFile(path));
+        } catch (Exception e) {
+            Eliten.getLogger().warning("File not found with path " + path);
+        }
+
+        return null;
     }
 
     public ImageIcon getImage(String path) {
