@@ -48,10 +48,10 @@ public class LoginUserListener implements ActionListener {
                     // password is correct
 
                     ArrayList<User> usersToAdd = new ArrayList<>();
-                    ArrayList<Media> mediasToAdd = new ArrayList<>();
+
 
                     for (int i = 0; i < user.getJSONArray("users").length(); i++) {
-                        mediasToAdd.clear();
+                        ArrayList<Media> mediasToAdd = new ArrayList<>();
                         JSONObject actualUser = user.getJSONArray("users").getJSONObject(i);
                         String username = user.getJSONArray("users").getJSONObject(i).getString("username");
                         int age = user.getJSONArray("users").getJSONObject(i).getInt("age");
