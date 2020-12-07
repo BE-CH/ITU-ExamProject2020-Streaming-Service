@@ -45,8 +45,6 @@ public class User {
     }
 
     public void removeFromList(Media m){
-        int index = myList.indexOf(m);
-        myList.remove(index);
+        myList.remove(m);
     }
-
 }

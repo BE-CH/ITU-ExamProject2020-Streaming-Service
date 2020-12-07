@@ -32,7 +32,9 @@ public class Media {
         genres = new ArrayList<>();
     }
 
-    public boolean getIsForKids(){ return isForKids; };
+    public boolean isForKids(){
+        return isForKids;
+    }
 
     public String getName() {
         return name;

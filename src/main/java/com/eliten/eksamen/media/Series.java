@@ -20,7 +20,11 @@ public class Series extends Media {
         seasons.add(episodes);
     }
 
-    public int getEpisodes(int season) {
-        return seasons.get(season - 1);
+    public LinkedList<Integer> getSeasons() {
+        return seasons;
+    }
+
+    public int getEpisodeAmount(int season) {
+        return seasons.get(season);
     }
 }
