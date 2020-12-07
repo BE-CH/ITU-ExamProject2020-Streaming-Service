@@ -1,6 +1,8 @@
 package com.eliten.eksamen.gui;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
+import com.eliten.eksamen.media.MediaType;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -8,6 +10,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MediaViewerPage extends JPanel {
 
@@ -34,18 +38,12 @@ public class MediaViewerPage extends JPanel {
     private JPanel seasonsButtonsContainer;
     private JPanel episodesBigContainer;
     private JPanel episodesContainer;
+    private JPanel singleEpisodesContainer;
     private JLabel episodesTitle;
     private JLabel watchEpisodeTitle;
-    private JPanel singleEpisodeContainer;
-    private JLabel singleEpisodeTitle;
-    private JButton singleEpisodeWatch;
-    private JPanel singleEpisodeContainer2;
-    private JLabel singleEpisodeTitle2;
-    private JButton singleEpisodeWatch2;
-    private JPanel singleEpisodeContainer3;
-    private JLabel singleEpisodeTitle3;
-    private JButton singleEpisodeWatch3;
     private JLabel movieImage;
+    private JScrollPane scrollPaneForEpisodes;
+    private JButton addToList;
 
     public MediaViewerPage(Media media) {
         topPanels = new JPanel();
@@ -71,18 +69,12 @@ public class MediaViewerPage extends JPanel {
         seasonsTitle = new JLabel();
         seasonsButtonsContainer = new JPanel();
         episodesBigContainer = new JPanel();
+        singleEpisodesContainer = new JPanel();
         episodesContainer = new JPanel();
         episodesTitle = new JLabel();
         watchEpisodeTitle = new JLabel();
-        singleEpisodeContainer = new JPanel();
-        singleEpisodeTitle = new JLabel();
-        singleEpisodeWatch = new JButton();
-        singleEpisodeContainer2 = new JPanel();
-        singleEpisodeTitle2 = new JLabel();
-        singleEpisodeWatch2 = new JButton();
-        singleEpisodeContainer3 = new JPanel();
-        singleEpisodeTitle3 = new JLabel();
-        singleEpisodeWatch3 = new JButton();
+        scrollPaneForEpisodes = new JScrollPane();
+        addToList = new JButton();
 
         //======== JPanel ========
         setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -231,139 +223,140 @@ public class MediaViewerPage extends JPanel {
                     playMovieContainer.add(playMovieButton);
                 }
                 textContainer.add(playMovieContainer);
+
+                if(Eliten.getSelectedUser().getMyList().indexOf(media) == -1){
+                    addToList.setText("Tilføj til min liste");
+                    addToList.addMouseListener(new MouseAdapter() {
+                        public void mouseClicked(MouseEvent e) {
+                            Eliten.getSelectedUser().addToList(media);
+                            //dont know if this is the best way to do it
+                            Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                        }
+                    });
+                } else {
+                    addToList.setText("Fjern fra min liste");
+                    addToList.addMouseListener(new MouseAdapter() {
+                        public void mouseClicked(MouseEvent e) {
+                            Eliten.getSelectedUser().removeFromList(media);
+                            //dont know if this is the best way to do it
+                            Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                        }
+                    });
+                }
+                addToList.setAlignmentY(0.0F);
+                addToList.setBackground(new Color(16, 170, 22));
+                addToList.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
+                addToList.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                playMovieContainer.add(addToList);
+                textContainer.add(playMovieContainer);
             }
             topPanels.add(textContainer);
         }
         add(topPanels);
 
-        //======== seasonsBigContainer ========
-        {
-            seasonsBigContainer.setAlignmentY(0.0F);
-            seasonsBigContainer.setBorder(new CompoundBorder(
-                    new EmptyBorder(5, 5, 5, 5),
-                    LineBorder.createBlackLineBorder()));
-            seasonsBigContainer.setLayout(new BoxLayout(seasonsBigContainer, BoxLayout.Y_AXIS));
-
-            //---- seasonsTitle ----
-            seasonsTitle.setText("Sæsoner");
-            seasonsTitle.setAlignmentY(0.0F);
-            seasonsTitle.setFont(new Font("Tahoma", Font.BOLD, 22));
-            seasonsTitle.setBorder(new EmptyBorder(5, 5, 5, 5));
-            seasonsBigContainer.add(seasonsTitle);
-
-            //======== seasonsButtonsContainer ========
+        if(media.getType() == MediaType.SERIES){
+            //======== seasonsBigContainer ========
             {
-                seasonsButtonsContainer.setAlignmentY(0.0F);
-                seasonsButtonsContainer.setAlignmentX(0.0F);
-                seasonsButtonsContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
-                seasonsButtonsContainer.setLayout(new GridLayout(1, 7, 5, 0));
+                seasonsBigContainer.setAlignmentY(0.0F);
+                seasonsBigContainer.setBorder(new CompoundBorder(
+                        new EmptyBorder(5, 5, 5, 5),
+                        LineBorder.createBlackLineBorder()));
+                seasonsBigContainer.setLayout(new BoxLayout(seasonsBigContainer, BoxLayout.Y_AXIS));
 
-                //---- seasonButtons ----
-                for (int i = 1; i < 7; i++) {
-                    JButton seasonButton = new JButton("Sæson " + i);
-                    seasonButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                    seasonsButtonsContainer.add(seasonButton);
+                //---- seasonsTitle ----
+                seasonsTitle.setText("Sæsoner");
+                seasonsTitle.setAlignmentY(0.0F);
+                seasonsTitle.setFont(new Font("Tahoma", Font.BOLD, 22));
+                seasonsTitle.setBorder(new EmptyBorder(5, 5, 5, 5));
+                seasonsBigContainer.add(seasonsTitle);
+
+                //======== seasonsButtonsContainer ========
+                {
+                    seasonsButtonsContainer.setAlignmentY(0.0F);
+                    seasonsButtonsContainer.setAlignmentX(0.0F);
+                    seasonsButtonsContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
+                    seasonsButtonsContainer.setLayout(new GridLayout(1, 7, 5, 0));
+
+                    //---- seasonButtons ----
+                    for (int i = 1; i < 7; i++) {
+                        JButton seasonButton = new JButton("Sæson " + i);
+                        seasonButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                        seasonsButtonsContainer.add(seasonButton);
+                    }
                 }
+                seasonsBigContainer.add(seasonsButtonsContainer);
             }
-            seasonsBigContainer.add(seasonsButtonsContainer);
+            add(seasonsBigContainer);
+
+            //======== episodesBigContainer ========
+            {
+                episodesBigContainer.setAlignmentX(0.0F);
+                episodesBigContainer.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), LineBorder.createBlackLineBorder()));
+                episodesBigContainer.setLayout(new BoxLayout(episodesBigContainer, BoxLayout.Y_AXIS));
+
+                //======== episodesContainer ========
+                {
+                    episodesContainer.setAlignmentX(0.0F);
+                    episodesContainer.setAlignmentY(0.0F);
+                    episodesContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
+                    episodesContainer.setLayout(new GridLayout(1, 2, 5, 0));
+
+                    //---- episodesTitle ----
+                    episodesTitle.setText("Episoder");
+                    episodesTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
+                    episodesTitle.setAlignmentY(0.0F);
+                    episodesContainer.add(episodesTitle);
+
+                    //---- watchEpisodeTitle ----
+                    watchEpisodeTitle.setText("Se episode");
+                    watchEpisodeTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
+                    watchEpisodeTitle.setAlignmentY(0.0F);
+                    episodesContainer.add(watchEpisodeTitle);
+                }
+                episodesBigContainer.add(episodesContainer);
+//======== scrollPaneForEpisodes ========
+                {
+
+                    //======== singleEpisodesContainer ========
+                    {
+                        singleEpisodesContainer.setLayout(new BoxLayout(singleEpisodesContainer, BoxLayout.Y_AXIS));
+
+                        // int test = (Series) media.getEpisodes();
+
+                        for (int i = 0; i < 20; i++) {
+                            //======== singleEpisodeContainer ========
+
+                            JPanel singleEpisodeContainer = new JPanel();
+                            JLabel singleEpisodeTitle = new JLabel();
+                            JButton singleEpisodeWatch = new JButton();
+                            int episodeNumber = i+1;
+
+                                singleEpisodeContainer.setAlignmentX(0.0F);
+                                singleEpisodeContainer.setAlignmentY(0.0F);
+                                singleEpisodeContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
+                                singleEpisodeContainer.setLayout(new GridLayout(1, 2, 5, 0));
+
+                                //---- singleEpisodeTitle ----
+                                singleEpisodeTitle.setText("Episode " + episodeNumber);
+                                singleEpisodeTitle.setAutoscrolls(true);
+                                singleEpisodeTitle.setAlignmentY(0.0F);
+                                singleEpisodeContainer.add(singleEpisodeTitle);
+
+                                //---- singleEpisodeWatch ----
+                                singleEpisodeWatch.setText("Se episode");
+                                singleEpisodeWatch.setAlignmentY(0.0F);
+                                singleEpisodeWatch.setBackground(new Color(16, 170, 22));
+                                singleEpisodeWatch.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
+                                singleEpisodeContainer.add(singleEpisodeWatch);
+                            singleEpisodesContainer.add(singleEpisodeContainer);
+                        }
+                    }
+                    scrollPaneForEpisodes.setViewportView(singleEpisodesContainer);
+                }
+                episodesBigContainer.add(scrollPaneForEpisodes);
+            }
+            add(episodesBigContainer);
         }
-        add(seasonsBigContainer);
-
-        //======== episodesBigContainer ========
-        {
-            episodesBigContainer.setAlignmentX(0.0F);
-            episodesBigContainer.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), LineBorder.createBlackLineBorder()));
-            episodesBigContainer.setLayout(new BoxLayout(episodesBigContainer, BoxLayout.Y_AXIS));
-
-            //======== episodesContainer ========
-            {
-                episodesContainer.setAlignmentX(0.0F);
-                episodesContainer.setAlignmentY(0.0F);
-                episodesContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
-                episodesContainer.setLayout(new GridLayout(1, 2, 5, 0));
-
-                //---- episodesTitle ----
-                episodesTitle.setText("Episoder");
-                episodesTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-                episodesTitle.setAlignmentY(0.0F);
-                episodesContainer.add(episodesTitle);
-
-                //---- watchEpisodeTitle ----
-                watchEpisodeTitle.setText("Se episode");
-                watchEpisodeTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-                watchEpisodeTitle.setAlignmentY(0.0F);
-                episodesContainer.add(watchEpisodeTitle);
-            }
-            episodesBigContainer.add(episodesContainer);
-
-            //======== singleEpisodeContainer ========
-            {
-                singleEpisodeContainer.setAlignmentX(0.0F);
-                singleEpisodeContainer.setAlignmentY(0.0F);
-                singleEpisodeContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
-                singleEpisodeContainer.setLayout(new GridLayout(1, 2, 5, 0));
-
-                //---- singleEpisodeTitle ----
-                singleEpisodeTitle.setText("Episode 1");
-                singleEpisodeTitle.setAutoscrolls(true);
-                singleEpisodeTitle.setAlignmentY(0.0F);
-                singleEpisodeContainer.add(singleEpisodeTitle);
-
-                //---- singleEpisodeWatch ----
-                singleEpisodeWatch.setText("Se episode");
-                singleEpisodeWatch.setAlignmentY(0.0F);
-                singleEpisodeWatch.setBackground(new Color(16, 170, 22));
-                singleEpisodeWatch.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
-                singleEpisodeContainer.add(singleEpisodeWatch);
-            }
-            episodesBigContainer.add(singleEpisodeContainer);
-
-            //======== singleEpisodeContainer2 ========
-            {
-                singleEpisodeContainer2.setAlignmentX(0.0F);
-                singleEpisodeContainer2.setAlignmentY(0.0F);
-                singleEpisodeContainer2.setBorder(new EmptyBorder(5, 5, 5, 5));
-                singleEpisodeContainer2.setLayout(new GridLayout(1, 2, 5, 0));
-
-                //---- singleEpisodeTitle2 ----
-                singleEpisodeTitle2.setText("Episode 1");
-                singleEpisodeTitle2.setAutoscrolls(true);
-                singleEpisodeTitle2.setAlignmentY(0.0F);
-                singleEpisodeContainer2.add(singleEpisodeTitle2);
-
-                //---- singleEpisodeWatch2 ----
-                singleEpisodeWatch2.setText("Se episode");
-                singleEpisodeWatch2.setAlignmentY(0.0F);
-                singleEpisodeWatch2.setBackground(new Color(16, 170, 22));
-                singleEpisodeWatch2.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
-                singleEpisodeContainer2.add(singleEpisodeWatch2);
-            }
-            episodesBigContainer.add(singleEpisodeContainer2);
-
-            //======== singleEpisodeContainer3 ========
-            {
-                singleEpisodeContainer3.setAlignmentX(0.0F);
-                singleEpisodeContainer3.setAlignmentY(0.0F);
-                singleEpisodeContainer3.setBorder(new EmptyBorder(5, 5, 5, 5));
-                singleEpisodeContainer3.setLayout(new GridLayout(1, 2, 5, 0));
-
-                //---- singleEpisodeTitle3 ----
-                singleEpisodeTitle3.setText("Episode 1");
-                singleEpisodeTitle3.setAutoscrolls(true);
-                singleEpisodeTitle3.setAlignmentY(0.0F);
-                singleEpisodeContainer3.add(singleEpisodeTitle3);
-
-                //---- singleEpisodeWatch3 ----
-                singleEpisodeWatch3.setText("Se episode");
-                singleEpisodeWatch3.setAlignmentY(0.0F);
-                singleEpisodeWatch3.setBackground(new Color(16, 170, 22));
-                singleEpisodeWatch3.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
-                singleEpisodeContainer3.add(singleEpisodeWatch3);
-            }
-            episodesBigContainer.add(singleEpisodeContainer3);
-        }
-        add(episodesBigContainer);
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
 }

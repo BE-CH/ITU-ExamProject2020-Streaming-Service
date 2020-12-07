@@ -3,7 +3,7 @@
 - [x] TEST 1123
 - [x] Create user class 
   - [x] Update Update SelectUser and MyProfile page to take user objects.
-- [ ] Add scrollPane to MediaViewerPage
+- [x] Add scrollPane to MediaViewerPage
 - [ ] Make MediaViewerPage loop through series and episodes
 - [x] Add navigationBar to MediaViewerPage
 - [ ] Check if isMovie() on MediaViewerPage når den loades.
