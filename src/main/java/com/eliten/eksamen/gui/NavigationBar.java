@@ -70,9 +70,12 @@ public class NavigationBar extends JPanel {
         navigation.setBorder(new EmptyBorder(0, 5, 0, 0));
         add(navigation);
 
+        NavigationButtonListener navigationButtonListener = new NavigationButtonListener();
+
         for (String string : new String[] {"Alle Medier", "Film", "Serier"}) {
 
-            NavigationBarButton button = new NavigationBarButton("Alle medier");
+            NavigationBarButton button = new NavigationBarButton(string);
+            button.addActionListener(navigationButtonListener);
             add(button);
         }
 
@@ -107,7 +110,9 @@ public class NavigationBar extends JPanel {
         });
         add(sort);
 
-        add(new NavigationBarButton("Genre"));
+        NavigationBarButton genre = new NavigationBarButton("Genre");
+        genre.addActionListener(navigationButtonListener);
+        add(genre);
 
         JLabel user = getLabel("Min bruger", 25, SwingConstants.LEFT);
         user.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -124,7 +129,7 @@ public class NavigationBar extends JPanel {
 
         for (String navButton : stringToLoop) {
             NavigationBarButton button = new NavigationBarButton(navButton);
-            button.addActionListener(new NavigationButtonListener());
+            button.addActionListener(navigationButtonListener);
             add(button);
         }
 
