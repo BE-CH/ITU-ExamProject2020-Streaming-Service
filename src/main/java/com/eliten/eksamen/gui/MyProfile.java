@@ -6,75 +6,173 @@ import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MyProfile extends JPanel {
 
+    private JLabel label1;
+    private JLabel label2;
+    private JPanel bigInfoContainer;
+    private JPanel singleContainer;
+    private JLabel textContainer;
+    private JLabel valueContainer;
+    private JPanel singleContainer2;
+    private JLabel textContainer2;
+    private JLabel valueContainer2;
+    private JPanel mediaContainer;
+    private JLabel myListLabel;
+    private JScrollPane scrollPane;
+
     public MyProfile(User user) {
-        super(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.3;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.PAGE_START;
 
-        //Creating the container for the information
-        JPanel container = new JPanel(new GridBagLayout());
-        container.setBorder(new EmptyBorder(10,15,0,15));
+        label1 = new JLabel();
+        label2 = new JLabel();
+        bigInfoContainer = new JPanel();
+        singleContainer = new JPanel();
+        textContainer = new JLabel();
+        valueContainer = new JLabel();
+        singleContainer2 = new JPanel();
+        textContainer2 = new JLabel();
+        valueContainer2 = new JLabel();
+        mediaContainer = new JPanel();
+        myListLabel = new JLabel();
+        scrollPane = new JScrollPane();
 
-        //Creating the header
-        JPanel headerCon = new JPanel(new GridLayout(2,1));
-        JLabel header = new JLabel("Din profil");
-        JLabel underHeader = new JLabel("Se de informationer vi har på dig");
-        headerCon.add(header);
-        headerCon.add(underHeader);
+        scrollPane.setAlignmentX(0.0F);
+        scrollPane.setAlignmentY(0.0F);
 
-        c.gridx = 1;
-        c.weighty = 0.25;
-        c.gridheight = 1;
-        container.add(headerCon, c);
+        //======== JPanel ========
+        setAlignmentY(0.0F);
+        setAlignmentX(0.0F);
+        setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        //Creating the standard info
-        JPanel infoCon = new JPanel(new GridLayout(2,1));
-        //has to be changed to use userobjects.
-        JLabel name = new JLabel("Navn: " + user.getName());
-        JLabel age = new JLabel("Alder: " + user.getAge());
-        infoCon.add(name);
-        infoCon.add(age);
-        c.gridy = 1;
-        c.gridx = 1;
-        c.ipady = 40;
-        container.add(infoCon, c);
+        //---- label1 ----
+        label1.setText("Min profil");
+        label1.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 25F));
+        label1.setAlignmentY(0.0F);
+        add(label1);
 
-        //Creating the movies list
-        JPanel movieCon = new JPanel(new GridLayout(2, 1));
-        JLabel movieHeader = new JLabel("Film på min liste: ");
-        movieCon.add(movieHeader);
+        //---- label2 ----
+        label2.setText("Se de informationer vi har på dig");
+        label2.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
+        label2.setAlignmentY(0.0F);
+        add(label2);
 
-        int moviesPerRow = 3;
-        double rows = user.getMyList().size()/moviesPerRow;
-        if(rows % moviesPerRow != 0){
-            rows++;
+        //======== bigInfoContainer ========
+        {
+            bigInfoContainer.setBorder(new EmptyBorder(5, 0, 5, 0));
+            bigInfoContainer.setLayout(new BoxLayout(bigInfoContainer, BoxLayout.Y_AXIS));
+
+            //======== singleContainer ========
+            {
+                singleContainer.setAlignmentY(0.0F);
+                singleContainer.setAlignmentX(0.0F);
+                singleContainer.setBorder(new EmptyBorder(5, 0, 5, 0));
+                singleContainer.setLayout(new BoxLayout(singleContainer, BoxLayout.X_AXIS));
+
+                //---- textContainer ----
+                textContainer.setText("Navn: ");
+                textContainer.setAlignmentY(0.0F);
+                textContainer.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 16F));
+                singleContainer.add(textContainer);
+
+                //---- valueContainer ----
+                valueContainer.setText("Mor");
+                valueContainer.setAlignmentY(0.0F);
+                valueContainer.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
+                singleContainer.add(valueContainer);
+            }
+            bigInfoContainer.add(singleContainer);
+
+            //======== singleContainer2 ========
+            {
+                singleContainer2.setAlignmentY(0.0F);
+                singleContainer2.setAlignmentX(0.0F);
+                singleContainer2.setBorder(new EmptyBorder(5, 0, 5, 0));
+                singleContainer2.setLayout(new BoxLayout(singleContainer2, BoxLayout.X_AXIS));
+
+                //---- textContainer2 ----
+                textContainer2.setText("Alder: ");
+                textContainer2.setAlignmentY(0.0F);
+                textContainer2.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 16F));
+                singleContainer2.add(textContainer2);
+
+                //---- valueContainer2 ----
+                valueContainer2.setText("45");
+                valueContainer2.setAlignmentY(0.0F);
+                valueContainer2.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
+                singleContainer2.add(valueContainer2);
+            }
+            bigInfoContainer.add(singleContainer2);
+
+            //---- label5 ----
+            myListLabel.setText("Min liste");
+            myListLabel.setAlignmentY(0F);
+            myListLabel.setAlignmentX(0F);
+            myListLabel.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 20F));
+            myListLabel.setBorder(new EmptyBorder(15, 0, 5, 0));
+            bigInfoContainer.add(myListLabel);
+        }
+        add(bigInfoContainer);
+
+
+        //======== mediaContainer ========
+        {
+            mediaContainer.setAlignmentY(0.0F);
+            mediaContainer.setAlignmentX(0.0F);
+            mediaContainer.setLayout(new BoxLayout(mediaContainer, BoxLayout.Y_AXIS));
+            
+
+            double amountOfRows = Math.ceil(Float.valueOf(user.getMyList().size()) / 5);
+            for (int i = 0; i < amountOfRows; i++) {
+                JPanel singleMediaContainer = new JPanel();
+                singleMediaContainer.setBorder(new LineBorder(Color.BLACK, 1));
+                singleMediaContainer.setAlignmentX(0F);
+                singleMediaContainer.setAlignmentY(0F);
+                singleMediaContainer.setLayout(new GridLayout(0, 5));
+
+                if(user.getMyList().size() >= 5*(i+1)){
+                    for (int j = 5*i; j < 5*(i+1); j++) {
+                        Media media = user.getMyList().get(j);
+                        singleMediaContainer.add(createVideoLabel(media));
+                    }
+                }else{
+                    for (int j = 5*i; j < user.getMyList().size(); j++) {
+                        Media media = user.getMyList().get(j);
+                        singleMediaContainer.add(createVideoLabel(media));
+                    }
+                }
+
+
+                mediaContainer.add(singleMediaContainer);
+            }
+
+            scrollPane.setViewportView(mediaContainer);
         }
 
-        JPanel movieList = new JPanel(new GridLayout((int) rows, moviesPerRow));
-        for(Media media : user.getMyList()){
-            JButton button = new JButton(media.getName());
-            button.addActionListener(e -> Eliten.getMasterFrame().changeView(new MediaViewerPage(media), true));
-            movieList.add(button);
-        }
+        add(scrollPane);
+    }
 
-        movieCon.add(movieList);
-        c.gridy = 2;
-        c.weighty = 0.7;
-        c.ipady = 10;
-        container.add(movieCon, c);
 
-        c.weightx = 4;
-        c.gridx = 1;
-        c.gridy = 0;
-        add(container, c);
+    public JLabel createVideoLabel(Media media){
+        JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
+        label.setAlignmentX(0F);
+        label.setAlignmentY(0F);
+        label.setBorder(new EmptyBorder(10,5,10,5));
+        label.setText(media.getName());
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        label.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+            }
+        });
+
+        return label;
     }
 
 }
