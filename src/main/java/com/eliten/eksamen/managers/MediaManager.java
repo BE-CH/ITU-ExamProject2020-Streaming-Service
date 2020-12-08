@@ -33,18 +33,6 @@ public class MediaManager {
         return null;
     }
 
-    public ArrayList<Media> getMediasByType(MediaType type) {
-        ArrayList<Media> movies = new ArrayList<>();
-
-        for (Media media : getMedias()) {
-            if (media.getType() == type) {
-                movies.add(media);
-            }
-        }
-
-        return movies;
-    }
-
     public ArrayList<Media> getMediasBySearch(String search, Genre genre, MediaType type) {
         ArrayList<Media> medias = new ArrayList<>();
 
