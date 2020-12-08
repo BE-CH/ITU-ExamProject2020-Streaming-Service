@@ -4,35 +4,45 @@ import com.eliten.eksamen.Eliten;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 
 public class MasterFrame extends JFrame {
 
     private NavigationBar navigationBar;
     private JPanel currentPage;
+    private Font mainFont;
 
     public MasterFrame() {
         super("Eliten");
 
-        setIconImage(Eliten.fileManager().getImage("logos/media_logo.png").getImage());
-        setLayout(new GridBagLayout());
+        try {
+            InputStream input = Eliten.class.getResourceAsStream("/fonts/Roboto-Regular.ttf");
+            mainFont = Font.createFont(Font.TRUETYPE_FONT, input);
 
-        LoginPage defaultPage = new LoginPage();
+            setIconImage(Eliten.fileManager().getImage("logos/media_logo.png").getImage());
+            setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.LINE_START;
+            LoginPage defaultPage = new LoginPage();
 
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        getContentPane().add(defaultPage, gbc);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.LINE_START;
 
-        currentPage = defaultPage;
+            gbc.weightx = 1;
+            gbc.weighty = 1;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            getContentPane().add(defaultPage, gbc);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(1600, 800);
-        setResizable(false);
-        setVisible(true);
+            currentPage = defaultPage;
+
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            setSize(1600, 800);
+            setResizable(false);
+            setVisible(true);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void changeView(JPanel newPanel, boolean navBar) {
@@ -74,5 +84,9 @@ public class MasterFrame extends JFrame {
 
     public NavigationBar getNavigationBar() {
         return navigationBar;
+    }
+
+    public Font getMainFont(int style, float size) {
+        return mainFont.deriveFont(style, size);
     }
 }

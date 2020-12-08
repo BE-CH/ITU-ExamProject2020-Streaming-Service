@@ -15,7 +15,7 @@ public class NavigationBarButton extends JButton {
     public NavigationBarButton(String text) {
         super(text, icon);
 
-        setFont(new Font("Serif", Font.PLAIN, 20));
+        setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 20F));
         setBorder(new EmptyBorder(0, 10, 0, 0));
 
         setHorizontalAlignment(SwingConstants.LEFT);

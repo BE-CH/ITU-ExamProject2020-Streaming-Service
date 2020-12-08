@@ -79,7 +79,7 @@ public class NavigationBar extends JPanel {
             add(button);
         }
 
-        NavigationBarButton sort = new NavigationBarButton("Sorter \uD83E\uDC46 Alfabetisk");
+        NavigationBarButton sort = new NavigationBarButton("Sorter > Alfabetisk");
         sort.addActionListener(e -> {
 
             ArrayList<Media> list = Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType());
@@ -105,7 +105,7 @@ public class NavigationBar extends JPanel {
                 SortingUtils.rating(list);
             }
 
-            sort.setText("Sorter \uD83E\uDC46 " + nextSortingStyle.getName());
+            sort.setText("Sorter > " + nextSortingStyle.getName());
             MediaListPage.changeList(list);
         });
         add(sort);
@@ -121,10 +121,10 @@ public class NavigationBar extends JPanel {
         String[] stringToLoop;
 
         if(Eliten.accountManager().getLoggedInAccount().isAdmin()){
-            stringToLoop = new String[] {"Min Liste", "Min Profil", "Admin Panel", "Log Ud"};
+            stringToLoop = new String[] {"Min Profil", "Admin Panel", "Log Ud"};
         }
         else{
-            stringToLoop = new String[] {"Min Liste", "Min Profil", "Log Ud"};
+            stringToLoop = new String[] {"Min Profil", "Log Ud"};
         }
 
         for (String navButton : stringToLoop) {
@@ -167,9 +167,9 @@ public class NavigationBar extends JPanel {
         this.mediaType = mediaType;
     }
 
-    private JLabel getLabel(String text, int size, int position) {
+    private JLabel getLabel(String text, float size, int position) {
         JLabel title = new JLabel(text, position);
-        title.setFont(new Font("Serif", Font.PLAIN, size));
+        title.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, size));
         title.setForeground(Color.WHITE);
 
         return title;

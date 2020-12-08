@@ -24,7 +24,6 @@ public class NavigationButtonListener implements ActionListener {
                 MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(navigationBar.getSearchFieldText(), navigationBar.getGenreFromCategory(), navigationBar.getMediaType()));
             }
             case "Genre" -> Eliten.getMasterFrame().changeView(new GenrePage(), true);
-            case "Min Liste" -> JOptionPane.showMessageDialog(null, "TODO: Skift til Min Liste");
             case "Min Profil" -> Eliten.getMasterFrame().changeView(new MyProfile(Eliten.accountManager().getLoggedInAccount().getSelectedUser()), true);
             case "Admin Panel" -> JOptionPane.showMessageDialog(null, "TODO: Skift til Admin Panel");
             case "Log Ud" -> Eliten.accountManager().logout();
