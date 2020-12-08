@@ -5,6 +5,7 @@ import com.eliten.eksamen.User;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
+import com.eliten.eksamen.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -43,7 +44,7 @@ public class MediaViewerPage extends JPanel {
         JLabel seasonsTitle = new JLabel();
         JPanel seasonsButtonsContainer = new JPanel();
         JPanel episodesBigContainer = new JPanel();
-        JPanel singleEpisodesContainer = new JPanel();
+        JPanel singleEpisodesContainer;
         JPanel episodesContainer = new JPanel();
         JLabel episodesTitle = new JLabel();
         JLabel watchEpisodeTitle = new JLabel();
@@ -56,25 +57,21 @@ public class MediaViewerPage extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         //======== topPanels ========
-
         topPanels.setAlignmentY(0.0F);
         topPanels.setAlignmentX(0.0F);
         topPanels.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), LineBorder.createBlackLineBorder()));
         topPanels.setLayout(new GridLayout(1, 2, 10, 10));
 
         //======== imageContainer ========
-
         imageContainer.setLayout(new BoxLayout(imageContainer, BoxLayout.Y_AXIS));
 
         // ====== Movie Image =========
-
         movieImage.setIcon(new ImageIcon(media.getImage().getImage().getScaledInstance(600,300, Image.SCALE_DEFAULT)));
         imageContainer.add(movieImage);
 
         topPanels.add(imageContainer);
 
         //======== textContainer ========
-
         textContainer.setLayout(new BoxLayout(textContainer, BoxLayout.Y_AXIS));
 
         //---- movieTitle ----
@@ -85,7 +82,6 @@ public class MediaViewerPage extends JPanel {
         textContainer.add(movieTitle);
 
         //======== releaseDateContainer ========
-
         releaseDateContainer.setAlignmentX(0.0F);
         releaseDateContainer.setBorder(new EmptyBorder(5, 0, 5, 0));
         releaseDateContainer.setLayout(new BoxLayout(releaseDateContainer, BoxLayout.X_AXIS));
@@ -106,7 +102,6 @@ public class MediaViewerPage extends JPanel {
         textContainer.add(releaseDateContainer);
 
         //======== ratingContainer ========
-
         ratingContainer.setAlignmentX(0.0F);
         ratingContainer.setBorder(new EmptyBorder(5, 0, 5, 0));
         ratingContainer.setLayout(new BoxLayout(ratingContainer, BoxLayout.X_AXIS));
@@ -127,7 +122,6 @@ public class MediaViewerPage extends JPanel {
         textContainer.add(ratingContainer);
 
         //======== forKidsContainer ========
-
         forKidsContainer.setAlignmentX(0.0F);
         forKidsContainer.setBorder(new EmptyBorder(5, 0, 5, 0));
         forKidsContainer.setLayout(new BoxLayout(forKidsContainer, BoxLayout.X_AXIS));
@@ -139,7 +133,6 @@ public class MediaViewerPage extends JPanel {
         forKidsContainer.add(forKidsTitle);
 
         //---- forKidsValue ----
-
         forKidsValue.setText(media.isForKids() ? "Ja" : "Nej");
         forKidsValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
         forKidsValue.setAlignmentY(0.0F);
@@ -149,7 +142,6 @@ public class MediaViewerPage extends JPanel {
         textContainer.add(forKidsContainer);
 
         //======== genresContainer ========
-
         genresContainer.setAlignmentX(0.0F);
         genresContainer.setBorder(new EmptyBorder(5, 0, 5, 0));
         genresContainer.setLayout(new BoxLayout(genresContainer, BoxLayout.X_AXIS));
@@ -187,9 +179,7 @@ public class MediaViewerPage extends JPanel {
             }
             playMovieButton.setText("Afspiller... Vent venligst");
             media.watch();
-            Timer timer = new Timer(2000, e1 -> playMovieButton.setText("Afspil film"));
-            timer.setRepeats(false);
-            timer.start();
+            Utils.runLater(a -> playMovieButton.setText("Afspil film"), 2000);
         });
         playMovieContainer.add(playMovieButton);
 
@@ -337,9 +327,9 @@ public class MediaViewerPage extends JPanel {
                 singleEpisodeWatch.setBackground(new Color(16, 170, 22));
                 singleEpisodeWatch.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
                 singleEpisodeContainer.add(singleEpisodeWatch);
-                singleEpisodesContainer.add(singleEpisodeContainer);
             }
 
+            singleEpisodesContainer.add(singleEpisodeContainer);
             episodePanels.add(singleEpisodesContainer);
         }
 

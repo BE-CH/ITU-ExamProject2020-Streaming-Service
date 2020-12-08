@@ -2,9 +2,12 @@ package com.eliten.eksamen.managers;
 
 import com.eliten.eksamen.Account;
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.User;
 import com.eliten.eksamen.gui.LoginPage;
+import com.eliten.eksamen.media.Media;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,38 @@ public class AccountManager {
         return loggedInAccount;
     }
 
+    public void save() {
+        JSONArray jsonAccounts = new JSONArray();
+
+        for (Account account : this.accounts) {
+            JSONObject jsonAccount = new JSONObject();
+            jsonAccount.put("email", account.getEmail());
+            jsonAccount.put("password", account.getPassword());
+            jsonAccount.put("admin", account.isAdmin());
+
+            JSONArray jsonUsers = new JSONArray();
+
+            for (User user : account.getUsers()) {
+                JSONObject jsonUser = new JSONObject();
+                jsonUser.put("username", user.getName());
+                jsonUser.put("age", user.getAge());
+
+                JSONArray jsonUserList = new JSONArray();
+
+                for (Media media : user.getMyList()) {
+                    jsonUserList.put(media.getName());
+                }
+
+                jsonUser.put("myList", jsonUserList);
+                jsonUsers.put(jsonUser);
+            }
+
+            jsonAccount.put("users", jsonUsers);
+            jsonAccounts.put(jsonAccount);
+        }
+
+        Eliten.fileManager().saveFile("accounts.json", jsonAccounts.toString());
+    }
 
     public void logout() {
         Eliten.getMasterFrame().changeView(new LoginPage(), false);

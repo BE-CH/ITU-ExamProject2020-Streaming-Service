@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Year;
@@ -99,6 +100,16 @@ public class FileManager {
     public File getFile(String path) throws URISyntaxException {
 
         return new File(getClass().getClassLoader().getResource(path).toURI());
+    }
+
+    public void saveFile(String path, String data) {
+
+        try (FileWriter writer = new FileWriter(getFile(path))){
+           writer.write(data);
+           writer.flush();
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     public byte[] getFileByteArray(String path) {

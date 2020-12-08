@@ -29,7 +29,6 @@ public class Eliten {
         fileManager = new FileManager();
         accountManager = new AccountManager();
         masterFrame = new MasterFrame();
-
     }
 
     public static AccountManager accountManager() {

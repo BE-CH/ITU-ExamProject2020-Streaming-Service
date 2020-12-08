@@ -34,15 +34,23 @@ public class Account {
                 myList.add(Eliten.mediaManager().getMediaByName(savedMedias.getString(j)));
             }
 
-            users.add(new User(jsonUser.getString("username"), jsonUser.getInt("age"), myList));
+            users.add(new User(this, jsonUser.getString("username"), jsonUser.getInt("age"), myList));
         }
     }
 
-    public Account(String email, String password, ArrayList<User> users, boolean isAdmin) {
+    /**
+     * Should only be used for creating new accounts using the interface.
+     * @param email the email
+     * @param password the password, not encrypted
+     * @param isAdmin whether the user is an admin or not
+     */
+    public Account(String email, String password, boolean isAdmin) {
         this.email = email;
         this.password = password;
-        this.users = users;
         this.isAdmin = isAdmin;
+
+        users = new ArrayList<>();
+        users.add(new User(this, "Default", -1, new ArrayList<>()));
     }
 
     public String getEmail(){
@@ -51,10 +59,6 @@ public class Account {
 
     public String getPassword() {
         return password;
-    }
-
-    public User getUserByIndex(int index){
-        return users.get(index);
     }
 
     public User getUserByName(String name){

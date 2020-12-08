@@ -49,7 +49,9 @@ public class MasterFrame extends JFrame {
 
             getContentPane().add(navigationBar, gbc);
         }
-
+        else {
+            navigationBar = null;
+        }
 
         gbc.weightx = 1;
         gbc.weighty = 1;
