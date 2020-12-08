@@ -1,6 +1,6 @@
 package com.eliten.eksamen.gui.actionlisteners;
 
-import com.eliten.eksamen.Account;
+import com.eliten.eksamen.account.Account;
 import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.gui.MediaListPage;
 

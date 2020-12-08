@@ -1,19 +1,17 @@
-package com.eliten.eksamen;
+package com.eliten.eksamen.account;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
 
 import java.util.ArrayList;
 
 public class User {
 
-    private Account account;
-
     private String name;
     private int age;
     private ArrayList<Media> myList;
 
-    public User(Account account, String name, int age, ArrayList<Media> myList){
-        this.account = account;
+    public User(String name, int age, ArrayList<Media> myList){
         this.name = name;
         this.age = age;
         this.myList = myList;

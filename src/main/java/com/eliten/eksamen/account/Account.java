@@ -1,5 +1,6 @@
-package com.eliten.eksamen;
+package com.eliten.eksamen.account;
 
+import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.media.Media;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ public class Account {
                 myList.add(Eliten.mediaManager().getMediaByName(savedMedias.getString(j)));
             }
 
-            users.add(new User(this, jsonUser.getString("username"), jsonUser.getInt("age"), myList));
+            users.add(new User(jsonUser.getString("username"), jsonUser.getInt("age"), myList));
         }
     }
 
@@ -50,7 +51,7 @@ public class Account {
         this.isAdmin = isAdmin;
 
         users = new ArrayList<>();
-        users.add(new User(this, "Default", -1, new ArrayList<>()));
+        users.add(new User("Default", -1, new ArrayList<>()));
     }
 
     public String getEmail(){

@@ -1,7 +1,7 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
-import com.eliten.eksamen.User;
+import com.eliten.eksamen.account.User;
 import com.eliten.eksamen.gui.actionlisteners.UserListener;
 
 import javax.swing.*;
