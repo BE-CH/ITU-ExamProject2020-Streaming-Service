@@ -44,7 +44,7 @@ public class AccountManager {
     public void save() {
         JSONArray jsonAccounts = new JSONArray();
 
-        for (Account account : this.accounts) {
+        for (Account account : accounts) {
             JSONObject jsonAccount = new JSONObject();
             jsonAccount.put("email", account.getEmail());
             jsonAccount.put("password", account.getPassword());
