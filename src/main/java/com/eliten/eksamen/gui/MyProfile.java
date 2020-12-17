@@ -81,7 +81,7 @@ public class MyProfile extends JPanel {
                 singleContainer.add(textContainer);
 
                 //---- valueContainer ----
-                valueContainer.setText("Mor");
+                valueContainer.setText(user.getName());
                 valueContainer.setAlignmentY(0.0F);
                 valueContainer.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
                 singleContainer.add(valueContainer);
@@ -102,7 +102,7 @@ public class MyProfile extends JPanel {
                 singleContainer2.add(textContainer2);
 
                 //---- valueContainer2 ----
-                valueContainer2.setText("45");
+                valueContainer2.setText(Integer.toString(user.getAge()) + " år");
                 valueContainer2.setAlignmentY(0.0F);
                 valueContainer2.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
                 singleContainer2.add(valueContainer2);
