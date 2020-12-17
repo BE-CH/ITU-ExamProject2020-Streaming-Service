@@ -3,15 +3,24 @@ package com.eliten.eksamen.gui;
 import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.account.User;
 import com.eliten.eksamen.gui.actionlisteners.UserListener;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.FileManager;
+import com.eliten.eksamen.managers.MediaManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class SelectUserPage extends JPanel{
-    public SelectUserPage(ArrayList<User> users)  {
+
+    private AccountManager accountManager;
+    private FileManager fileManager;
+
+    public SelectUserPage(ArrayList<User> users, AccountManager accountManager, Logger logger, MasterFrame masterFrame, MediaManager mediaManager, FileManager filemanager)  {
         super(new GridLayout(1,1));
+        this.fileManager = fileManager;
         JPanel container = new JPanel();
         container.setLayout(new GridLayout(3,1));
 
@@ -36,7 +45,7 @@ public class SelectUserPage extends JPanel{
         //Creating the buttons --- has to be updated to user objects
         for(User user : users){
             JButton userButton = new JButton(user.getName());
-            userButton.addActionListener(new UserListener());
+            userButton.addActionListener(new UserListener(accountManager, logger, masterFrame, mediaManager, fileManager));
             userCon.add(userButton);
         }
 
@@ -51,7 +60,7 @@ public class SelectUserPage extends JPanel{
 
         JButton logOutButton = new JButton("Log ud");
         logOutButton.setPreferredSize(new Dimension(150, 50));
-        logOutButton.addActionListener(e -> Eliten.accountManager().logout());
+        logOutButton.addActionListener(e -> accountManager.logout());
 
         //adding logoutbutton
         logoutCon.add(logOutButton, BorderLayout.SOUTH);

@@ -10,44 +10,44 @@ import java.util.logging.Logger;
 
 public class Eliten {
 
-    private static final Logger logger = Logger.getLogger("Test");
-
-    private static MediaManager mediaManager;
-    private static FileManager fileManager;
-    private static AccountManager accountManager;
-    private static MasterFrame masterFrame;
-
-    private static JSONArray database;
-
-
     public static void main(String[] args) {
+        Logger logger = Logger.getLogger("Test");
+
+        MediaManager mediaManager;
+        FileManager fileManager;
+        AccountManager accountManager;
+        MasterFrame masterFrame = new MasterFrame();
+
+        JSONArray database;
+
         System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT %4$s %2$s %5$s%6$s%n");
 
         logger.info("Programmerings Projekt 2020 - Eliten");
-
-        mediaManager = new MediaManager();
-        fileManager = new FileManager();
-        accountManager = new AccountManager();
-        masterFrame = new MasterFrame();
+        mediaManager = new MediaManager(masterFrame);
+        fileManager = new FileManager(logger, mediaManager);
+        accountManager = new AccountManager(logger, fileManager, masterFrame, mediaManager);
+        masterFrame = new MasterFrame(fileManager, logger, accountManager, mediaManager);
+        mediaManager = new MediaManager(masterFrame);
+        accountManager = new AccountManager(logger, fileManager, masterFrame, mediaManager);
     }
-
-    public static AccountManager accountManager() {
+    /*
+    public AccountManager accountManager() {
         return accountManager;
     }
 
-    public static MediaManager mediaManager() {
+    public MediaManager mediaManager() {
         return mediaManager;
     }
 
-    public static FileManager fileManager() {
+    public FileManager fileManager() {
         return fileManager;
     }
 
-    public static Logger getLogger() {
+    public Logger getLogger() {
         return logger;
     }
 
-    public static MasterFrame getMasterFrame() {
+    public MasterFrame getMasterFrame() {
         return masterFrame;
-    }
+    }*/
 }

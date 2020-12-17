@@ -1,6 +1,7 @@
 package com.eliten.eksamen.managers;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.gui.MasterFrame;
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
@@ -10,8 +11,10 @@ import java.util.ArrayList;
 public class MediaManager {
 
     private ArrayList<Media> medias;
+    private MasterFrame masterFrame;
 
-    public MediaManager() {
+    public MediaManager(MasterFrame masterFrame) {
+        this.masterFrame = masterFrame;
         medias = new ArrayList<>();
     }
 
@@ -42,6 +45,6 @@ public class MediaManager {
             }
         }
 
-        return Eliten.getMasterFrame().getNavigationBar().sort(medias);
+        return masterFrame.getNavigationBar().sort(medias);
     }
 }

@@ -1,12 +1,29 @@
 package com.eliten.eksamen.gui.actionlisteners;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.gui.MasterFrame;
 import com.eliten.eksamen.gui.MediaListPage;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.FileManager;
+import com.eliten.eksamen.managers.MediaManager;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.util.logging.FileHandler;
 
 public class SearchFieldListener implements DocumentListener {
+
+    private MediaManager mediaManager;
+    private MasterFrame masterFrame;
+    private FileManager fileManager;
+    private AccountManager accountManager;
+
+    public SearchFieldListener(MediaManager mediaManager, MasterFrame masterFrame, FileManager fileManager, AccountManager accountManager){
+        this.mediaManager = mediaManager;
+        this.masterFrame = masterFrame;
+        this.fileManager = fileManager;
+        this.accountManager = accountManager;
+    }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
@@ -24,8 +41,8 @@ public class SearchFieldListener implements DocumentListener {
     }
 
     private void handle() {
-        if (Eliten.getMasterFrame().isListPage()) {
-            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(Eliten.getMasterFrame().getNavigationBar().getSearchFieldText(), Eliten.getMasterFrame().getNavigationBar().getGenreFromCategory(), Eliten.getMasterFrame().getNavigationBar().getMediaType()));
+        if (masterFrame.isListPage()) {
+            MediaListPage.changeList(mediaManager.getMediasBySearch(masterFrame.getNavigationBar().getSearchFieldText(), masterFrame.getNavigationBar().getGenreFromCategory(), masterFrame.getNavigationBar().getMediaType()), masterFrame, fileManager, accountManager, mediaManager );
         }
     }
 }

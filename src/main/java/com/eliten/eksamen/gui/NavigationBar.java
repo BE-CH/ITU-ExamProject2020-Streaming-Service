@@ -1,8 +1,10 @@
 package com.eliten.eksamen.gui;
 
-import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.gui.actionlisteners.NavigationButtonListener;
 import com.eliten.eksamen.gui.actionlisteners.SearchFieldListener;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.FileManager;
+import com.eliten.eksamen.managers.MediaManager;
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
@@ -14,6 +16,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.logging.Logger;
 
 public class NavigationBar extends JPanel {
 
@@ -27,8 +30,20 @@ public class NavigationBar extends JPanel {
     private SortingStyle currentSortingStyle;
     private SortingStyle nextSortingStyle;
 
-    public NavigationBar() {
+    private MediaManager mediaManager;
+    private AccountManager accountManager;
+    private MasterFrame masterFrame;
+    private FileManager fileManager;
+    private Logger logger;
+
+    public NavigationBar(MediaManager mediamanager, AccountManager accountManager, MasterFrame masterFrame, FileManager fileManager, Logger logger) {
         super(new GridLayout(15, 1));
+
+        this.mediaManager = mediamanager;
+        this.accountManager = accountManager;
+        this.masterFrame = masterFrame;
+        this.fileManager = fileManager;
+        this.logger = logger;
 
         mediaType = null;
         currentSortingStyle = SortingStyle.DEFAULT;
@@ -56,11 +71,11 @@ public class NavigationBar extends JPanel {
         genreSelector.setPreferredSize(new Dimension(50, 50));
         genreSelector.setBackground(Color.WHITE);
         genreSelector.setFocusable(false);
-        genreSelector.addActionListener(e -> MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType())));
+        genreSelector.addActionListener(e -> MediaListPage.changeList(mediaManager.getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType()), masterFrame, fileManager, accountManager, mediaManager));
 
         searchField = new JTextField();
         searchField.setToolTipText("Search...");
-        searchField.getDocument().addDocumentListener(new SearchFieldListener());
+        searchField.getDocument().addDocumentListener(new SearchFieldListener(mediaManager, masterFrame, fileManager, accountManager));
 
         panel.add(genreSelector);
         panel.add(searchField);
@@ -70,19 +85,20 @@ public class NavigationBar extends JPanel {
         navigation.setBorder(new EmptyBorder(0, 5, 0, 0));
         add(navigation);
 
-        NavigationButtonListener navigationButtonListener = new NavigationButtonListener();
+        NavigationButtonListener navigationButtonListener = new NavigationButtonListener(masterFrame, fileManager, accountManager, mediaManager);
+
+        ImageIcon icon = new ImageIcon(fileManager.getImage("logos/media_logo.png", logger).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
 
         for (String string : new String[] {"Alle Medier", "Film", "Serier"}) {
-
-            NavigationBarButton button = new NavigationBarButton(string);
+            NavigationBarButton button = new NavigationBarButton(string, icon, masterFrame);
             button.addActionListener(navigationButtonListener);
             add(button);
         }
 
-        NavigationBarButton sort = new NavigationBarButton("Sorter > Alfabetisk");
+        NavigationBarButton sort = new NavigationBarButton("Sorter > Alfabetisk", icon, masterFrame);
         sort.addActionListener(e -> {
 
-            ArrayList<Media> list = Eliten.mediaManager().getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType());
+            ArrayList<Media> list = mediaManager.getMediasBySearch(searchField.getText(), getGenreFromCategory(), getMediaType());
 
             if (nextSortingStyle == SortingStyle.DEFAULT) {
                 currentSortingStyle = nextSortingStyle;
@@ -106,11 +122,11 @@ public class NavigationBar extends JPanel {
             }
 
             sort.setText("Sorter > " + nextSortingStyle.getName());
-            MediaListPage.changeList(list);
+            MediaListPage.changeList(list, masterFrame, fileManager, accountManager, mediaManager);
         });
         add(sort);
 
-        NavigationBarButton genre = new NavigationBarButton("Genre");
+        NavigationBarButton genre = new NavigationBarButton("Genre", icon, masterFrame);
         genre.addActionListener(navigationButtonListener);
         add(genre);
 
@@ -120,7 +136,7 @@ public class NavigationBar extends JPanel {
 
         String[] stringToLoop;
 
-        if(Eliten.accountManager().getLoggedInAccount().isAdmin()){
+        if(accountManager.getLoggedInAccount().isAdmin()){
             stringToLoop = new String[] {"Min Profil", "Admin Panel", "Log Ud"};
         }
         else{
@@ -128,7 +144,7 @@ public class NavigationBar extends JPanel {
         }
 
         for (String navButton : stringToLoop) {
-            NavigationBarButton button = new NavigationBarButton(navButton);
+            NavigationBarButton button = new NavigationBarButton(navButton, icon, masterFrame);
             button.addActionListener(navigationButtonListener);
             add(button);
         }
@@ -169,7 +185,7 @@ public class NavigationBar extends JPanel {
 
     private JLabel getLabel(String text, float size, int position) {
         JLabel title = new JLabel(text, position);
-        title.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, size));
+        title.setFont(masterFrame.getMainFont(Font.PLAIN, size));
         title.setForeground(Color.WHITE);
 
         return title;

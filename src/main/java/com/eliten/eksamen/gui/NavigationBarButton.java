@@ -1,6 +1,7 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.managers.FileManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,12 +11,10 @@ import java.awt.event.MouseEvent;
 
 public class NavigationBarButton extends JButton {
 
-    private static final ImageIcon icon = new ImageIcon(Eliten.fileManager().getImage("logos/media_logo.png").getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
-
-    public NavigationBarButton(String text) {
+    public NavigationBarButton(String text, Icon icon, MasterFrame masterFrame) {
         super(text, icon);
 
-        setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 20F));
+        setFont(masterFrame.getMainFont(Font.PLAIN, 20F));
         setBorder(new EmptyBorder(0, 10, 0, 0));
 
         setHorizontalAlignment(SwingConstants.LEFT);

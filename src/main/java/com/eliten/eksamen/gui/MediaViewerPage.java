@@ -2,6 +2,8 @@ package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.account.User;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.MediaManager;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
 import com.eliten.eksamen.media.Series;
@@ -19,8 +21,15 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MediaViewerPage extends JPanel {
+    private MediaManager mediaManager;
+    private MasterFrame masterFrame;
+    private AccountManager accountManager;
 
-    public MediaViewerPage(Media media) {
+    public MediaViewerPage(Media media, MediaManager mediaManager, MasterFrame masterFrame, AccountManager accountManager) {
+        this.mediaManager = mediaManager;
+        this.masterFrame = masterFrame;
+        this.accountManager = accountManager;
+
         JPanel topPanels = new JPanel();
         JPanel imageContainer = new JPanel();
         JPanel textContainer = new JPanel();
@@ -81,7 +90,7 @@ public class MediaViewerPage extends JPanel {
 
         //---- movieTitle ----
         movieTitle.setText(media.getName());
-        movieTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 48F));
+        movieTitle.setFont(masterFrame.getMainFont(Font.PLAIN, 48F));
         movieTitle.setAlignmentY(0.0F);
         movieTitle.setHorizontalAlignment(SwingConstants.LEFT);
         textContainer.add(movieTitle);
@@ -94,12 +103,12 @@ public class MediaViewerPage extends JPanel {
         //---- releaseDateTitle ----
         releaseDateTitle.setText("Udgivelsesdato:");
         releaseDateTitle.setAlignmentY(0.0F);
-        releaseDateTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 14F));
+        releaseDateTitle.setFont(masterFrame.getMainFont(Font.BOLD, 14F));
         releaseDateContainer.add(releaseDateTitle);
 
         //---- releaseDateValue ----
         releaseDateValue.setText("" + media.getReleaseYear());
-        releaseDateValue.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 14F));
+        releaseDateValue.setFont(masterFrame.getMainFont(Font.PLAIN, 14F));
         releaseDateValue.setAlignmentY(0.0F);
         releaseDateValue.setBorder(new EmptyBorder(0, 5, 0, 0));
         releaseDateContainer.add(releaseDateValue);
@@ -114,12 +123,12 @@ public class MediaViewerPage extends JPanel {
         //---- ratingTitle ----
         ratingTitle.setText("Vurdering:");
         ratingTitle.setAlignmentY(0.0F);
-        ratingTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 14F));
+        ratingTitle.setFont(masterFrame.getMainFont(Font.BOLD, 14F));
         ratingContainer.add(ratingTitle);
 
         //---- ratingValue ----
         ratingValue.setText("" + media.getScore());
-        ratingValue.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 14F));
+        ratingValue.setFont(masterFrame.getMainFont(Font.PLAIN, 14F));
         ratingValue.setAlignmentY(0.0F);
         ratingValue.setBorder(new EmptyBorder(0, 5, 0, 0));
         ratingContainer.add(ratingValue);
@@ -134,12 +143,12 @@ public class MediaViewerPage extends JPanel {
         //---- forKidsTitle ----
         forKidsTitle.setText("Egnet til børn:");
         forKidsTitle.setAlignmentY(0.0F);
-        forKidsTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 14F));
+        forKidsTitle.setFont(masterFrame.getMainFont(Font.BOLD, 14F));
         forKidsContainer.add(forKidsTitle);
 
         //---- forKidsValue ----
         forKidsValue.setText(media.isForKids() ? "Ja" : "Nej");
-        forKidsValue.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 14F));
+        forKidsValue.setFont(masterFrame.getMainFont(Font.PLAIN, 14F));
         forKidsValue.setAlignmentY(0.0F);
         forKidsValue.setBorder(new EmptyBorder(0, 5, 0, 0));
         forKidsContainer.add(forKidsValue);
@@ -154,12 +163,12 @@ public class MediaViewerPage extends JPanel {
         //---- genresTitle ----
         genresTitle.setText("Genre" + (media.getGenres().size() > 1 ? "r" : "") + ":");
         genresTitle.setAlignmentY(0.0F);
-        genresTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 14F));
+        genresTitle.setFont(masterFrame.getMainFont(Font.BOLD, 14F));
         genresContainer.add(genresTitle);
 
         //---- genresValue ----
         genresValue.setText(media.getGenresString());
-        genresValue.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 14F));
+        genresValue.setFont(masterFrame.getMainFont(Font.PLAIN, 14F));
         genresValue.setAlignmentY(0.0F);
         genresValue.setBorder(new EmptyBorder(0, 5, 0, 0));
         genresContainer.add(genresValue);
@@ -177,7 +186,7 @@ public class MediaViewerPage extends JPanel {
         playMovieButton.setAlignmentY(0.0F);
         playMovieButton.setBackground(new Color(16, 170, 22));
         playMovieButton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
-        playMovieButton.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 20F));
+        playMovieButton.setFont(masterFrame.getMainFont(Font.PLAIN, 20F));
         playMovieButton.addActionListener(e -> {
             if (playMovieButton.getText().contains("Afspiller...")) {
                 return;
@@ -190,7 +199,7 @@ public class MediaViewerPage extends JPanel {
 
         textContainer.add(playMovieContainer);
 
-        User user = Eliten.accountManager().getLoggedInAccount().getSelectedUser();
+        User user = accountManager.getLoggedInAccount().getSelectedUser();
 
         if(!user.getMyList().contains(media)){
             addToList.setText("Tilføj til min liste");
@@ -198,7 +207,7 @@ public class MediaViewerPage extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     user.addToList(media);
                     //dont know if this is the best way to do it
-                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                    masterFrame.changeView(new MediaViewerPage(mediaManager.getMediaByName(media.getName()), mediaManager, masterFrame, accountManager), true);
                 }
             });
         } else {
@@ -207,14 +216,14 @@ public class MediaViewerPage extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     user.removeFromList(media);
                     //dont know if this is the best way to do it
-                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                    masterFrame.changeView(new MediaViewerPage(mediaManager.getMediaByName(media.getName()), mediaManager, masterFrame, accountManager), true);
                 }
             });
         }
         addToList.setAlignmentY(0.0F);
         addToList.setBackground(new Color(16, 170, 22));
         addToList.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
-        addToList.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 20F));
+        addToList.setFont(masterFrame.getMainFont(Font.PLAIN, 20F));
         playMovieContainer.add(addToList);
         textContainer.add(playMovieContainer);
 
@@ -236,7 +245,7 @@ public class MediaViewerPage extends JPanel {
         //---- seasonsTitle ----
         seasonsTitle.setText("Sæsoner");
         seasonsTitle.setAlignmentY(0.0F);
-        seasonsTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 22F));
+        seasonsTitle.setFont(masterFrame.getMainFont(Font.BOLD, 22F));
         seasonsTitle.setBorder(new EmptyBorder(5, 5, 5, 5));
         seasonsBigContainer.add(seasonsTitle);
 
@@ -258,7 +267,7 @@ public class MediaViewerPage extends JPanel {
                 seasonButton = new JButton("Sæson " + i);
             }
 
-            seasonButton.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 14F));
+            seasonButton.setFont(masterFrame.getMainFont(Font.PLAIN, 14F));
 
             int indexCopy = i;
 
@@ -295,13 +304,13 @@ public class MediaViewerPage extends JPanel {
 
         //---- episodesTitle ----
         episodesTitle.setText("Episoder");
-        episodesTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 14F));
+        episodesTitle.setFont(masterFrame.getMainFont(Font.BOLD, 14F));
         episodesTitle.setAlignmentY(0.0F);
         episodesContainer.add(episodesTitle);
 
         //---- watchEpisodeTitle ----
         watchEpisodeTitle.setText("Se episode");
-        watchEpisodeTitle.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 14F));
+        watchEpisodeTitle.setFont(masterFrame.getMainFont(Font.BOLD, 14F));
         watchEpisodeTitle.setAlignmentY(0.0F);
         episodesContainer.add(watchEpisodeTitle);
 

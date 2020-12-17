@@ -1,6 +1,9 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.FileManager;
+import com.eliten.eksamen.managers.MediaManager;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
@@ -18,25 +21,38 @@ public class MediaListPage extends JPanel {
     private DefaultTableModel model;
     private JTable table;
 
+    private MasterFrame masterFrame;
+    private FileManager fileManager;
+    private AccountManager accountManager;
+    private MediaManager mediaManager;
+
     private final int columns = 8;
 
-    public static void changeList(ArrayList<Media> medias) {
+    public MediaListPage(MasterFrame masterFrame, FileManager fileManager, AccountManager accountManager, MediaManager mediaManager){
+        super();
+        this.masterFrame = masterFrame;
+        this.fileManager = fileManager;
+        this.accountManager = accountManager;
+        this.mediaManager = mediaManager;
+    }
+
+    public static void changeList(ArrayList<Media> medias, MasterFrame masterFrame, FileManager fileManager, AccountManager accountManager, MediaManager mediaManager) {
 
         MediaListPage page;
 
-        if (!Eliten.getMasterFrame().isListPage()) {
+        if (!masterFrame.isListPage()) {
 
-            page = new MediaListPage();
-            Eliten.getMasterFrame().changeView(page, true);
+            page = new MediaListPage(masterFrame, fileManager, accountManager, mediaManager);
+            masterFrame.changeView(page, true);
         } else {
-            page = (MediaListPage) Eliten.getMasterFrame().getCurrentPage();
+            page = (MediaListPage) masterFrame.getCurrentPage();
         }
 
         page.update(medias);
     }
 
     // Made static to decrease load time
-    private static ImageIcon starImage = new ImageIcon(Eliten.fileManager().getImage("logos/star.png").getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
+    ImageIcon starImage = new ImageIcon(fileManager.getImage("logos/star.png", null).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
 
     public void update(ArrayList<Media> medias) {
         for (int i = model.getRowCount() - 1; i >= 0; i--) {
@@ -47,7 +63,7 @@ public class MediaListPage extends JPanel {
 
         int count = 0;
 
-        ArrayList<Media> userList = Eliten.accountManager().getLoggedInAccount().getSelectedUser().getMyList();
+        ArrayList<Media> userList = accountManager.getLoggedInAccount().getSelectedUser().getMyList();
 
         for (Media media : medias) {
             JPanel panel = new JPanel();
@@ -128,7 +144,7 @@ public class MediaListPage extends JPanel {
 
                 if (panel != null) {
                     JLabel label = (JLabel) panel.getComponent(0);
-                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())), true);
+                    masterFrame.changeView(new MediaViewerPage(mediaManager.getMediaByName(label.getText()), mediaManager, masterFrame, accountManager), true);
                 }
             }
         });

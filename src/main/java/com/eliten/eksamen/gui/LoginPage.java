@@ -1,17 +1,27 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.gui.actionlisteners.LoginUserListener;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.FileManager;
+import com.eliten.eksamen.managers.MediaManager;
 import com.eliten.eksamen.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.logging.Logger;
 
 
 public class LoginPage extends JPanel {
 
-    public LoginPage(){
+    private AccountManager accountManager;
+    private Logger logger;
+    private MasterFrame masterFrame;
+    private MediaManager mediaManager;
+    private FileManager fileManager;
+
+    public LoginPage(AccountManager acc, Logger log, MasterFrame master, MediaManager meman){
         JLabel titleLabel = new JLabel();
         JLabel descriptionLabel = new JLabel();
         JLabel loginLabel = new JLabel();
@@ -89,7 +99,7 @@ public class LoginPage extends JPanel {
         loginButton.setAlignmentY(0.0F);
         loginButton.setAlignmentX(0.5F);
         loginButton.setBorder(new EmptyBorder(5, 30, 5, 30));
-        loginButton.addActionListener(new LoginUserListener(emailField, passwordField));
+        loginButton.addActionListener(new LoginUserListener(emailField, passwordField, acc, log, master, meman, fileManager));
         loginContainer.add(loginButton);
 
         add(loginContainer);

@@ -1,6 +1,8 @@
 package com.eliten.eksamen.account;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.MediaManager;
 import com.eliten.eksamen.media.Media;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,10 +15,14 @@ public class Account {
     private String password;
     private ArrayList<User> users;
     private boolean isAdmin;
+    private MediaManager mediaManager;
+    private AccountManager accountManager;
 
     private User selectedUser;
 
-    public Account(JSONObject json) {
+    public Account(JSONObject json, MediaManager mediaManager, AccountManager accountManager) {
+        this.mediaManager = mediaManager;
+        this.accountManager = accountManager;
         email = json.getString("email");
         password = json.getString("password");
         isAdmin = json.getBoolean("admin");
@@ -32,10 +38,10 @@ public class Account {
             ArrayList<Media> myList = new ArrayList<>();
 
             for (int j = 0; j < savedMedias.length(); j++) {
-                myList.add(Eliten.mediaManager().getMediaByName(savedMedias.getString(j)));
+                myList.add(mediaManager.getMediaByName(savedMedias.getString(j)));
             }
 
-            users.add(new User(jsonUser.getString("username"), jsonUser.getInt("age"), myList));
+            users.add(new User(jsonUser.getString("username"), jsonUser.getInt("age"), myList, accountManager));
         }
     }
 
@@ -51,7 +57,7 @@ public class Account {
         this.isAdmin = isAdmin;
 
         users = new ArrayList<>();
-        users.add(new User("Default", -1, new ArrayList<>()));
+        users.add(new User("Default", -1, new ArrayList<>(), accountManager));
     }
 
     public String getEmail(){

@@ -2,6 +2,8 @@ package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.account.User;
+import com.eliten.eksamen.managers.AccountManager;
+import com.eliten.eksamen.managers.MediaManager;
 import com.eliten.eksamen.media.Media;
 
 import javax.swing.*;
@@ -26,7 +28,15 @@ public class MyProfile extends JPanel {
     private JLabel myListLabel;
     private JScrollPane scrollPane;
 
-    public MyProfile(User user) {
+    private MasterFrame masterFrame;
+    private MediaManager mediaManager;
+    private AccountManager accountManager;
+
+    public MyProfile(User user, MasterFrame masterFrame, MediaManager mediaManager, AccountManager accountManager) {
+        this.masterFrame = masterFrame;
+        this.mediaManager = mediaManager;
+        this.accountManager = accountManager;
+
 
         label1 = new JLabel();
         label2 = new JLabel();
@@ -52,13 +62,13 @@ public class MyProfile extends JPanel {
 
         //---- label1 ----
         label1.setText("Min profil");
-        label1.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 25F));
+        label1.setFont(MyProfile.this.masterFrame.getMainFont(Font.PLAIN, 25F));
         label1.setAlignmentY(0.0F);
         add(label1);
 
         //---- label2 ----
         label2.setText("Se de informationer vi har på dig");
-        label2.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
+        label2.setFont(MyProfile.this.masterFrame.getMainFont(Font.PLAIN, 16F));
         label2.setAlignmentY(0.0F);
         add(label2);
 
@@ -77,13 +87,13 @@ public class MyProfile extends JPanel {
                 //---- textContainer ----
                 textContainer.setText("Navn: ");
                 textContainer.setAlignmentY(0.0F);
-                textContainer.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 16F));
+                textContainer.setFont(MyProfile.this.masterFrame.getMainFont(Font.BOLD, 16F));
                 singleContainer.add(textContainer);
 
                 //---- valueContainer ----
                 valueContainer.setText("Mor");
                 valueContainer.setAlignmentY(0.0F);
-                valueContainer.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
+                valueContainer.setFont(MyProfile.this.masterFrame.getMainFont(Font.PLAIN, 16F));
                 singleContainer.add(valueContainer);
             }
             bigInfoContainer.add(singleContainer);
@@ -98,13 +108,13 @@ public class MyProfile extends JPanel {
                 //---- textContainer2 ----
                 textContainer2.setText("Alder: ");
                 textContainer2.setAlignmentY(0.0F);
-                textContainer2.setFont(Eliten.getMasterFrame().getMainFont(Font.BOLD, 16F));
+                textContainer2.setFont(MyProfile.this.masterFrame.getMainFont(Font.BOLD, 16F));
                 singleContainer2.add(textContainer2);
 
                 //---- valueContainer2 ----
                 valueContainer2.setText("45");
                 valueContainer2.setAlignmentY(0.0F);
-                valueContainer2.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 16F));
+                valueContainer2.setFont(MyProfile.this.masterFrame.getMainFont(Font.PLAIN, 16F));
                 singleContainer2.add(valueContainer2);
             }
             bigInfoContainer.add(singleContainer2);
@@ -113,7 +123,7 @@ public class MyProfile extends JPanel {
             myListLabel.setText("Min liste");
             myListLabel.setAlignmentY(0F);
             myListLabel.setAlignmentX(0F);
-            myListLabel.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, 20F));
+            myListLabel.setFont(MyProfile.this.masterFrame.getMainFont(Font.PLAIN, 20F));
             myListLabel.setBorder(new EmptyBorder(15, 0, 5, 0));
             bigInfoContainer.add(myListLabel);
         }
@@ -138,12 +148,12 @@ public class MyProfile extends JPanel {
                 if(user.getMyList().size() >= 5*(i+1)){
                     for (int j = 5*i; j < 5*(i+1); j++) {
                         Media media = user.getMyList().get(j);
-                        singleMediaContainer.add(createVideoLabel(media));
+                        singleMediaContainer.add(createVideoLabel(media, mediaManager));
                     }
                 }else{
                     for (int j = 5*i; j < user.getMyList().size(); j++) {
                         Media media = user.getMyList().get(j);
-                        singleMediaContainer.add(createVideoLabel(media));
+                        singleMediaContainer.add(createVideoLabel(media, mediaManager));
                     }
                 }
 
@@ -158,7 +168,7 @@ public class MyProfile extends JPanel {
     }
 
 
-    public JLabel createVideoLabel(Media media){
+    public JLabel createVideoLabel(Media media, MediaManager mediaManager){
         JLabel label = new JLabel(new ImageIcon(media.getImage().getImage().getScaledInstance(150, 125, Image.SCALE_DEFAULT)));
         label.setAlignmentX(0F);
         label.setAlignmentY(0F);
@@ -168,7 +178,7 @@ public class MyProfile extends JPanel {
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                masterFrame.changeView(new MediaViewerPage(mediaManager.getMediaByName(media.getName()), mediaManager, masterFrame, accountManager), true);
             }
         });
 

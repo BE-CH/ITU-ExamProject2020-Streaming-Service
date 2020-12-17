@@ -15,19 +15,23 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Year;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class FileManager {
 
-    public FileManager() {
+    private MediaManager mediaManager;
 
-        Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
-        readFiles();
-        Eliten.getLogger().info("FileManager: All data has been loaded");
+    public FileManager(Logger logger, MediaManager mediaManager) {
+        this.mediaManager = mediaManager;
+
+        logger.info("FileManager: Initialised. Data will begin: ");
+        readFiles(logger);
+        logger.info("FileManager: All data has been loaded");
     }
 
-    public void readFiles() {
+    public void readFiles(Logger logger) {
 
-        Eliten.getLogger().info("Loading movies - begun");
+        logger.info("Loading movies - begun");
 
         Scanner movies = new Scanner(getClass().getResourceAsStream("/film.txt")).useDelimiter("\\s*;\\s");
 
@@ -38,15 +42,15 @@ public class FileManager {
             String genres = movies.next();
             double score = movies.nextDouble();
 
-            Media media = new Media(name, MediaType.MOVIE, year, score);
+            Media media = new Media(name, MediaType.MOVIE, year, score, this, logger);
             addGenres(media, genres);
-            addImage(media, "movie_images");
+            addImage(media, "movie_images", logger);
 
-            Eliten.mediaManager().addMedia(media);
+            mediaManager.addMedia(media);
         }
 
-        Eliten.getLogger().info("Loading movies - complete");
-        Eliten.getLogger().info("Loading series - begun");
+        logger.info("Loading movies - complete");
+        logger.info("Loading series - begun");
 
         Scanner seriesScanner = new Scanner(getClass().getResourceAsStream("/serier.txt")).useDelimiter("\\s*;\\s");
 
@@ -65,19 +69,19 @@ public class FileManager {
 
             String[] seasons = seriesScanner.next().split(",");
 
-            Series series = new Series(name, MediaType.SERIES, releaseYear, endYear, score);
+            Series series = new Series(name, MediaType.SERIES, releaseYear, endYear, score, this, logger);
             addGenres(series, genres);
-            addImage(series, "series_images");
+            addImage(series, "series_images", logger);
 
             for (String seasonAndEpisodes : seasons) {
                 String[] parts = seasonAndEpisodes.split("-");
                 series.addSeason(Integer.parseInt(parts[1].trim()));
             }
 
-            Eliten.mediaManager().addMedia(series);
+            mediaManager.addMedia(series);
         }
 
-        Eliten.getLogger().info("Loading series - complete");
+        logger.info("Loading series - complete");
     }
 
     private void addGenres(Media media, String genres) {
@@ -92,9 +96,9 @@ public class FileManager {
         }
     }
 
-    private void addImage(Media media, String folder) {
+    private void addImage(Media media, String folder, Logger logger) {
 
-        media.setImage(getImage(folder + "/" + media.getName() + ".jpg"));
+        media.setImage(getImage(folder + "/" + media.getName() + ".jpg", logger));
     }
 
     public File getFile(String path) throws URISyntaxException {
@@ -112,26 +116,26 @@ public class FileManager {
         }
     }
 
-    public byte[] getFileByteArray(String path) {
+    public byte[] getFileByteArray(String path, Logger logger) {
 
         try {
             return FileUtils.readFileToByteArray(getFile(path));
         } catch (Exception e) {
-            Eliten.getLogger().warning("File not found with path " + path);
+            logger.warning("File not found with path " + path);
         }
 
         return null;
     }
 
-    public ImageIcon getImage(String path) {
+    public ImageIcon getImage(String path, Logger logger) {
 
         try {
             return new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream(path)));
         } catch(IOException e) {
             e.printStackTrace();
-            Eliten.getLogger().warning("Failed to load image from path: " + path);
+            logger.warning("Failed to load image from path: " + path);
         } catch (IllegalArgumentException e) {
-            Eliten.getLogger().warning("Image path is returning null " + path);
+            logger.warning("Image path is returning null " + path);
         }
         
         return null;
