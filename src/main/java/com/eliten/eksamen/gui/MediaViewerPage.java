@@ -228,6 +228,10 @@ public class MediaViewerPage extends JPanel {
         Series series = (Series) media;
         ArrayList<JPanel> episodePanels = new ArrayList<>();
 
+        if (series.getReleaseYear() != series.getEndYear()) {
+            releaseDateValue.setText(series.getReleaseYear() + "-" + series.getEndYear());
+        }
+
         //======== seasonsBigContainer ========
         seasonsBigContainer.setAlignmentY(0.0F);
         seasonsBigContainer.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), LineBorder.createBlackLineBorder()));
