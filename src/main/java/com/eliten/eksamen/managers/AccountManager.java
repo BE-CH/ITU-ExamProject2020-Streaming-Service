@@ -1,7 +1,7 @@
 package com.eliten.eksamen.managers;
 
-import com.eliten.eksamen.account.Account;
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.account.Account;
 import com.eliten.eksamen.account.User;
 import com.eliten.eksamen.gui.LoginPage;
 import com.eliten.eksamen.media.Media;
@@ -9,6 +9,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class AccountManager {
@@ -74,8 +75,12 @@ public class AccountManager {
             jsonAccount.put("users", jsonUsers);
             jsonAccounts.put(jsonAccount);
         }
-
-        Eliten.fileManager().saveFile("accounts.json", jsonAccounts.toString());
+        try {
+            Eliten.fileManager().saveFile("accounts.json", jsonAccounts.toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Vi kunne desværre ikke gemme din data til filen. Kontakt venligst support hvis problemet forsætter.");
+            e.printStackTrace();
+        }
     }
 
     public void logout() {
