@@ -12,6 +12,7 @@ public class MediaManager {
     private ArrayList<Media> medias;
 
     public MediaManager() {
+        Eliten.getLogger().info("Initialised.");
         medias = new ArrayList<>();
     }
 
@@ -42,6 +43,6 @@ public class MediaManager {
             }
         }
 
-        return Eliten.getMasterFrame().getNavigationBar().sort(medias);
+        return Eliten.viewManager().getNavigationBar().sort(medias);
     }
 }

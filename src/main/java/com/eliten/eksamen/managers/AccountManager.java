@@ -17,6 +17,8 @@ public class AccountManager {
     private Account loggedInAccount;
 
     public AccountManager() {
+        Eliten.getLogger().info("Initialised. Loading accounts and users now");
+
         accounts = new ArrayList<>();
 
         JSONArray jsonAccounts = new JSONArray(new String(Eliten.fileManager().getFileByteArray("accounts.json")));
@@ -24,6 +26,8 @@ public class AccountManager {
         for (int i = 0; i < jsonAccounts.length(); i++) {
             accounts.add(new Account(jsonAccounts.getJSONObject(i)));
         }
+
+        Eliten.getLogger().info("Accounts and users have been loaded");
     }
 
     public boolean login(String email, String password) {
@@ -75,6 +79,6 @@ public class AccountManager {
     }
 
     public void logout() {
-        Eliten.getMasterFrame().changeView(new LoginPage(), false);
+        Eliten.viewManager().changeView(new LoginPage(), false);
     }
 }

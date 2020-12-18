@@ -13,7 +13,7 @@ title __EKSAMEN's Class Diagram__\n
         {static} + accountManager()
         {static} + fileManager()
         {static} + getLogger()
-        {static} + getMasterFrame()
+        {static} + viewManager()
         {static} + main()
         {static} + mediaManager()
     }

@@ -24,8 +24,8 @@ public class SearchFieldListener implements DocumentListener {
     }
 
     private void handle() {
-        if (Eliten.getMasterFrame().isListPage()) {
-            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(Eliten.getMasterFrame().getNavigationBar().getSearchFieldText(), Eliten.getMasterFrame().getNavigationBar().getGenreFromCategory(), Eliten.getMasterFrame().getNavigationBar().getMediaType()));
+        if (Eliten.viewManager().isListPage()) {
+            MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(Eliten.viewManager().getNavigationBar().getSearchFieldText(), Eliten.viewManager().getNavigationBar().getGenreFromCategory(), Eliten.viewManager().getNavigationBar().getMediaType()));
         }
     }
 }

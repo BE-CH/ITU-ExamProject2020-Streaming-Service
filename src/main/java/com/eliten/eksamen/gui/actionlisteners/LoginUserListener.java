@@ -34,6 +34,6 @@ public class LoginUserListener implements ActionListener {
             return;
         }
 
-        Eliten.getMasterFrame().changeView(new SelectUserPage(Eliten.accountManager().getLoggedInAccount().getUsers()), false);
+        Eliten.viewManager().changeView(new SelectUserPage(Eliten.accountManager().getLoggedInAccount().getUsers()), false);
     }
 }

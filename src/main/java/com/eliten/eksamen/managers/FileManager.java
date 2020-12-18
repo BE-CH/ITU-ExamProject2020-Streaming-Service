@@ -20,9 +20,9 @@ public class FileManager {
 
     public FileManager() {
 
-        Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
+        Eliten.getLogger().info("Initialised. Data loading will begin: ");
         readFiles();
-        Eliten.getLogger().info("FileManager: All data has been loaded");
+        Eliten.getLogger().info("All data has been loaded");
     }
 
     public void readFiles() {
