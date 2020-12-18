@@ -1,0 +1,294 @@
+@startuml
+
+title __ITU-PROGRAMMERINGSPROJEKT-ELITEN's Class Diagram__\n
+
+  namespace com.eliten.eksamen {
+    class com.eliten.eksamen.Eliten {
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace Test {
+      class com.eliten.eksamen.Test.ElitenTest {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace Test {
+      class com.eliten.eksamen.Test.FileManagerTest {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace Test {
+      class com.eliten.eksamen.Test.UserTest {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace account {
+      class com.eliten.eksamen.account.Account {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace account {
+      class com.eliten.eksamen.account.User {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.CustomRenderer {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.GenrePage {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.LoginPage {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.MasterFrame {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.MediaListPage {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.MediaViewerPage {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.MyProfile {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.NavigationBar {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.NavigationBarButton {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.NavigationBarButtonUI {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      class com.eliten.eksamen.gui.SelectUserPage {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      enum SortingStyle {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      namespace actionlisteners {
+        class com.eliten.eksamen.gui.actionlisteners.LoginUserListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      namespace actionlisteners {
+        class com.eliten.eksamen.gui.actionlisteners.NavigationButtonListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      namespace actionlisteners {
+        class com.eliten.eksamen.gui.actionlisteners.SearchFieldListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace gui {
+      namespace actionlisteners {
+        class com.eliten.eksamen.gui.actionlisteners.UserListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace managers {
+      class com.eliten.eksamen.managers.AccountManager {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace managers {
+      class com.eliten.eksamen.managers.FileManager {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace managers {
+      class com.eliten.eksamen.managers.MediaManager {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace media {
+      enum Genre {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace media {
+      class com.eliten.eksamen.media.Media {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace media {
+      enum MediaType {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace media {
+      class com.eliten.eksamen.media.Series {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace utils {
+      class com.eliten.eksamen.utils.SortingUtils {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
+    namespace utils {
+      class com.eliten.eksamen.utils.Utils {
+      }
+    }
+  }
+  
+
+  com.eliten.eksamen.Test.FileManagerTest o-- com.eliten.eksamen.Eliten : eliten
+  com.eliten.eksamen.Test.UserTest o-- com.eliten.eksamen.media.Media : movieTest
+  com.eliten.eksamen.Test.UserTest o-- com.eliten.eksamen.account.User : user
+  com.eliten.eksamen.account.Account o-- com.eliten.eksamen.account.User : selectedUser
+  com.eliten.eksamen.gui.CustomRenderer -up-|> javax.swing.table.DefaultTableCellRenderer
+  com.eliten.eksamen.gui.GenrePage -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.LoginPage -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.MasterFrame -up-|> javax.swing.JFrame
+  com.eliten.eksamen.gui.MasterFrame o-- com.eliten.eksamen.gui.NavigationBar : navigationBar
+  com.eliten.eksamen.gui.MediaListPage -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.MediaViewerPage -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.MyProfile -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.NavigationBar -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.NavigationBar o-- com.eliten.eksamen.gui.SortingStyle : currentSortingStyle
+  com.eliten.eksamen.gui.NavigationBar o-- com.eliten.eksamen.media.MediaType : mediaType
+  com.eliten.eksamen.gui.NavigationBar o-- com.eliten.eksamen.gui.SortingStyle : nextSortingStyle
+  com.eliten.eksamen.gui.NavigationBarButton -up-|> javax.swing.JButton
+  com.eliten.eksamen.gui.NavigationBarButtonUI -up-|> javax.swing.plaf.metal.MetalButtonUI
+  com.eliten.eksamen.gui.SelectUserPage -up-|> javax.swing.JPanel
+  com.eliten.eksamen.gui.actionlisteners.LoginUserListener .up.|> java.awt.event.ActionListener
+  com.eliten.eksamen.gui.actionlisteners.NavigationButtonListener .up.|> java.awt.event.ActionListener
+  com.eliten.eksamen.gui.actionlisteners.SearchFieldListener .up.|> javax.swing.event.DocumentListener
+  com.eliten.eksamen.gui.actionlisteners.UserListener .up.|> java.awt.event.ActionListener
+  com.eliten.eksamen.managers.AccountManager o-- com.eliten.eksamen.account.Account : loggedInAccount
+  com.eliten.eksamen.media.Media o-- com.eliten.eksamen.media.MediaType : type
+  com.eliten.eksamen.media.Series -up-|> com.eliten.eksamen.media.Media
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
