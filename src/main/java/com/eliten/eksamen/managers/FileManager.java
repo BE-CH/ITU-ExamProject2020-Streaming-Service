@@ -18,16 +18,18 @@ import java.util.Scanner;
 
 public class FileManager {
 
+    private MediaManager mediaTest = new MediaManager();
+
     public FileManager() {
 
-        Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
-        readFiles();
-        Eliten.getLogger().info("FileManager: All data has been loaded");
+        //Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
+        //readFiles();
+        //Eliten.getLogger().info("FileManager: All data has been loaded");
     }
 
     public void readFiles() {
 
-        Eliten.getLogger().info("Loading movies - begun");
+        //Eliten.getLogger().info("Loading movies - begun");
 
         Scanner movies = new Scanner(getClass().getResourceAsStream("/film.txt")).useDelimiter("\\s*;\\s");
 
@@ -42,11 +44,12 @@ public class FileManager {
             addGenres(media, genres);
             addImage(media, "movie_images");
 
-            Eliten.mediaManager().addMedia(media);
+            mediaTest.addMedia(media);
+            //Eliten.mediaManager().addMedia(media);
         }
 
-        Eliten.getLogger().info("Loading movies - complete");
-        Eliten.getLogger().info("Loading series - begun");
+        //Eliten.getLogger().info("Loading movies - complete");
+        //Eliten.getLogger().info("Loading series - begun");
 
         Scanner seriesScanner = new Scanner(getClass().getResourceAsStream("/serier.txt")).useDelimiter("\\s*;\\s");
 
@@ -74,10 +77,15 @@ public class FileManager {
                 series.addSeason(Integer.parseInt(parts[1].trim()));
             }
 
-            Eliten.mediaManager().addMedia(series);
+            mediaTest.addMedia((series));
+            //Eliten.mediaManager().addMedia(series);
         }
 
-        Eliten.getLogger().info("Loading series - complete");
+        //Eliten.getLogger().info("Loading series - complete");
+    }
+
+    public MediaManager getTestMediaManager(){
+        return mediaTest;
     }
 
     private void addGenres(Media media, String genres) {
@@ -92,7 +100,7 @@ public class FileManager {
         }
     }
 
-    private void addImage(Media media, String folder) {
+    public void addImage(Media media, String folder) {
 
         media.setImage(getImage(folder + "/" + media.getName() + ".jpg"));
     }
@@ -117,7 +125,7 @@ public class FileManager {
         try {
             return FileUtils.readFileToByteArray(getFile(path));
         } catch (Exception e) {
-            Eliten.getLogger().warning("File not found with path " + path);
+            //Eliten.getLogger().warning("File not found with path " + path);
         }
 
         return null;
@@ -129,9 +137,9 @@ public class FileManager {
             return new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream(path)));
         } catch(IOException e) {
             e.printStackTrace();
-            Eliten.getLogger().warning("Failed to load image from path: " + path);
+            //Eliten.getLogger().warning("Failed to load image from path: " + path);
         } catch (IllegalArgumentException e) {
-            Eliten.getLogger().warning("Image path is returning null " + path);
+            //Eliten.getLogger().warning("Image path is returning null " + path);
         }
         
         return null;
