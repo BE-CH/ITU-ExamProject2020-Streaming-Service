@@ -33,14 +33,7 @@ title __GUI's Class Diagram__\n
   namespace com.eliten.eksamen {
     namespace gui {
       class com.eliten.eksamen.gui.MasterFrame {
-          - currentPage : JPanel
-          - mainFont : Font
           + MasterFrame()
-          + changeView()
-          + getCurrentPage()
-          + getMainFont()
-          + getNavigationBar()
-          + isListPage()
       }
     }
   }
@@ -158,7 +151,6 @@ title __GUI's Class Diagram__\n
   com.eliten.eksamen.gui.GenrePage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.LoginPage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.MasterFrame -up-|> javax.swing.JFrame
-  com.eliten.eksamen.gui.MasterFrame o-- com.eliten.eksamen.gui.NavigationBar : navigationBar
   com.eliten.eksamen.gui.MediaListPage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.MediaViewerPage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.MyProfile -up-|> javax.swing.JPanel

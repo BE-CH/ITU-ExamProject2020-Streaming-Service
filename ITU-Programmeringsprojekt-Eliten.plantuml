@@ -49,6 +49,14 @@ title __ITU-PROGRAMMERINGSPROJEKT-ELITEN's Class Diagram__\n
   
 
   namespace com.eliten.eksamen {
+    namespace exceptions {
+      class com.eliten.eksamen.exceptions.FileManagerLoadException {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
     namespace gui {
       class com.eliten.eksamen.gui.CustomRenderer {
       }
@@ -209,6 +217,14 @@ title __ITU-PROGRAMMERINGSPROJEKT-ELITEN's Class Diagram__\n
   
 
   namespace com.eliten.eksamen {
+    namespace managers {
+      class com.eliten.eksamen.managers.ViewManager {
+      }
+    }
+  }
+  
+
+  namespace com.eliten.eksamen {
     namespace media {
       enum Genre {
       }
@@ -264,7 +280,6 @@ title __ITU-PROGRAMMERINGSPROJEKT-ELITEN's Class Diagram__\n
   com.eliten.eksamen.gui.GenrePage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.LoginPage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.MasterFrame -up-|> javax.swing.JFrame
-  com.eliten.eksamen.gui.MasterFrame o-- com.eliten.eksamen.gui.NavigationBar : navigationBar
   com.eliten.eksamen.gui.MediaListPage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.MediaViewerPage -up-|> javax.swing.JPanel
   com.eliten.eksamen.gui.MyProfile -up-|> javax.swing.JPanel
@@ -280,6 +295,8 @@ title __ITU-PROGRAMMERINGSPROJEKT-ELITEN's Class Diagram__\n
   com.eliten.eksamen.gui.actionlisteners.SearchFieldListener .up.|> javax.swing.event.DocumentListener
   com.eliten.eksamen.gui.actionlisteners.UserListener .up.|> java.awt.event.ActionListener
   com.eliten.eksamen.managers.AccountManager o-- com.eliten.eksamen.account.Account : loggedInAccount
+  com.eliten.eksamen.managers.ViewManager o-- com.eliten.eksamen.gui.MasterFrame : masterFrame
+  com.eliten.eksamen.managers.ViewManager o-- com.eliten.eksamen.gui.NavigationBar : navigationBar
   com.eliten.eksamen.media.Media o-- com.eliten.eksamen.media.MediaType : type
   com.eliten.eksamen.media.Series -up-|> com.eliten.eksamen.media.Media
 

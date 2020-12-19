@@ -5,17 +5,16 @@ title __EKSAMEN's Class Diagram__\n
   namespace com.eliten.eksamen {
     class com.eliten.eksamen.Eliten {
         {static} - accountManager : AccountManager
-        {static} - database : JSONArray
         {static} - fileManager : FileManager
         {static} - logger : Logger
-        {static} - masterFrame : MasterFrame
         {static} - mediaManager : MediaManager
+        {static} - viewManager : ViewManager
         {static} + accountManager()
         {static} + fileManager()
         {static} + getLogger()
-        {static} + viewManager()
         {static} + main()
         {static} + mediaManager()
+        {static} + viewManager()
     }
   }
   

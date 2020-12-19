@@ -80,6 +80,7 @@ title __MEDIA's Class Diagram__\n
           - seasons : LinkedList<Integer>
           + Series()
           + addSeason()
+          + getEndYear()
           + getEpisodeAmount()
           + getSeasons()
       }
