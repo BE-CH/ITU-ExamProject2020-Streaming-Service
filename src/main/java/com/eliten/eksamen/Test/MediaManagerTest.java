@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MediaManagerTest {
-    private MediaManager mediaManager = new MediaManager();
 
     @Test
     public void getMediaByNameTest(){
@@ -18,3 +17,9 @@ class MediaManagerTest {
     }
 
 }
+
+
+
+
+
+
