@@ -13,6 +13,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -178,39 +179,50 @@ public class MediaViewerPage extends JPanel {
         playMovieButton.setBackground(new Color(16, 170, 22));
         playMovieButton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
         playMovieButton.setFont(Eliten.viewManager().getMainFont(Font.PLAIN, 20F));
-        playMovieButton.addActionListener(e -> {
-            if (playMovieButton.getText().contains("Afspiller...")) {
+
+        ActionListener playActionListener = e -> {
+
+            JButton source = (JButton) e.getSource();
+
+            if (source.getText().contains("Afspiller...")) {
                 return;
             }
+
+            String beforeMain = playMovieButton.getText();
+            Utils.runLater(a -> playMovieButton.setText(beforeMain), 2000);
             playMovieButton.setText("Afspiller... Vent venligst");
+
+            if (!source.equals(playMovieButton)) {
+                String beforeSub = source.getText();
+                Utils.runLater(a -> source.setText(beforeSub), 2000);
+                source.setText("Afspiller...");
+            }
+
             media.watch();
-            Utils.runLater(a -> playMovieButton.setText("Afspil film"), 2000);
-        });
+        };
+
+        playMovieButton.addActionListener(playActionListener);
         playMovieContainer.add(playMovieButton);
 
         textContainer.add(playMovieContainer);
 
         User user = Eliten.accountManager().getLoggedInAccount().getSelectedUser();
 
-        if(!user.getMyList().contains(media)){
-            addToList.setText("Tilføj til min liste");
-            addToList.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
+        addToList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                if(!user.getMyList().contains(media)){
                     user.addToList(media);
-                    //dont know if this is the best way to do it
-                    Eliten.viewManager().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
-                }
-            });
-        } else {
-            addToList.setText("Fjern fra min liste");
-            addToList.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
+                    addToList.setText("Fjern til min liste");
+
+                } else {
                     user.removeFromList(media);
-                    //dont know if this is the best way to do it
-                    Eliten.viewManager().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(media.getName())), true);
+                    addToList.setText("Tilføj til min liste");
                 }
-            });
-        }
+            }
+        });
+
+        addToList.setText((user.getMyList().contains(media) ? "Fjern fra" : "Tilføj til") + " min liste");
         addToList.setAlignmentY(0.0F);
         addToList.setBackground(new Color(16, 170, 22));
         addToList.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
@@ -231,6 +243,8 @@ public class MediaViewerPage extends JPanel {
         if (series.getReleaseYear() != series.getEndYear()) {
             releaseDateValue.setText(series.getReleaseYear() + "-" + series.getEndYear());
         }
+
+        playMovieButton.setText("Afspil fra starten");
 
         //======== seasonsBigContainer ========
         seasonsBigContainer.setAlignmentY(0.0F);
@@ -342,6 +356,7 @@ public class MediaViewerPage extends JPanel {
                 singleEpisodeWatch.setText("Se episode");
                 singleEpisodeWatch.setAlignmentY(0.0F);
                 singleEpisodeWatch.setBackground(new Color(16, 170, 22));
+                singleEpisodeWatch.addActionListener(playActionListener);
                 singleEpisodeWatch.setBorder(new BevelBorder(BevelBorder.RAISED, Color.darkGray, Color.lightGray, Color.gray, Color.black));
                 singleEpisodeContainer.add(singleEpisodeWatch);
             }

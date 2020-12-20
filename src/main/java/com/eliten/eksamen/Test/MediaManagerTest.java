@@ -1,11 +1,9 @@
 package com.eliten.eksamen.Test;
 
 import com.eliten.eksamen.managers.FileManager;
-import com.eliten.eksamen.managers.MediaManager;
-import com.eliten.eksamen.media.Media;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MediaManagerTest {
 
@@ -15,7 +13,6 @@ class MediaManagerTest {
         fileManager.readFiles();
         assertEquals(fileManager.getTestMediaManager().getMediaByName("Psycho").getName(), "Psycho");
     }
-
 }
 
 
