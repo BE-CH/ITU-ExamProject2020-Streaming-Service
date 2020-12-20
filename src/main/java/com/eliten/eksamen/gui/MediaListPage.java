@@ -149,6 +149,10 @@ public class MediaListPage extends JPanel {
             private void handle(Point point) {
                 JPanel panel = getPanelFromMouseEvent(point);
 
+                if (panel == null) {
+                    return;
+                }
+
                 if (previous == null) {
                     previous = panel;
                     previous.setBackground(Color.LIGHT_GRAY);
