@@ -25,7 +25,7 @@ public class NavigationButtonListener implements ActionListener {
             }
             case "Genre" -> Eliten.viewManager().changeView(new GenrePage(), true);
             case "Min Profil" -> Eliten.viewManager().changeView(new MyProfile(Eliten.accountManager().getLoggedInAccount().getSelectedUser()), true);
-            case "Admin Panel" -> JOptionPane.showMessageDialog(null, "TODO: Skift til Admin Panel");
+            case "Admin Panel" -> JOptionPane.showMessageDialog(null, "Skift til Admin Panel");
             case "Log Ud" -> Eliten.accountManager().logout();
             default -> JOptionPane.showMessageDialog(null, "Vi kender ikke denne side!");
         }

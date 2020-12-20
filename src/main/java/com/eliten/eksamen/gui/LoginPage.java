@@ -1,7 +1,6 @@
 package com.eliten.eksamen.gui;
 
 import com.eliten.eksamen.gui.actionlisteners.LoginUserListener;
-import com.eliten.eksamen.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -93,14 +92,5 @@ public class LoginPage extends JPanel {
         loginContainer.add(loginButton);
 
         add(loginContainer);
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
-
-        if (true) {
-            Utils.runLater(e -> {
-                emailField.setText("deyi@itu.dk");
-                passwordField.setText("test123");
-                loginButton.doClick();
-            }, 1000);
-        }
     }
 }
