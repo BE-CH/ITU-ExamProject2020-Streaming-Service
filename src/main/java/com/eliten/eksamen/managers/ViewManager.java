@@ -4,12 +4,11 @@ import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.gui.MasterFrame;
 import com.eliten.eksamen.gui.MediaListPage;
 import com.eliten.eksamen.gui.NavigationBar;
-import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class ViewManager {
 
@@ -23,10 +22,9 @@ public class ViewManager {
         Eliten.getLogger().info("Initialised. Creation of master frame will begin.");
 
         try {
-            mainFont = Font.createFont(Font.TRUETYPE_FONT, FileUtils.openInputStream(Eliten.fileManager().getFile("fonts/Roboto-Regular.ttf")));
-        } catch (URISyntaxException e) {
-            Eliten.getLogger().warning("Main font file could not be loaded.");
+            mainFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("Fonts/Roboto-Regular.ttf")));
         } catch (IOException e) {
+            e.printStackTrace();
             Eliten.getLogger().warning("Main font file could not be turned into input stream");
         } catch (FontFormatException e) {
             Eliten.getLogger().warning("Main font could not be created");

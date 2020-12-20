@@ -20,7 +20,7 @@ public class LoginUserListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String emailInput = email.getText();
-        String passwordInput = password.getText();
+        String passwordInput = String.valueOf(password.getPassword());
 
         if(emailInput.isEmpty() || passwordInput.isEmpty()) {
             Eliten.getLogger().info("You need to put in both user and password.");

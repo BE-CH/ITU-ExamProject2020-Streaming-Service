@@ -105,9 +105,13 @@ public class FileManager {
         media.setImage(getImage(folder + "/" + media.getName() + ".jpg"));
     }
 
-    public File getFile(String path) throws URISyntaxException {
+    public File getFile(String path) throws IOException {
 
-        return new File(getClass().getClassLoader().getResource(path).toURI());
+
+        File targetFile = new File(path);
+        FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream(path), targetFile);
+
+        return targetFile;
     }
 
     public void saveFile(String path, String data) throws IOException, URISyntaxException  {
