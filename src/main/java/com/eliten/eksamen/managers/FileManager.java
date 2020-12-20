@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.Year;
 import java.util.Scanner;
 
@@ -38,7 +37,7 @@ public class FileManager {
 
     public void readFiles() {
 
-        //Eliten.getLogger().info("Loading movies - begun");
+        Eliten.getLogger().info("Loading movies - begun");
 
         Scanner movies = new Scanner(getClass().getResourceAsStream("/film.txt")).useDelimiter("\\s*;\\s");
 
@@ -54,11 +53,11 @@ public class FileManager {
             addImage(media, "movie_images");
 
             mediaTest.addMedia(media);
-            //Eliten.mediaManager().addMedia(media);
+            Eliten.mediaManager().addMedia(media);
         }
 
-        //Eliten.getLogger().info("Loading movies - complete");
-        //Eliten.getLogger().info("Loading series - begun");
+        Eliten.getLogger().info("Loading movies - complete");
+        Eliten.getLogger().info("Loading series - begun");
 
         Scanner seriesScanner = new Scanner(getClass().getResourceAsStream("/serier.txt")).useDelimiter("\\s*;\\s");
 
@@ -87,10 +86,10 @@ public class FileManager {
             }
 
             mediaTest.addMedia((series));
-            //Eliten.mediaManager().addMedia(series);
+            Eliten.mediaManager().addMedia(series);
         }
 
-        //Eliten.getLogger().info("Loading series - complete");
+        Eliten.getLogger().info("Loading series - complete");
     }
 
     public MediaManager getTestMediaManager(){
@@ -116,14 +115,17 @@ public class FileManager {
 
     public File getFile(String path) throws IOException {
 
-
         File targetFile = new File(path);
-        FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream(path), targetFile);
+
+        // Creates file basically
+        if (!targetFile.exists()) {
+            FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream(path), targetFile);
+        }
 
         return targetFile;
     }
 
-    public void saveFile(String path, String data) throws IOException, URISyntaxException  {
+    public void saveFile(String path, String data) throws IOException  {
 
         FileWriter writer = new FileWriter(getFile(path));
         writer.write(data);
