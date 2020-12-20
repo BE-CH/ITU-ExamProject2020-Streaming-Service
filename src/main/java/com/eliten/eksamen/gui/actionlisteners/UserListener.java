@@ -23,7 +23,7 @@ public class UserListener implements ActionListener {
         String selectedUser = ((JButton) e.getSource()).getText();
 
         Eliten.accountManager().getLoggedInAccount().setSelectedUser(Eliten.accountManager().getLoggedInAccount().getUserByName(selectedUser));
-        Eliten.getMasterFrame().changeView(new MediaListPage(), true);
+        Eliten.viewManager().changeView(new MediaListPage(), true);
         MediaListPage.changeList(Eliten.mediaManager().getMedias());
     }
 }

@@ -27,4 +27,8 @@ public class Series extends Media {
     public int getEpisodeAmount(int season) {
         return seasons.get(season);
     }
+
+    public int getEndYear() {
+        return endYear;
+    }
 }

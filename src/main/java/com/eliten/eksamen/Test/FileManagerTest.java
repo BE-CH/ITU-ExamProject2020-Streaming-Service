@@ -23,6 +23,3 @@ class FileManagerTest {
         assertNotNull(movieTest.getImage());
     }
 }
-
-
-

@@ -169,7 +169,7 @@ public class NavigationBar extends JPanel {
 
     private JLabel getLabel(String text, float size, int position) {
         JLabel title = new JLabel(text, position);
-        title.setFont(Eliten.getMasterFrame().getMainFont(Font.PLAIN, size));
+        title.setFont(Eliten.viewManager().getMainFont(Font.PLAIN, size));
         title.setForeground(Color.WHITE);
 
         return title;

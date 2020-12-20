@@ -24,12 +24,11 @@ public class MediaListPage extends JPanel {
 
         MediaListPage page;
 
-        if (!Eliten.getMasterFrame().isListPage()) {
-
+        if (!Eliten.viewManager().isListPage()) {
             page = new MediaListPage();
-            Eliten.getMasterFrame().changeView(page, true);
+            Eliten.viewManager().changeView(page, true);
         } else {
-            page = (MediaListPage) Eliten.getMasterFrame().getCurrentPage();
+            page = (MediaListPage) Eliten.viewManager().getCurrentPage();
         }
 
         page.update(medias);
@@ -128,7 +127,7 @@ public class MediaListPage extends JPanel {
 
                 if (panel != null) {
                     JLabel label = (JLabel) panel.getComponent(0);
-                    Eliten.getMasterFrame().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())), true);
+                    Eliten.viewManager().changeView(new MediaViewerPage(Eliten.mediaManager().getMediaByName(label.getText())), true);
                 }
             }
         });

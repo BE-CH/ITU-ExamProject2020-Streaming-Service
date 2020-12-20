@@ -16,16 +16,16 @@ public class NavigationButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String selectedPage = ((JButton) e.getSource()).getText();
 
-        NavigationBar navigationBar = Eliten.getMasterFrame().getNavigationBar();
+        NavigationBar navigationBar = Eliten.viewManager().getNavigationBar();
 
         switch (selectedPage) {
             case "Alle Medier", "Film", "Serier" -> {
                 navigationBar.setMediaType(selectedPage.equalsIgnoreCase("Alle Medier") ? null : selectedPage.equalsIgnoreCase("Film") ? MediaType.MOVIE : MediaType.SERIES);
                 MediaListPage.changeList(Eliten.mediaManager().getMediasBySearch(navigationBar.getSearchFieldText(), navigationBar.getGenreFromCategory(), navigationBar.getMediaType()));
             }
-            case "Genre" -> Eliten.getMasterFrame().changeView(new GenrePage(), true);
-            case "Min Profil" -> Eliten.getMasterFrame().changeView(new MyProfile(Eliten.accountManager().getLoggedInAccount().getSelectedUser()), true);
-            case "Admin Panel" -> JOptionPane.showMessageDialog(null, "TODO: Skift til Admin Panel");
+            case "Genre" -> Eliten.viewManager().changeView(new GenrePage(), true);
+            case "Min Profil" -> Eliten.viewManager().changeView(new MyProfile(Eliten.accountManager().getLoggedInAccount().getSelectedUser()), true);
+            case "Admin Panel" -> JOptionPane.showMessageDialog(null, "Skift til Admin Panel");
             case "Log Ud" -> Eliten.accountManager().logout();
             default -> JOptionPane.showMessageDialog(null, "Vi kender ikke denne side!");
         }

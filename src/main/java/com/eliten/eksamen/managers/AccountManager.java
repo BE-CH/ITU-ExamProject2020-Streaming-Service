@@ -1,7 +1,7 @@
 package com.eliten.eksamen.managers;
 
-import com.eliten.eksamen.account.Account;
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.account.Account;
 import com.eliten.eksamen.account.User;
 import com.eliten.eksamen.gui.LoginPage;
 import com.eliten.eksamen.media.Media;
@@ -9,6 +9,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class AccountManager {
@@ -17,6 +18,8 @@ public class AccountManager {
     private Account loggedInAccount;
 
     public AccountManager() {
+        Eliten.getLogger().info("Initialised. Loading accounts and users now");
+
         accounts = new ArrayList<>();
 
         JSONArray jsonAccounts = new JSONArray(new String(Eliten.fileManager().getFileByteArray("accounts.json")));
@@ -24,6 +27,8 @@ public class AccountManager {
         for (int i = 0; i < jsonAccounts.length(); i++) {
             accounts.add(new Account(jsonAccounts.getJSONObject(i)));
         }
+
+        Eliten.getLogger().info("Accounts and users have been loaded");
     }
 
     public boolean login(String email, String password) {
@@ -70,11 +75,15 @@ public class AccountManager {
             jsonAccount.put("users", jsonUsers);
             jsonAccounts.put(jsonAccount);
         }
-
-        Eliten.fileManager().saveFile("accounts.json", jsonAccounts.toString());
+        try {
+            Eliten.fileManager().saveFile("accounts.json", jsonAccounts.toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Vi kunne desværre ikke gemme din data til filen. Kontakt venligst support hvis problemet forsætter.");
+            e.printStackTrace();
+        }
     }
 
     public void logout() {
-        Eliten.getMasterFrame().changeView(new LoginPage(), false);
+        Eliten.viewManager().changeView(new LoginPage(), false);
     }
 }

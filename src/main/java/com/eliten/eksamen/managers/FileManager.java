@@ -1,6 +1,7 @@
 package com.eliten.eksamen.managers;
 
 import com.eliten.eksamen.Eliten;
+import com.eliten.eksamen.exceptions.FileManagerLoadException;
 import com.eliten.eksamen.media.Genre;
 import com.eliten.eksamen.media.Media;
 import com.eliten.eksamen.media.MediaType;
@@ -22,9 +23,17 @@ public class FileManager {
 
     public FileManager() {
 
-        //Eliten.getLogger().info("FileManager: Initialised. Data will begin: ");
-        //readFiles();
-        //Eliten.getLogger().info("FileManager: All data has been loaded");
+        Eliten.getLogger().info("Initialised. Data loading will begin: ");
+
+        try {
+            readFiles();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FileManagerLoadException();
+        }
+
+        Eliten.getLogger().info("All data has been loaded");
+
     }
 
     public void readFiles() {
@@ -105,19 +114,20 @@ public class FileManager {
         media.setImage(getImage(folder + "/" + media.getName() + ".jpg"));
     }
 
-    public File getFile(String path) throws URISyntaxException {
+    public File getFile(String path) throws IOException {
 
-        return new File(getClass().getClassLoader().getResource(path).toURI());
+
+        File targetFile = new File(path);
+        FileUtils.copyInputStreamToFile(getClass().getClassLoader().getResourceAsStream(path), targetFile);
+
+        return targetFile;
     }
 
-    public void saveFile(String path, String data) {
+    public void saveFile(String path, String data) throws IOException, URISyntaxException  {
 
-        try (FileWriter writer = new FileWriter(getFile(path))){
-           writer.write(data);
-           writer.flush();
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+        FileWriter writer = new FileWriter(getFile(path));
+        writer.write(data);
+        writer.flush();
     }
 
     public byte[] getFileByteArray(String path) {
