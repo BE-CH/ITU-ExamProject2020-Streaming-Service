@@ -2,7 +2,6 @@ package com.eliten.eksamen.gui.actionlisteners;
 
 import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.gui.SelectUserPage;
-import com.eliten.eksamen.managers.AccountManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -44,21 +43,15 @@ public class LoginUserListener implements ActionListener {
 
         if(emailInput.isEmpty() || passwordInput.isEmpty()) {
             return"You need to put in both user and password.";
-            //JOptionPane.showMessageDialog(null, "Du skal indtaste både email og adgangskode!");
-            //return;
         }
 
         try {
             if (!Eliten.accountManager().login(emailInput, passwordInput)) {
                 return "Incorrect login, please try again.";
-                //JOptionPane.showMessageDialog(null, "Der findes ingen brugerer med den kombination!");
-                //return;
             }
         } catch (Exception e){
-            System.err.println(e);
+            return "error";
         }
-
-        return "correct";
-        //Eliten.getMasterFrame().changeView(new SelectUserPage(Eliten.accountManager().getLoggedInAccount().getUsers()), false);
+        return "error";
     }
 }
