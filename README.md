@@ -5,11 +5,15 @@ java version "15.0.1" 2020-10-20
 Java(TM) SE Runtime Environment (build 15.0.1+9-18)
 Java HotSpot(TM) 64-Bit Server VM (build 15.0.1+9-18, mixed mode, sharing)
 ```
-#####Using CMD
+#####Run using the terminal
 ```
 java -jar Eliten-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
 
-#####Using CMD
-Just double click the Eliten-1.0-SNAPSHOT-jar-with-dependencies.jar file
+#####Testuser information
+**Email:** milb@itu.dk
+
+**Adgangskode:** test123
+
+*Further information on testing can be found as an appendix in the paper*
 ####
