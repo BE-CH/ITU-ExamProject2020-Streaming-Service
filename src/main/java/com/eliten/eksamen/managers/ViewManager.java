@@ -4,6 +4,8 @@ import com.eliten.eksamen.Eliten;
 import com.eliten.eksamen.gui.MasterFrame;
 import com.eliten.eksamen.gui.MediaListPage;
 import com.eliten.eksamen.gui.NavigationBar;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +41,12 @@ public class ViewManager {
         }
     }
 
-    public void changeView(JPanel newPanel, boolean navBar) {
+    /**
+     * Change the current view of the frame to another JPanel
+     * @param newPanel the new {@link JPanel} to change to
+     * @param navBar whether or not to keep the navigation bar
+     */
+    public void changeView(@NotNull JPanel newPanel, boolean navBar) {
         masterFrame.getContentPane().removeAll();
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -67,22 +74,48 @@ public class ViewManager {
         masterFrame.revalidate();
     }
 
+    /**
+     * Checks weather or not the current page is a {@link MediaListPage}
+     * @return true if the current page is a {@link MediaListPage}
+     */
     public boolean isListPage() {
         return currentPage instanceof MediaListPage;
     }
 
+    /**
+     * Retrieve the current page that is being viewed
+     * @return the current page
+     */
+    @NotNull
     public JPanel getCurrentPage() {
         return currentPage;
     }
 
+    /**
+     * Sets the current page. Note that this does not change the view.
+     * @param currentPage the {@link JPanel} to set it to
+     */
     public void setCurrentPage(JPanel currentPage) {
         this.currentPage = currentPage;
     }
 
+
+    /**
+     * Retrieve the {@link NavigationBar} if it is enabled
+     * @return the navigation bar
+     */
+    @Nullable
     public NavigationBar getNavigationBar() {
         return navigationBar;
     }
 
+    /**
+     * Retrieve the main font that is used using the style and size of your choice to have consistency
+     * @param style the style of the font
+     * @param size the size of the font
+     * @return the actual font
+     */
+    @NotNull
     public Font getMainFont(int style, float size) {
         return mainFont.deriveFont(style, size);
     }
