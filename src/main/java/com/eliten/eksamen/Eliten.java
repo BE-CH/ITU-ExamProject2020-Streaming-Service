@@ -27,22 +27,42 @@ public class Eliten {
         viewManager = new ViewManager();
     }
 
+    /**
+     * Retrieve the global {@link AccountManager}.
+     * @return the account manager that has been created.
+     */
     public static AccountManager accountManager() {
         return accountManager;
     }
 
+    /**
+     * Retrieve the global {@link MediaManager}.
+     * @return the media manager that has been created.
+     */
     public static MediaManager mediaManager() {
         return mediaManager;
     }
 
+    /**
+     * Retrieve the global {@link ViewManager}.
+     * @return the view manager that has been created.
+     */
     public static ViewManager viewManager() {
         return viewManager;
     }
 
+    /**
+     * Retrieve the global {@link FileManager}.
+     * @return the file manager that has been created.
+     */
     public static FileManager fileManager() {
         return fileManager;
     }
 
+    /**
+     * Retrieve the global {@link Logger}.
+     * @return the logger that has been created.
+     */
     public static Logger getLogger() {
         return logger;
     }

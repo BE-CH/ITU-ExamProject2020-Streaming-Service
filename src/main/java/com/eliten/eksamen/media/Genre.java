@@ -1,9 +1,14 @@
 package com.eliten.eksamen.media;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+/**
+ * An enum with all the genres available that is being used.
+ */
 public enum Genre {
-    FILMNOIR("Film-noir", "N/A"),
+    FILMNOIR("Film-noir", "Er det tid til at se en sort film?!?"),
     MUSIC("", "Hvem kan ikke lide film og serier med noget musik?"),
     DOCUMENTARY("", "Leder du efter at lære noget nyt? Kig ikke længere!"),
     CRIME("", "Vil du hjælpe at med at løse et mord? Eller noget lignede?"),
@@ -36,15 +41,31 @@ public enum Genre {
         this.description = description;
     }
 
+    /**
+     * Retrieve the name of the Genre.
+     * @return the name of the genre
+     */
+    @NotNull
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieve the description of the Genre.
+     * @return the description of the genre
+     */
+    @NotNull
     public String getDescription() {
         return description;
     }
 
-    public static Genre fromString(String string) {
+    /**
+     * Retrieve a {@link Genre} based its name.
+     * @param string the name to search for
+     * @return the genre if found
+     */
+    @Nullable
+    public static Genre fromString(@NotNull String string) {
         for (Genre genre : values()) {
             if (genre.name.equalsIgnoreCase(string)) {
                 return genre;
