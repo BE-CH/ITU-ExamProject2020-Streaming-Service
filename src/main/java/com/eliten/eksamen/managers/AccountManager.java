@@ -104,6 +104,7 @@ public class AccountManager {
      * Log the user out and send them back to the login page
      */
     public void logout() {
+        loggedInAccount.setSelectedUser(null);
         loggedInAccount = null;
         Eliten.viewManager().changeView(new LoginPage(), false);
     }
