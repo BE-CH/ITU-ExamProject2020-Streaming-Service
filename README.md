@@ -13,7 +13,5 @@ java -jar Eliten-1.0-SNAPSHOT-jar-with-dependencies.jar
 ##### Testuser information
 **Email:** milb@itu.dk
 
-**Adgangskode:** test123
-
-*Further information on testing can be found as an appendix in the paper*
+**Password:** test123
 ####
