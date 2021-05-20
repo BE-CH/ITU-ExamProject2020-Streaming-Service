@@ -2,9 +2,7 @@
 **Course: Grundlæggende programmering**
 
 ## Description
-Streaming service app made in Java. The streaming service has basic functionality such as; searching for movies or series, sorting by different categories and login/creating accounts. The code has been writtein in about 2 weeks. 
-
-## Screenshots
+Streaming service app made in Java. The streaming service has basic functionality such as; searching for movies or series, sorting by different categories and login/creating accounts. The code has been writtein in about 2 weeks. The code has been used for the exam.
 
 ## How to run:
 The Java application is compiled with Java 15.0.1
